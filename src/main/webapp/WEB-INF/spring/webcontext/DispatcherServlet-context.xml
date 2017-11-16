@@ -15,6 +15,10 @@
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	<bean id="tilesViewResolver"   class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+        <property name="order" value="-2" />
+	</bean>
 
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -23,11 +27,13 @@
 
 	<mvc:resources location="/resources/" mapping="/resource/**" />
 
-	<!-- <mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/add*" />
-			<bean class="com.packt.webstore.interceptor.VolunteerInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors> -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles/definitions/tile3-definition.xml</value>
+            </list>
+        </property>
+<!--         <property name="completeAutoload" value="true"/> -->
+	</bean>
 
 </beans>
