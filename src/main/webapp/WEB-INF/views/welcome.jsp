@@ -1,27 +1,29 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<title>Welcome</title>
+</head>
+<body>
+	<section>
+		<div class="jumbotron">
+			<div class="container">
+				<img src="<spring:url value='/resource/images/loneRanger.jpg' />" />
+				<h1> ${greeting} </h1>
+				<p> ${tagline} </p>
+			</div>	 
  
- <tiles:insertDefinition name="baseLayout">
-    <tiles:putAttribute name="title"> welcome.title </tiles:putAttribute>
-    <tiles:putAttribute name="heading"> welcome.heading </tiles:putAttribute>
-    <tiles:putAttribute name="tagline"> welcome.tagline </tiles:putAttribute>
-    <tiles:putAttribute name="body">
-   
-	    Language : <a href="?language=en_US">English</a>|<a href="?language=zh_CN">Chinese</a>
-		 
-		<h3>
-			welcome.springmvc : <spring:message code="welcome.springmvc" text="default text" />
-		</h3>
-		 
-		<p> Current Locale : ${pageContext.response.locale}</p>
-	 
- 
-    </tiles:putAttribute>
-
-</tiles:insertDefinition>
-	  
-
+				  <div class="container">
+		
+					 <a href="<spring:url value='list' />" class="btn btn-default">
+						<span class="glyphicon-hand-left glyphicon"></span> Go to Community
+					</a>
+				</div>	
+		</div>	
+	</section>
+	
+</body>
 </html>
