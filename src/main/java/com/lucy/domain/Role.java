@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,7 +21,8 @@ public class Role {
 	@NotEmpty
 	private String role;
 	
-	@ManyToMany()
+	@Valid
+	@ManyToMany
 	private List<Profile> profiles;
 	
 }

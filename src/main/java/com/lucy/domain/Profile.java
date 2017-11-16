@@ -18,8 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,13 +47,6 @@ public class Profile {
 	 @Transient
 	 private String confirmpassword;
 	 
-	 @Valid
-	 @OneToMany
-	 private Address address;
-	 
-	 @ManyToMany( fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	 private List<Role> roles=new ArrayList<Role>() ;
-	 
 	 @Email
 	 private String email;
 	 
@@ -65,6 +57,14 @@ public class Profile {
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date birthdate;
+	
+	 @Valid
+	 @OneToMany
+	 private Address address;
+	 
+	 @ManyToMany( fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	 private List<Role> roles=new ArrayList<Role>() ;
+
 	 
 	 public Profile() {
 			
