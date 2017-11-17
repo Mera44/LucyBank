@@ -10,7 +10,7 @@ public interface CreditAccountService {
 	public List<CreditAccount> findAll();
 	public CreditAccount save(CreditAccount account);
 	public CreditAccount update(CreditAccount account);
-	public boolean delete(long id);
+	public boolean delete(Integer accNo);
 	public CreditAccount getByAccountNumber(Integer accNo);
 	public boolean payBill(Integer payFrom, Integer payTo, double amount);
 }

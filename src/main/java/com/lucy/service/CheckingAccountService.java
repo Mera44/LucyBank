@@ -10,8 +10,9 @@ public interface CheckingAccountService {
 	public List<CheckingAccount> findAll();
 	public CheckingAccount save(CheckingAccount account);
 	public CheckingAccount update(CheckingAccount account);
-	public boolean delete(long id);
+	public boolean delete(Integer accNo);
 	public CheckingAccount getByAccountNumber(Integer accNo);
-	public CheckingAccount withdraw(Integer accNo, double amount);
+	public boolean withdraw(Integer accNo, double amount);
 	public CheckingAccount deposit(Integer accNo, double amount);
+	public boolean transfer(Integer transferFrom, Integer transferTo, double amount);
 }

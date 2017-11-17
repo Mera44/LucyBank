@@ -68,6 +68,10 @@ public abstract class Account {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+	public boolean addTransaction(Transaction transaction) {
+		return this.transaction.add(transaction);
+	}
+
 	
 		
 

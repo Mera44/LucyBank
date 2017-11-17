@@ -2,9 +2,12 @@ package com.lucy.serviceImpl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.lucy.domain.CreditAccount;
 import com.lucy.service.CreditAccountService;
 
+@Service
 public class CreditAccountServiceImpl implements CreditAccountService {
 
 	@Override
@@ -32,7 +35,7 @@ public class CreditAccountServiceImpl implements CreditAccountService {
 	}
 
 	@Override
-	public boolean delete(long id) {
+	public boolean delete(Integer accNo) {
 		
 		return false;
 	}
