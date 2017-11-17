@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	
+	<definition name="baseLayout" template="/WEB-INF/tiles/template/layoutTemplate.jsp">
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="heading" value="" />
+		<put-attribute name="tagline" value="" />
+ 		<put-attribute name="navigation" value="/WEB-INF/tiles/template/navigation.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/template/footer.jsp" />
+	</definition>
+
+ 	<definition name="welcome" extends="baseLayout">
+		<put-attribute name="title" value="Welcome" />
+		<put-attribute name="heading" value="Internationalization" />
+ 		<put-attribute name="body" value="/WEB-INF/views/welcome.jsp" />
+	</definition>
+	
+	<definition name="products" extends="baseLayout">
+		<put-attribute name="title" value="Products" />
+		<put-attribute name="heading" value="Products" />
+		<put-attribute name="tagline" value="Available Products" />
+		<put-attribute name="body" value="/WEB-INF/views/products.jsp" />
+	</definition>
+	
+	<definition name="product" extends="baseLayout">
+		<put-attribute name="title" value="Product" />
+		<put-attribute name="heading" value="Products" />
+		<put-attribute name="tagline" value="Product" />
+		<put-attribute name="body" value="/WEB-INF/views/product.jsp" />
+	</definition>
+	
+	<definition name="addProduct" extends="baseLayout">
+		<put-attribute name="title" value="Products" />
+		<put-attribute name="heading" value="Products" />
+		<put-attribute name="tagline" value="Product" />
+		<put-attribute name="body" value="/WEB-INF/views/addProduct.jsp" />
+	</definition>
+	
+	<definition name="login" extends="baseLayout">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="heading" value="Login" />
+		<put-attribute name="tagline" value="Enter your Credentials" />
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	</definition>
+	
+	<definition name="cart" extends="baseLayout">
+		<put-attribute name="title" value="Shopping Cart" />
+		<put-attribute name="heading" value="Cart" />
+		<put-attribute name="tagline" value="your shopping cart" />
+		<put-attribute name="body" value="/WEB-INF/views/cart.jsp" />
+	</definition>
+	 	
+	<definition name="productNotFound" extends="baseLayout">
+		<put-attribute name="title" value="Product Exception" />
+ 		<put-attribute name="body" value="/WEB-INF/views/productNotFound.jsp" />
+	</definition>
+	 	
+</tiles-definitions>
