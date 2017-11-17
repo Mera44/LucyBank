@@ -73,3 +73,4 @@ pom.properties
 applicationContext.xml
 DispatcherServlet-context.xml
 spring-security.xml
+web.xml
