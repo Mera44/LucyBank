@@ -8,7 +8,4 @@ import com.lucy.domain.Role;
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long>{
 
-	
-	
-	
 }

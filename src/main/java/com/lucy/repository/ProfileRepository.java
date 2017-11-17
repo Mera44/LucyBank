@@ -7,6 +7,5 @@ import com.lucy.domain.Profile;
 
 @Repository
 public interface ProfileRepository extends CrudRepository<Profile, Long>{
-	
 
 }

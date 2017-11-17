@@ -3,7 +3,6 @@ package com.lucy.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import com.lucy.domain.Profile;
 import com.lucy.domain.Role;
 
 @Service
