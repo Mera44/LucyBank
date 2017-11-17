@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
@@ -12,6 +13,7 @@ import com.lucy.repository.TransactionRepository;
 import com.lucy.service.AccountService;
 import com.lucy.service.TransactionService;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired

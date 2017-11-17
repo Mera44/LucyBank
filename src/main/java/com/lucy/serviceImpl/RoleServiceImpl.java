@@ -3,11 +3,13 @@ package com.lucy.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Role;
 import com.lucy.repository.RoleRepository;
 import com.lucy.service.RoleService;
 
+@Service
 public class RoleServiceImpl implements RoleService {
 	
 	@Autowired

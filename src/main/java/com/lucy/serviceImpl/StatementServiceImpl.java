@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Statement;
 import com.lucy.repository.StatementRepository;
 import com.lucy.service.StatementService;
 
+@Service
 public class StatementServiceImpl implements StatementService {
 
 	@Autowired
