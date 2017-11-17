@@ -18,6 +18,7 @@
 <link href="http://getbootstrap.com/dist/css/bootstrap.css"	rel="stylesheet">
 
 <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css"	rel="stylesheet">
+<%-- <link href='<spring:url value="resources/css/style.css"></spring:url>' rel="stylesheet"> --%>
 <style type="text/css">
 	.header-div{
 	    width: 100%;
@@ -27,10 +28,60 @@
 	    left: 0;
 	    position: fixed;
 	    color:white;
-}
-.bodyAndFooter{
-	margin-top:100px;
-}
+	}
+	.bodyAndFooter{
+		margin-top:100px;
+	}
+	.footer{
+		  position: fixed;
+		  right: 0;
+		  bottom: 0;
+		  left: 0;
+		  padding: 1rem;
+		  background-color: #efefef;
+		  text-align: center;
+	}
+	.footer .nav{
+		width:75%;
+		margin-left:auto;
+		margin-top:0;
+		font-size:1em;
+	}
+	.nav{
+		width:70%;
+		margin-left:300px;	
+		margin-top:40px;
+		font-size:1.1em;
+	}
+	.logo-img{
+		width:250px;
+	}
+	.logo{
+		margin-top:20px;
+		width:10%;
+		float:left;
+	}
+	.nav span{
+		margin-right:10px;
+	}
+	.nav sapan a{
+		color:white;
+	}
+	.language{
+		float:right;
+		margin-right:20px;
+	}
+	.header-right{
+	    color:white;
+	    margin-left:600px;
+	    margin-top:40px;
+	    width: 500px;
+	}
+	.content-div{
+		width:70%;
+		margin-left:auto;
+		background-color:black;
+	}
 </style>
 </head>
 

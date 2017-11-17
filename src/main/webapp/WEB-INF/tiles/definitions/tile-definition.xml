@@ -47,11 +47,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
 	</definition>
 	
-	<definition name="cart" extends="baseLayout">
-		<put-attribute name="title" value="Shopping Cart" />
-		<put-attribute name="heading" value="Cart" />
-		<put-attribute name="tagline" value="your shopping cart" />
-		<put-attribute name="body" value="/WEB-INF/views/cart.jsp" />
+	<definition name="customer" extends="baseLayout">
+		<put-attribute name="title" value="customer profile" />
+		<put-attribute name="heading" value="CustomerProfile" />
+		<put-attribute name="tagline" value="edit customer profile" />
+		<put-attribute name="body" value="/WEB-INF/views/customerProfile.jsp" />
 	</definition>
 	 	
 	<definition name="productNotFound" extends="baseLayout">
