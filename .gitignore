@@ -63,3 +63,7 @@ target/
 **/.settings/
 blog/bin/
 **/.tern-project
+#additional ignore
+**.properties
+.classpath
+org.eclipse.wst.common.component
