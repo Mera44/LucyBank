@@ -3,12 +3,13 @@ package com.lucy.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Profile;
 import com.lucy.repository.ProfileRepository;
 import com.lucy.service.ProfileService;
 
-
+@Service
 public class ProfileServiceImpl implements ProfileService {
 	
 	@Autowired
