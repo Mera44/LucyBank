@@ -67,3 +67,9 @@ blog/bin/
 **.properties
 .classpath
 org.eclipse.wst.common.component
+pom.xml
+pom.properties
+.class
+applicationContext.xml
+DispatcherServlet-context.xml
+spring-security.xml
