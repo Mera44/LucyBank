@@ -8,6 +8,6 @@ public interface AccountService {
 	public Account findById(long id);
 	public List<Account> findAll();
 	public Account update(Account account);
-	public boolean delete(long id);
+	public boolean delete(Integer accNo);
 	public Account save(Account account);
 }
