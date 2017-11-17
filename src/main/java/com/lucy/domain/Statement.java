@@ -11,6 +11,7 @@ public class Statement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private String monthName;
 	private Date startDate;
 	private Date endDate;
 	@ManyToOne

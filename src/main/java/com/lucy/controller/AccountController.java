@@ -68,7 +68,7 @@ public class AccountController {
 	}
 
 	@RequestMapping(value = "/deleteAccount/{id}", method = RequestMethod.DELETE)
-	public String deleteAccount(@ModelAttribute("account") Account account, @RequestParam() Long id, Model model,
+	public String deleteAccount(@ModelAttribute("account") Account account, @RequestParam() Integer id, Model model,
 			RedirectAttributes redirectAttributes) {
 		accountService.delete(id);
 		return "redirect:/success";
