@@ -16,4 +16,5 @@ public interface SavingAccountService {
 	public boolean withdraw(Integer accNo, Transaction transaction);
 	public SavingAccount deposit(Integer accNo, Transaction transaction);
 	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction);
+	public boolean payCreditBill(Integer payFrom, Integer credit, Transaction transaction);//transaction paycredit
 }

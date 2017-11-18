@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.CreditAccount;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 
@@ -43,6 +44,15 @@ public class AccountHelper {
 			return Arrays.asList(deposit(creditAccount, transaction), withdraw(payFrom, transaction.setTransactionTypeFor(TransactionType.PAYCREDIT)));
 		}
 		return null;
+	}
+	
+	public CreditAccount payCreditCardTo(CreditAccount credit, Transaction transaction){		
+		transaction.setTransactionDate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+		transaction.setStartingBalance(credit.getBalance());
+		credit.setBalance(credit.getBalance()+transaction.getTransactionAmount());
+		transaction.setEndingBalance(credit.getBalance());
+		credit.addTransaction(transaction);
+		return credit;
 	}
 
 }

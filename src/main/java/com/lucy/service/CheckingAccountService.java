@@ -15,5 +15,6 @@ public interface CheckingAccountService {
 	public CheckingAccount getByAccountNumber(Integer accNo);
 	public boolean withdraw(Integer accNo, Transaction transaction);
 	public CheckingAccount deposit(Integer accNo, Transaction transaction);
-	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction);
+	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction);//transaction type transferfrom
+	public boolean payCreditBill(Integer payFrom, Integer credit, Transaction transaction);//transaction paycredit
 }

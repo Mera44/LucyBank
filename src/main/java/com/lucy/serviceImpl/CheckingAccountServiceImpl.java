@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Account;
 import com.lucy.domain.CheckingAccount;
+import com.lucy.domain.CreditAccount;
 import com.lucy.domain.Transaction;
+import com.lucy.domain.TransactionType;
 import com.lucy.repository.AccountRepository;
 import com.lucy.repository.CheckingAccountRepository;
+import com.lucy.repository.CreditAccountRepository;
 import com.lucy.service.CheckingAccountService;
 
 @Service
@@ -21,6 +24,8 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 	AccountRepository accountRepository;
 	@Autowired
 	AccountHelper accountHelper;
+	@Autowired
+	CreditAccountRepository creditRepository;
 	
 	@Override
 	public CheckingAccount findById(long id) {		
@@ -107,6 +112,18 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 				accountRepository.findByAccountNumber(transferTo), transaction);
 		if(!accounts.isEmpty() && !(accounts == null)){
 			accounts.forEach(accountRepository::save);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean payCreditBill(Integer payFrom, Integer credit, Transaction transaction) {		
+		if(accountHelper.withdraw(checkingRepository.findByAccountNumber(payFrom), transaction)!=null){
+			update((CheckingAccount) accountHelper.withdraw(checkingRepository.findByAccountNumber(payFrom), transaction));
+			CreditAccount paidAccount = accountHelper.payCreditCardTo(creditRepository.findByAccountNumber(credit), 
+					transaction.setTransactionTypeFor(TransactionType.PAYMENT));
+			creditRepository.save(paidAccount);
 			return true;
 		}
 		return false;
