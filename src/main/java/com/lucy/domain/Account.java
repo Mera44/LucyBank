@@ -26,7 +26,7 @@ public abstract class Account {
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<Transaction> transaction;
 	@Range(min=10000, max=99999)
-    	private Integer accountNumber;
+    private Integer accountNumber;
 	@OneToOne
 	private CardNumber cardNumber;
 	protected Double balance;
@@ -74,11 +74,8 @@ public abstract class Account {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	public boolean addTransaction(Transaction transaction) {
+	public boolean addTransaction(Transaction transaction) {		
 		return this.transaction.add(transaction);
-	}
-
-	
-		
+	}		
 
 }

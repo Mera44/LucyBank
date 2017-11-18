@@ -12,7 +12,9 @@ public interface StatementService {
 	public Statement update(Statement statement);
 	public boolean delete(long id);
 	public Statement save(Statement statement);
-	public Statement createStatement(Integer accNo, Date startDate);
+	public Statement createCheckingStatement(Statement statement);//statement has id and start date
+	public Statement createSavingStatement(Statement statement);
+	public Statement createCreditStatement(Statement statement);
 	public List<Statement> getByAccountNumber(Integer aacNo);
 	public Statement getByDate(Date date);
 	public Statement getByMonthName(String monthName);

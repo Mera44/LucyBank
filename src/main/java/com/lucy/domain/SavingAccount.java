@@ -2,9 +2,7 @@ package com.lucy.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
 @Entity
 public class SavingAccount extends Account {
 	@Column
@@ -13,5 +11,9 @@ public class SavingAccount extends Account {
 	public double getInterestRate() {
 		return interestRate;
 	}
-
+	
+	public SavingAccount setStatementBalance(){
+		this.setBalance(getBalance()*(1.0+getInterestRate()));
+		return this;
+	}
 }

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Statement;
+import com.lucy.repository.CheckingAccountRepository;
+import com.lucy.repository.CreditAccountRepository;
+import com.lucy.repository.SavingAccountRepository;
 import com.lucy.repository.StatementRepository;
 import com.lucy.service.StatementService;
 
@@ -15,6 +18,14 @@ public class StatementServiceImpl implements StatementService {
 
 	@Autowired
 	StatementRepository statementRepository;
+	@Autowired
+	CheckingAccountRepository checkingRepository;
+	@Autowired
+	SavingAccountRepository savingRepository;
+	@Autowired
+	CreditAccountRepository creditRepository;
+	@Autowired
+	StatementHelper statementHelper;
 	
 	@Override
 	public Statement findById(long id) {		
@@ -42,8 +53,21 @@ public class StatementServiceImpl implements StatementService {
 	}
 
 	@Override
-	public Statement createStatement(Integer accNo, Date startDate) {
-		
+	public Statement createCheckingStatement(Statement statement) {
+		statement.setAccount(checkingRepository.findOne(statement.getAccount().getId()));		
+		return statementHelper.createCheckingStatement(statement,
+						checkingRepository.findOne(statement.getAccount().getId()).getTransaction());
+	}
+	
+	@Override
+	public Statement createSavingStatement(Statement statement) {
+		statement.setAccount(savingRepository.findOne(statement.getAccount().getId()));	
+		return statementHelper.createSavingStatement(statement, 
+						savingRepository.findOne(statement.getAccount().getId()).getTransaction());
+	}
+
+	@Override
+	public Statement createCreditStatement(Statement statement) {
 		return null;
 	}
 
@@ -61,5 +85,4 @@ public class StatementServiceImpl implements StatementService {
 	public Statement getByMonthName(String monthName) {
 		return statementRepository.findByMonthName(monthName);
 	}
-
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Account;
 import com.lucy.domain.SavingAccount;
+import com.lucy.domain.Transaction;
 import com.lucy.repository.AccountRepository;
 import com.lucy.repository.SavingAccountRepository;
 import com.lucy.service.SavingAccountService;
@@ -18,6 +19,8 @@ public class SavingAccountServiceImpl implements SavingAccountService {
 	SavingAccountRepository savingRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	AccountHelper accountHelper;
 	
 	@Override
 	public SavingAccount findById(long id) {		
@@ -56,32 +59,44 @@ public class SavingAccountServiceImpl implements SavingAccountService {
 	}
 
 	@Override
-	public boolean withdraw(Integer accNo, double amount) {
-		SavingAccount account = getByAccountNumber(accNo);
+	public boolean withdraw(Integer accNo, Transaction transaction) {
+		/*SavingAccount account = getByAccountNumber(accNo);
 		if(account.getBalance()>amount){
 			account.setBalance(account.getBalance()-amount);
 			update(account);
 			return true;
 		}
-		return false;
+		return false;*/
+		if(accountHelper.withdraw(getByAccountNumber(accNo), transaction)==null)
+			return false;
+		save((SavingAccount)accountHelper.withdraw(getByAccountNumber(accNo), transaction));
+		return true;
 	}
 
 	@Override
-	public SavingAccount deposit(Integer accNo, double amount) {		
-		SavingAccount account = getByAccountNumber(accNo);
+	public SavingAccount deposit(Integer accNo, Transaction transaction) {		
+		/*SavingAccount account = getByAccountNumber(accNo);
 		account.setBalance(account.getBalance()+amount);
-		return savingRepository.save(account);
+		return savingRepository.save(account);*/
+		return save((SavingAccount)accountHelper.deposit(getByAccountNumber(accNo), transaction));
 	}
 
 	@Override
-	public boolean transfer(Integer transferFrom, Integer transferTo, double amount) {		
-		SavingAccount accountFrom = getByAccountNumber(transferFrom);
+	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction) {		
+		/*SavingAccount accountFrom = getByAccountNumber(transferFrom);
 		Account accountTo = accountRepository.findByAccountNumber(transferTo);
 		if(accountFrom.getBalance()>amount){
 			accountFrom.setBalance(accountFrom.getBalance()-amount);
 			accountTo.setBalance(accountTo.getBalance()+amount);
 			save(accountFrom);
 			accountRepository.save(accountTo);
+			return true;
+		}
+		return false;*/
+		List<Account> accounts = accountHelper.transfer(getByAccountNumber(transferFrom),
+				accountRepository.findByAccountNumber(transferTo), transaction);
+		if(!accounts.isEmpty() && !(accounts == null)){
+			accounts.forEach(accountRepository::save);
 			return true;
 		}
 		return false;
