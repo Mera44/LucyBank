@@ -70,7 +70,4 @@ blog/bin/
 org.eclipse.wst.common.component
 pom.properties
 .class
-applicationContext.xml
-DispatcherServlet-context.xml
-spring-security.xml
-web.xml
+
