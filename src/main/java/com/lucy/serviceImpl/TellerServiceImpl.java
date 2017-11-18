@@ -16,8 +16,9 @@ public class TellerServiceImpl implements TellerService{
 	TellerRepository tellerRepository;
 	
 	@Override
-	public void save(Teller teller) {
+	public Teller save(Teller teller) {
 		tellerRepository.save(teller);
+		return teller;
 	}
 
 	@Override

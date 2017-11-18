@@ -5,7 +5,7 @@ import java.util.List;
 import com.lucy.domain.Teller;
 
 public interface TellerService {
-	public void save(Teller teller);
+	public Teller save(Teller teller);
 	public Teller getTeller(long id);
 	public List<Teller> getAllTellers();
 	public void updateTeller(long id, Teller teller);

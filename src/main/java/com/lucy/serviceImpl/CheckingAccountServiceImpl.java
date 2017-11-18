@@ -55,7 +55,7 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 
 	@Override
 	public CheckingAccount getByAccountNumber(Integer accNo) {		
-		return checkingRepository.findByAccountNumber(accNo);
+		return checkingRepository.findByAccountNumber(accNo); 
 	}
 
 	@Override
