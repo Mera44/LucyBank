@@ -6,9 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 @Entity
 public class Transaction {
-
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,6 +18,7 @@ public class Transaction {
 	private Double startingBalance;
 	private Double endingBalance;
 	private TransactionType transactionType;
+	
 	public Long getId() {
 		return id;
 	}
@@ -55,5 +56,9 @@ public class Transaction {
 		this.transactionType = transactionType;
 	}
 	
+	public Transaction setTransactionTypeFor(TransactionType transactionType) {
+		this.transactionType = transactionType;
+		return this;
+	}
 
 }

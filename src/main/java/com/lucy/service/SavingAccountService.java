@@ -3,6 +3,7 @@ package com.lucy.service;
 import java.util.List;
 
 import com.lucy.domain.SavingAccount;
+import com.lucy.domain.Transaction;
 
 public interface SavingAccountService {
 	
@@ -12,7 +13,7 @@ public interface SavingAccountService {
 	public SavingAccount update(SavingAccount account);
 	public boolean delete(Integer accNo);
 	public SavingAccount getByAccountNumber(Integer accNo);
-	public boolean withdraw(Integer accNo, double amount);
-	public SavingAccount deposit(Integer accNo, double amount);
-	public boolean transfer(Integer transferFrom, Integer transferTo, double amount);
+	public boolean withdraw(Integer accNo, Transaction transaction);
+	public SavingAccount deposit(Integer accNo, Transaction transaction);
+	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction);
 }

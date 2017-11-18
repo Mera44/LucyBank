@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Account;
 import com.lucy.domain.CheckingAccount;
+import com.lucy.domain.Transaction;
 import com.lucy.repository.AccountRepository;
 import com.lucy.repository.CheckingAccountRepository;
 import com.lucy.service.CheckingAccountService;
@@ -18,6 +19,8 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 	CheckingAccountRepository checkingRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	AccountHelper accountHelper;
 	
 	@Override
 	public CheckingAccount findById(long id) {		
@@ -56,32 +59,54 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 	}
 
 	@Override
-	public boolean withdraw(Integer accNo, double amount) {
-		CheckingAccount account = getByAccountNumber(accNo);
-		if(account.getBalance()>amount){
-			account.setBalance(account.getBalance()-amount);
+	public boolean withdraw(Integer accNo, Transaction transaction) {
+		/*CheckingAccount account = getByAccountNumber(accNo);
+		if(account.getBalance()>transaction.getTransactionAmount()){
+			transaction.setTransactionDate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+			transaction.setStartingBalance(account.getBalance());
+			account.setBalance(account.getBalance()-transaction.getTransactionAmount());
+			transaction.setEndingBalance(account.getBalance());
+			account.addTransaction(transaction);
 			update(account);
 			return true;
 		}
-		return false;//if available balance is less than withdraw amount 
+		return false;//if available balance is less than withdraw amount */
+		//return accountHelper.withdraw(account, transaction)==null ? false:true;
+		if(accountHelper.withdraw(getByAccountNumber(accNo), transaction)==null)
+			return false;
+		save((CheckingAccount)accountHelper.withdraw(getByAccountNumber(accNo), transaction));
+		return true;
 	}
 
 	@Override
-	public CheckingAccount deposit(Integer accNo, double amount) {
-		CheckingAccount account = getByAccountNumber(accNo);
-		account.setBalance(account.getBalance()+amount);
-		return checkingRepository.save(account);
+	public CheckingAccount deposit(Integer accNo, Transaction transaction) {
+		/*CheckingAccount account = getByAccountNumber(accNo);
+		/*transaction.setTransactionDate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
+		transaction.setStartingBalance(account.getBalance());
+		account.setBalance(account.getBalance()+transaction.getTransactionAmount());
+		transaction.setEndingBalance(account.getBalance());
+		account.addTransaction(transaction);
+		return save(account);*/
+		
+		return save((CheckingAccount)accountHelper.deposit(getByAccountNumber(accNo), transaction));
 	}
 
 	@Override
-	public boolean transfer(Integer transferFrom, Integer transferTo, double amount) {
-		CheckingAccount accountFrom = getByAccountNumber(transferFrom);
+	public boolean transfer(Integer transferFrom, Integer transferTo, Transaction transaction) {
+		/*CheckingAccount accountFrom = getByAccountNumber(transferFrom);
 		Account accountTo = accountRepository.findByAccountNumber(transferTo);
-		if(accountFrom.getBalance()>amount){
-			accountFrom.setBalance(accountFrom.getBalance()-amount);
-			accountTo.setBalance(accountTo.getBalance()+amount);
+		if(accountFrom.getBalance()>transaction.getTransactionAmount()){
+			accountFrom.setBalance(accountFrom.getBalance()-transaction.getTransactionAmount());
+			accountTo.setBalance(accountTo.getBalance()+transaction.getTransactionAmount());
 			save(accountFrom);
 			accountRepository.save(accountTo);
+			return true;
+		}
+		return false;*/
+		List<Account> accounts = accountHelper.transfer(getByAccountNumber(transferFrom), 
+				accountRepository.findByAccountNumber(transferTo), transaction);
+		if(!accounts.isEmpty() && !(accounts == null)){
+			accounts.forEach(accountRepository::save);
 			return true;
 		}
 		return false;

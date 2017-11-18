@@ -73,9 +73,10 @@ public class TransactionServiceImpl implements TransactionService {
 		return transactionRepository.findByTransactionType(type);
 	}
 
-//	@Override
-//	public List<Transaction> getByAccountNumberAndDates(long accId, Date startDate, Date endDate) {
-//		return transactionRepository.getByAccountNumberAndDates(accId, startDate, endDate);
-//	}
+	@Override
+	public List<Transaction> getByAccountNumberAndDates(long accId, Date startDate, Date endDate) {
+		//return transactionRepository.getByAccountNumberAndDates(accId, startDate, endDate);
+		return null;
+	}
 
 }

@@ -4,5 +4,8 @@ package com.lucy.domain;
 public enum TransactionType{
 	WITHDRAW,
 	DEPOSIT,
-	TRANSFER,
+	TRANSFEREDTO,
+	TRANSFEREDFROM,
+	PAYCREDIT,
+	PAYMENT
 }

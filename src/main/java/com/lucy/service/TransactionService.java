@@ -17,5 +17,5 @@ public interface TransactionService {
 	public List<Transaction> getTransactionByUser(String username);
 	public Transaction getByDate(Date date);
 	public Transaction getByType(TransactionType type);
-	//public List<Transaction> getByAccountNumberAndDates(long accId,Date startDate, Date endDate);
+	public List<Transaction> getByAccountNumberAndDates(long accId,Date startDate, Date endDate);
 }
