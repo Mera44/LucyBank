@@ -14,7 +14,7 @@
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/customer/profile">Profile |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit">Pay Credit |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/customer/accountSummery">Account Summery |</a></span>
+	  		<span><a href="<%=request.getContextPath() %>/customer/accountSummery">Account Summary |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/statment">Statement |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/transfer">Transfer |</a></span>
 	  		
@@ -37,10 +37,10 @@
 						class="btn btn-default pull-right"> Login </a>
 				</security:authorize>
 			</span>
-		
+		  <div class="language"> 
+	  	<a href="?language=en_US">English</a>|<a href="?language=fr">French</a>
+	  </div>
 	    		
 	  </div>
-	  <div class="language"> 
-	  	<a href="?language=en_US">English</a>|<a href="?language=zh_CN">Amharic</a>
-	  </div>
+	
 </div>

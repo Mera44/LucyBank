@@ -1,8 +1,7 @@
 package com.lucy.domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -50,10 +49,10 @@ public class Profile {
 	/* private String userStatus;
 	 private int isActive;*/
 	 
-	@NotNull
+	/*@NotNull
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date birthdate;
+    private Date birthdate;*/
 	
 	 @Valid
 	 @OneToOne
@@ -133,14 +132,14 @@ public class Profile {
 		this.email = email;
 	}
 
-	public Date getBirthdate() {
+/*	public Date getBirthdate() {
 		return birthdate;
 	}
 
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-
+*/
 	public Address getAddress() {
 		return address;
 	}
