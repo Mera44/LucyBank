@@ -1,5 +1,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 
 <div class="header-div">
 	<div class="logo">
@@ -18,7 +19,24 @@
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/teller/deposit">Deposit |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/teller/withdraw">Withdraw |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/welcome/logout">Logout </a></span>
+	  		<span>
+	  		
+	  		
+	  		
+				
+			
+					<security:authorize access="isAuthenticated()">
+	  					Welcome:  <security:authentication property="principal.username" />
+	  					<a href="<c:url value="/logout" />">Logout</a>
+					</security:authorize>
+			</span>	
+			<span>
+				<security:authorize access="isAnonymous()">
+					<a href="<spring:url value='/login' />"
+						class="btn btn-default pull-right"> Login </a>
+				</security:authorize>
+			</span>
+		
 	    		
 	  </div>
 	  <div class="language"> 
