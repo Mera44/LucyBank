@@ -60,7 +60,7 @@ public class Profile {
 	
 	 @Valid
 	 @OneToMany
-	 private Address address;
+	 private List<Address> address;
 	 
 	 @ManyToMany( fetch=FetchType.EAGER,cascade=CascadeType.ALL)
 	 private List<Role> roles=new ArrayList<Role>() ;

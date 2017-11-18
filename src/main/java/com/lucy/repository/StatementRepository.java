@@ -13,7 +13,7 @@ import com.lucy.domain.Statement;
 @Repository
 public interface StatementRepository extends CrudRepository<Statement, Long>{
 	public List<Statement> findByAccountAccountNumber(Integer accNo);
-	@Query("selcet s Statement s where :date BETWEEN s.startDate AND s.endDate")
+	@Query("select s from Statement s where :date BETWEEN s.startDate AND s.endDate")
 	public Statement findByDate(@Param("date")Date date);
 	public Statement findByMonthName(String monthName);
 }
