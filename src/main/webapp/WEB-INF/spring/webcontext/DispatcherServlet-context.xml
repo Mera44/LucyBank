@@ -23,6 +23,7 @@
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basename" value="messages" />
+		<property name="defaultEncoding" value="UTF-8" />
 	</bean>
 
 	<mvc:resources location="/resources/" mapping="/resource/**" />
@@ -34,6 +35,18 @@
             </list>
         </property>
 <!--         <property name="completeAutoload" value="true"/> -->
+	</bean>
+	
+		<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+
+		</bean>
+	</mvc:interceptors>
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="en_US" />
 	</bean>
 
 </beans>

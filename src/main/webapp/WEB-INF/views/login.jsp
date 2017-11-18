@@ -15,16 +15,22 @@
 	<section>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>Welcome Kimosabe!!</h1>
+				<h1><spring:message code="profile.welcome"/></h1>
+			</div>
+			<div class="pull-right" style="padding-right: 50px">
+				<a href="?language=en">English</a>|<a href="?language=fr">French</a>
 			</div>
 		</div>
+		
+	
+	
 	</section>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Please sign in</h3>
+						<h3 class="panel-title"><spring:message code="profile.please"/></h3>
 					</div>
 					<div class="panel-body">
 						<%-- <c:if test="${not empty error}">
@@ -47,11 +53,11 @@
                                 </div>
                             </c:if>
                             <div class="input-group input-sm">
-                                <label class="" for="username">Username: </label>
+                                <label class="" for="username"><spring:message code="profile.form.username.label"/> </label>
                                 <input type="text" class="form-control" id="username" name="ssoId" placeholder="Enter Username" required>
                             </div>
                             <div class="input-group input-sm">
-                                <label class="" for="password">Password</label> 
+                                <label class="" for="password"><spring:message code="profile.form.password.label"/></label> 
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />

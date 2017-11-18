@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.CreditAccount;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Transaction;
+import com.lucy.domain.TransactionType;
 import com.lucy.repository.AccountRepository;
+import com.lucy.repository.CreditAccountRepository;
 import com.lucy.repository.SavingAccountRepository;
 import com.lucy.service.SavingAccountService;
 
@@ -21,6 +24,8 @@ public class SavingAccountServiceImpl implements SavingAccountService {
 	AccountRepository accountRepository;
 	@Autowired
 	AccountHelper accountHelper;
+	@Autowired
+	CreditAccountRepository creditRepository;
 	
 	@Override
 	public SavingAccount findById(long id) {		
@@ -97,6 +102,18 @@ public class SavingAccountServiceImpl implements SavingAccountService {
 				accountRepository.findByAccountNumber(transferTo), transaction);
 		if(!accounts.isEmpty() && !(accounts == null)){
 			accounts.forEach(accountRepository::save);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean payCreditBill(Integer payFrom, Integer credit, Transaction transaction) {
+		if(accountHelper.withdraw(savingRepository.findByAccountNumber(payFrom), transaction)!=null){
+			update((SavingAccount) accountHelper.withdraw(savingRepository.findByAccountNumber(payFrom), transaction));
+			CreditAccount paidAccount = accountHelper.payCreditCardTo(creditRepository.findByAccountNumber(credit), 
+					transaction.setTransactionTypeFor(TransactionType.PAYMENT));
+			creditRepository.save(paidAccount);
 			return true;
 		}
 		return false;

@@ -69,10 +69,9 @@ public class CreditAccountServiceImpl implements CreditAccountService {
 	}
 
 	@Override
-	public boolean chargeCredit(Integer accNo, Transaction transaction) {		
+	public boolean chargeCredit(Integer accNo, Transaction transaction) {//transaction creditcharge	
 		if(accountHelper.withdraw(getByAccountNumber(accNo), transaction)==null)
 			return false;
-		//not finished
 		save((CreditAccount)accountHelper.withdraw(getByAccountNumber(accNo), transaction));
 		return true;
 	}
