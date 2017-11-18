@@ -6,18 +6,15 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -59,11 +56,11 @@ public class Profile {
     private Date birthdate;
 	
 	 @Valid
-	 @OneToMany
-	 private List<Address> address;
+	 @OneToOne
+	 private Address address;
 	 
-	 @ManyToMany( fetch=FetchType.EAGER,cascade=CascadeType.ALL)
-	 private List<Role> roles=new ArrayList<Role>() ;
+	 @OneToOne(cascade=CascadeType.ALL)
+	 private Role role;
 
 	 
 	 public Profile() {
@@ -118,12 +115,14 @@ public class Profile {
 		this.confirmpassword = confirmpassword;
 	}
 
-	public List<Role> getRoles() {
-		return roles;
+	
+
+	public Role getRole() {
+		return role;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public String getEmail() {
@@ -140,6 +139,14 @@ public class Profile {
 
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	

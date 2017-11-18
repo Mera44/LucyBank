@@ -15,7 +15,7 @@
 	<section>
 		<div class="jumbotron">
 			<div class="container">
-				<h1>Welcome Kimosabe!!</h1>
+				<h1>Welcome to LUCY BANK!!</h1>
 			</div>
 		</div>
 	</section>
