@@ -3,9 +3,9 @@ package com.lucy.domain;
 
 public enum TransactionType{
 	WITHDRAW,
-	DEPOSIT,
-	TRANSFEREDTO,
+	DEPOSIT, 
+	TRANSFEREDTO, 
 	TRANSFEREDFROM,
-	PAYCREDIT,
-	PAYMENT
+	PAYCREDIT,// charge ur credit card
+	PAYMENT //statement/bill payment 
 }
