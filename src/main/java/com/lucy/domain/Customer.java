@@ -1,5 +1,6 @@
 package com.lucy.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,7 +31,7 @@ public class Customer {
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	@Fetch(FetchMode.JOIN)
-	private List<Account> accounts;
+	private List<Account> accounts = new ArrayList<>();
 	
 	public long getId() {
 		return id;

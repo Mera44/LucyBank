@@ -61,9 +61,11 @@
 			
 		<br />
 			Accounts:<br />	
-			 <input type="radio" name="checking" value="checking"> Checking<br>
-  			<input type="radio" name="saving" value="saving"> Saving<br>
-  			<input type="radio" name="credit" value="credit"> Credit
+			<fieldset>
+			 <input type="checkbox" name="accTypes" value="checking"> Checking<br>
+  			<input type="checkbox" name="accTypes" value="saving"> Saving<br>
+  			<input type="checkbox" name="accTypes" value="credit"> Credit
+  			</fieldset>
 			
 			<form:input type="hidden" path="profile.role" value="customer" />
 	
