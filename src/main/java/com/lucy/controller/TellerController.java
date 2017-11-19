@@ -1,7 +1,9 @@
 package com.lucy.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.CheckingAccount;
+import com.lucy.domain.Customer;
+import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
@@ -62,7 +67,7 @@ public class TellerController {
 	public String success(Model model, @PathVariable("id") Long id) {
 		System.out.println("=======>customer id " + id);
 		model.addAttribute("customer", customerService.getCustomer(id));
-		model.addAttribute("account", customerService.getCustomer(id).getAccounts());
+		model.addAttribute("account", getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 
 		return "custAccount";
 
@@ -99,12 +104,13 @@ public class TellerController {
 			}
 		}
 
-		return "redirect:/teller/account/ "+ id;
+		return "redirect:/teller/account/ " + id;
 
 	}
 
 	@RequestMapping(value = "/account/withdraw/{id}", method = RequestMethod.GET)
-	public String getWithdrawForm(@ModelAttribute("transaction") Transaction transaction,Model model, @PathVariable("id") Long id) {
+	public String getWithdrawForm(@ModelAttribute("transaction") Transaction transaction, Model model,
+			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
 
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
@@ -122,40 +128,52 @@ public class TellerController {
 
 	}
 
-	@RequestMapping(value = "/deposit/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/account/deposit/{id}", method = RequestMethod.POST)
 	public String deposit(@ModelAttribute("transaction") Transaction transaction, Model model,
-			@RequestParam("id") Integer id, @PathVariable("accountNumber") Integer accNum,
+			@PathVariable("id") Integer id, @RequestParam("accountNumber") Integer accNum,
 			RedirectAttributes redirectAttributes) {
-
+		Transaction trans = new Transaction();
+		trans.setTransactionAmount(transaction.getTransactionAmount());
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getAccountNumber() == accNum) {
-				if (acc.getClass().getSimpleName() == "CheckingAccount") {
-					checkingService.withdraw(accNum, transaction.setTransactionTypeFor(TransactionType.DEPOSIT));
+			System.out.println("=======> amount444   " + (acc.getAccountNumber()));
+
+			if (acc.getAccountNumber().intValue()==(accNum.intValue())) {
+				System.out.println("=======> amount444  " + (acc.getAccountNumber().intValue()== accNum.intValue()));
+				if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")) {
+					CheckingAccount checAcc = checkingService.deposit(accNum,
+							trans.setTransactionTypeFor(TransactionType.DEPOSIT));
+					System.out.println("=======> amount2   " + checAcc.getBalance());
+					checkingService.save(checAcc);
 					break;
 				}
-				if (acc.getClass().getSimpleName() == "SavingAccount") {
+				if (acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
 					{
-						savingService.withdraw(accNum, transaction.setTransactionTypeFor(TransactionType.DEPOSIT));
+						SavingAccount saveAcc = savingService.deposit(accNum,
+								trans.setTransactionTypeFor(TransactionType.DEPOSIT));
+						System.out.println("=======> amount2   " + saveAcc.getBalance());
+						savingService.save(saveAcc);
 						break;
 					}
 				}
 			}
 		}
 
-		return "redirect:/teller/account?id=" + id;
+		return "redirect:/teller/account/" + id;
 
 	}
 
-	@RequestMapping(value = "/deposit/{id}", method = RequestMethod.GET)
-	public String getDepositForm(Model model, @RequestParam("id") Long id) {
+	@RequestMapping(value = "/account/deposit/{id}", method = RequestMethod.GET)
+	public String getDepositForm(@ModelAttribute("transaction") Transaction transaction, Model model,
+			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getClass().getSimpleName() == "CheckingAccount"
-					|| acc.getClass().getSimpleName() == "SavingAccount") {
+			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")
+					|| acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
 				withdrawingAccount.add(acc);
 			}
 		}
-		model.addAttribute("account", withdrawingAccount);
+	
+		model.addAttribute("account", getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 		model.addAttribute("customer", customerService.getCustomer(id));
 
 		return "deposit";
@@ -197,6 +215,13 @@ public class TellerController {
 
 		return "transfer";
 
+	}
+	
+	private List<Account> getRemovedDuplicates(List<Account> acc){
+		 Set<Account> set = new HashSet<Account>(acc);
+		List<Account> customers = new ArrayList<>(set);
+		return customers;
+		
 	}
 
 }

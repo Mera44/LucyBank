@@ -30,7 +30,7 @@ public class Customer {
 	@JoinColumn
 	private Profile profile;
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.REMOVE},orphanRemoval=true)
 	@Fetch(FetchMode.JOIN)
 	private List<Account> accounts = new ArrayList<>();
 	

@@ -5,14 +5,18 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -23,15 +27,24 @@ public abstract class Account {
 	@Column(name ="id", updatable = false, nullable = false)
 	private Long id;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	//@OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH,CascadeType.REMOVE})
+	//@Fetch(FetchMode.JOIN)
+	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Transaction> transaction;
 	@Range(min=10000, max=99999)
     private Integer accountNumber;
 	@OneToOne
 	private CardNumber cardNumber;
+	private String typeAccount;
 	protected Double balance = 0.0;
 	private Boolean status = true;
 	
+	public String getTypeAccount() {
+		return typeAccount;
+	}
+	public void setTypeAccount(String typeAccount) {
+		this.typeAccount = typeAccount;
+	}
 	public Long getId() {
 		return id;
 	}

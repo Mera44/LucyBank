@@ -26,9 +26,11 @@ public class AccountHelper {
 		return null;//if available balance is less than withdraw amount 
 	}
 	public Account deposit(Account account, Transaction transaction){
+		System.out.println("=======> amounthelper" + transaction.getTransactionAmount());
+
 		transaction.setTransactionDate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 		transaction.setStartingBalance(account.getBalance());
-		account.setBalance(account.getBalance()+transaction.getTransactionAmount());
+		account.setBalance(account.getBalance()+(double)transaction.getTransactionAmount());
 		transaction.setEndingBalance(account.getBalance());
 		account.addTransaction(transaction);
 		return account;
