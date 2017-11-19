@@ -17,7 +17,8 @@ import com.lucy.validator.ProfileId;
 
 @Entity
 public class Profile {
-
+	 
+	
 	 @ProfileId
 	 private Long id;
 	 
