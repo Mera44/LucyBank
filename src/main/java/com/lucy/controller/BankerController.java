@@ -44,9 +44,6 @@ public class BankerController {
 			bindingResult, @RequestParam("accTypes") String[] accountsType, RedirectAttributes redirectAttribute) {
 		Role role = new Role();
 		role.setRole("customer");
-		for(String accTyp:accountsType) {
-		System.out.println(accTyp);
-		}
 		
 		for(String accTyp:accountsType) {		
 			if("saving".equals(accTyp)) {
@@ -79,6 +76,5 @@ public class BankerController {
 		Random rand = new Random();
 		return rand.nextInt(99998) + 10001;
 	}
-	
 	
 }

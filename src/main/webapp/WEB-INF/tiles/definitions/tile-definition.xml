@@ -38,11 +38,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/withdraw.jsp" />
 	</definition>
 
-	<definition name="product" extends="baseLayout">
-		<put-attribute name="title" value="Product" />
-		<put-attribute name="heading" value="Products" />
-		<put-attribute name="tagline" value="Product" />
-		<put-attribute name="body" value="/WEB-INF/views/product.jsp" />
+	<definition name="bankerCustomerList" extends="baseLayout">
+		<put-attribute name="title" value="banker" />
+		<put-attribute name="heading" value="banker" />
+		<put-attribute name="tagline" value="banker" />
+		<put-attribute name="body" value="/WEB-INF/views/bankerWelcome.jsp" />
 	</definition>
 
 	<definition name="addProduct" extends="baseLayout">
