@@ -78,9 +78,27 @@
 	    width: 500px;
 	}
 	.content-div{
+		padding:20px;
+		maring-top:300px;
 		width:70%;
-		margin-left:auto;
-		background-color:black;
+		margin-left:200px;
+	}
+	.content-div .personal-info{
+		width:300px;
+		padding: 20px;
+		border-right:1px solid black;
+		float:left;
+	}
+	.content-div .address{
+		width:300px;
+		padding: 20px;
+		border-right:1px solid black;
+		float:left;
+	}
+	.content-div .submmit-button{
+		width:300px;
+		padding: 20px;
+		clear:both;
 	}
 </style>
 </head>

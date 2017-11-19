@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
@@ -24,6 +25,7 @@ public class Customer {
 	
 	@Valid
 	@OneToOne(cascade=CascadeType.PERSIST)
+	@JoinColumn
 	private Profile profile;
 	
 	@OneToMany(cascade=CascadeType.ALL)

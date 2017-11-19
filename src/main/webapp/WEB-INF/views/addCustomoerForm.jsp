@@ -15,13 +15,7 @@
 	   
 		 
 		<div class="header-right">
-		    <div class="input-group">
-		        <input class="form-control" type="text" name="username" placeholder="Username">&nbsp;&nbsp;&nbsp;&nbsp;
-		        <input class="form-control" type="text" name="password" placeholder="Password">
-		        <span class="input-group-btn">
-		            <button  class="btn btn-primary" type="button">Sign in</button>
-		          </span>
-		    </div>
+		   <h2>Add Customer</h2>
 		</div>    
 	 
  
@@ -36,16 +30,47 @@
 <body>
 		
 <div class="content-div">
-		<form:form class="form-group" modelAttribute="customer" action="banker/customer/add" method="post">
-			<label for="firstname"></label>
-			<form:input class="form-control" id="firstname" path="firstName" placeholder="First name"/>
-			<label for="lastname"></label>
-			<form:input class="form-control" id="lastname" path="lastName" placeholder="Lastname"/>
-			<label for="firstname"></label>
-			<form:input class="form-control" id="firstname" path="firstName" placeholder="First name"/>
-			<label for="username"></label>
-			<form:input class="form-control" id="username" path="userName" placeholder="Username"/>
+	
+		<form:form class="form-group" modelAttribute="customer" action="add" method="post">
 		
+		<div class="personal-info">
+		Personal:<br />
+			<label for="firstname"></label>
+			<form:input class="form-control" id="firstname" path="profile.firstName" placeholder="First name"/>
+			<label for="lastname"></label>
+			<form:input class="form-control" id="lastname" path="profile.lastName" placeholder="Lastname"/>
+			<label for="email"></label>
+			<form:input class="form-control" id="email" path="profile.email" placeholder="Email"/>
+			<label for="birthdate"></label>
+			<%-- <form:input type="text" class="form-control" id="birthdate" path="profile.birthdate" placeholder="Birth day"/>
+			<label for="username"></label> --%>
+			<form:input class="form-control" id="username" path="profile.userName" placeholder="Username"/>
+			<label for="password"></label>
+			<form:input class="form-control" id="password" path="profile.password" placeholder="password"/>
+			
+		</div>
+		<div class="address">
+			Address:
+			
+			<label for="street"></label>
+			<form:input class="form-control" id="street" path="profile.address.street" placeholder="Street"/>
+			<label for="street"></label>
+			<form:input class="form-control" id="street" path="profile.address.state" placeholder="State"/>
+			<label for="street"></label>
+			<form:input class="form-control" id="street" path="profile.address.zipcode" placeholder="Zipcode"/>
+			
+		<br />
+			Accounts:<br />	
+			 <input type="radio" name="checking" value="checking"> Checking<br>
+  			<input type="radio" name="saving" value="saving"> Saving<br>
+  			<input type="radio" name="credit" value="credit"> Credit
+			
+			<form:input type="hidden" path="profile.role" value="customer" />
+	
+		</div>
+		<div class="submmit-button">
+			<input class="btn btn-primary" type="submit" value="Add Customer" />
+		</div>
 		</form:form>
 </div>
 </body>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Customer;
+import com.lucy.domain.Role;
 import com.lucy.service.CustomerService;
 
 @RequestMapping("/banker")
@@ -28,12 +29,20 @@ public class BankerController {
 	}
 	
 	@RequestMapping(value="/customer/add", method=RequestMethod.GET)
-	public String addCustomerForm(@ModelAttribute("newCustomer") Customer customer) {
+	public String addCustomerForm(@ModelAttribute("customer") Customer customer) {
+		
+		
+	
 		return "addCustomoerForm";
 	}
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)
-	public String addCustomer(@Valid @ModelAttribute("newCustomer") Customer customer, BindingResult 
+	public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult 
 			bindingResult, RedirectAttributes redirectAttribute) {
+		System.out.println(customer.getProfile().getUserName());
+		Role role = new Role();
+		role.setRole("customer");
+		
+		customer.getProfile().setRole(role);
 		customerService.save(customer);
 		if(bindingResult.hasErrors())
 			return "addCustomerForm";

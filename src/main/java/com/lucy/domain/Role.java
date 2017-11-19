@@ -22,7 +22,7 @@ public class Role {
 	private String role;
 	
 	@Valid
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="role")
 	private Profile profile;
 
 	public Long getId() {

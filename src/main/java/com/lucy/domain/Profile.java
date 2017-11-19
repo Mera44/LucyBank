@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -55,10 +56,12 @@ public class Profile {
     private Date birthdate;*/
 	
 	 @Valid
-	 @OneToOne
+	 @OneToOne(cascade=CascadeType.ALL)
+	 @JoinColumn
 	 private Address address;
 	 
 	 @OneToOne(cascade=CascadeType.ALL)
+	 @JoinColumn
 	 private Role role;
 
 	 
