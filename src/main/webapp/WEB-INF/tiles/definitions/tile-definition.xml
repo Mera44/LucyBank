@@ -25,12 +25,17 @@
 		<put-attribute name="heading" value="Teller Page" />
 		<put-attribute name="body" value="/WEB-INF/views/listCustomers.jsp" />
 	</definition>
+	<definition name="customerAccount" extends="baseLayout">
+		<put-attribute name="title" value="Teller Page" />
+		<put-attribute name="heading" value="Teller Page" />
+		<put-attribute name="body" value="/WEB-INF/views/custAccount.jsp" />
+	</definition>
+	
 
-	<definition name="products" extends="baseLayout">
-		<put-attribute name="title" value="Products" />
-		<put-attribute name="heading" value="Products" />
-		<put-attribute name="tagline" value="Available Products" />
-		<put-attribute name="body" value="/WEB-INF/views/products.jsp" />
+	<definition name="withdraw" extends="baseLayout">
+		<put-attribute name="title" value="Teller" />
+		<put-attribute name="heading" value="Teller" />
+		<put-attribute name="body" value="/WEB-INF/views/withdraw.jsp" />
 	</definition>
 
 	<definition name="product" extends="baseLayout">

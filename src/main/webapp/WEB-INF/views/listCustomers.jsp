@@ -7,13 +7,13 @@
 <html>
  
  <tiles:insertDefinition name="baseLayout">
-    <tiles:putAttribute name="title"> teller.title </tiles:putAttribute>
-    <tiles:putAttribute name="heading"> teller.heading </tiles:putAttribute>
-    <tiles:putAttribute name="tagline"> teller.tagline </tiles:putAttribute>
+    <tiles:putAttribute name="title"> withdraw.title </tiles:putAttribute>
+    <tiles:putAttribute name="heading"> withdraw.heading </tiles:putAttribute>
+    <tiles:putAttribute name="tagline"> withdraw.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
 
 
-<!-- <p>list customers</p> -->
+ <p>list customers</p> 
  
     </tiles:putAttribute>
 
@@ -27,7 +27,7 @@
 <c:forEach var= "customer"  items="${customers}"> 
     <span>${customer.profile.firstName}</span>
     <span>${customer.profile.lastName}</span> &nbsp; &nbsp;
-    <span> <a href="account?id=${customer.id }">See Account</a></span></br>
+    <span> <a href="account/	${customer.id }">See Account</a></span></br>
 </c:forEach>
 
 </body>

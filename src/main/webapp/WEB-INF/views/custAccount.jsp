@@ -7,12 +7,12 @@
 <html>
  
  <tiles:insertDefinition name="baseLayout">
-    <tiles:putAttribute name="title"> teller.title </tiles:putAttribute>
-    <tiles:putAttribute name="heading"> teller.heading </tiles:putAttribute>
-    <tiles:putAttribute name="tagline"> teller.tagline </tiles:putAttribute>
+    <tiles:putAttribute name="title"> customerAccount.title </tiles:putAttribute>
+    <tiles:putAttribute name="heading"> customerAccount.heading </tiles:putAttribute>
+    <tiles:putAttribute name="tagline"> customerAccount.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
 
-
+<!-- <p>Customer Account</p> -->
     </tiles:putAttribute>
 
 </tiles:insertDefinition>
@@ -26,9 +26,9 @@
     <span>${account.accountNumber}</span>
     <span>${account.balance}</span><br><br>
 </c:forEach>
-<span><a href="withdraw?id=${customer.id}"> Withdraw</a></span>
-<span><a href="deposit?id=${customer.id}"> Deposit</a></span>
-<span><a href="deposit?id=${customer.id}"> Make Transfer</a></span>
-<span><a href="paybill?id=${customer.id}"> Pay Bill</a></span>
+<span><a href="withdraw/${customer.id}"> Withdraw</a></span>
+<span><a href="deposit/${customer.id}"> Deposit</a></span>
+<span><a href="transfer/${customer.id}"> Make Transfer</a></span>
+<span><a href="paybill/${customer.id}"> Pay Bill</a></span>
 </body>
 </html>	

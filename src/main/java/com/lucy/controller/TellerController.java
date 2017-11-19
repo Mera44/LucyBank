@@ -59,7 +59,7 @@ public class TellerController {
 	}
 
 	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
-	public String success(Model model, @RequestParam("id") Long id) {
+	public String success(Model model, @PathVariable("id") Long id) {
 		System.out.println("=======>customer id "+id);
 		model.addAttribute("customer", customerService.getCustomer(id));
 		model.addAttribute("account", customerService.getCustomer(id).getAccounts());
@@ -77,10 +77,11 @@ public class TellerController {
 
 	}
 
-	@RequestMapping(value = "/withdraw/{id}", method = RequestMethod.POST)
-	public String withdraw(@ModelAttribute("transaction") Transaction transaction, Model model, @RequestParam("id") Integer id, @PathVariable("accountNumber")Integer accNum,
+	@RequestMapping(value = "/account/withdraw/{id}", method = RequestMethod.POST)
+	public String withdraw(@ModelAttribute("transaction") Transaction transaction, Model model, @PathVariable("id") Long id, @PathVariable("accountNumber")Integer accNum,
 			RedirectAttributes redirectAttributes) {
-		
+		System.out.println("=======>acc simple name class "+id);
+
 		for(Account acc : customerService.getCustomer(id).getAccounts() ) {
 			if(acc.getAccountNumber() == accNum) {
 				 if(acc.getClass().getSimpleName() == "CheckingAccount") {
@@ -100,15 +101,18 @@ public class TellerController {
 
 	}
 
-	@RequestMapping(value = "/withdraw/{id}", method = RequestMethod.GET)
-	public String getWithdrawForm(Model model, @RequestParam("id") Long id) {
+	@RequestMapping(value = "/account/withdraw/{id}", method = RequestMethod.GET)
+	public String getWithdrawForm(Model model, @PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
+	
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getClass().getSimpleName() == "CheckingAccount" || acc.getClass().getSimpleName() == "SavingAccount") {
+			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount") || acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
 				withdrawingAccount.add(acc);
 			}
 		}
 		model.addAttribute("account", withdrawingAccount);
+
+		//model.addAttribute("account", customerService.getCustomer(id).getAccounts());
 		model.addAttribute("customer", customerService.getCustomer(id));
 
 		return "withdraw";
