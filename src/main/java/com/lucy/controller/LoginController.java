@@ -1,5 +1,6 @@
 package com.lucy.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,15 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "login";
+	}
+	
+	@RequestMapping(value= {"/","/welcome"})
+	public String admin(Model model) {
+
+		String loggedInUserName = Util.getPrincipal();
+		model.addAttribute("user", loggedInUserName);
+	
+		return "welcome";
 	}
 
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)

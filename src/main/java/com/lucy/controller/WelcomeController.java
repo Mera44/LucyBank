@@ -1,4 +1,4 @@
-
+/*
 package com.lucy.controller;
 
 import org.springframework.stereotype.Controller;
@@ -13,3 +13,4 @@ public class WelcomeController {
 	}
 	
 }
+*/
