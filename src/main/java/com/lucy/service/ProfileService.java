@@ -8,10 +8,10 @@ import com.lucy.domain.Profile;
 @Service
 public interface ProfileService {
 	
-	public Profile findById(long id);
+	public Profile findById(Long id);
 	public List<Profile> getAll();
 	public Profile update(Profile profile);
-	public boolean delete(long id);
+	public boolean delete(Long id);
 	public Profile save(Profile profile);
 	
 }

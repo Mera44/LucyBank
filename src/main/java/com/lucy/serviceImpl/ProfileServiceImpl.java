@@ -16,7 +16,7 @@ public class ProfileServiceImpl implements ProfileService {
 	ProfileRepository profileRepository;
 
 	@Override
-	public Profile findById(long id) {
+	public Profile findById(Long id) {
 		
 		return profileRepository.findOne(id);
 	}
@@ -35,7 +35,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
-	public boolean delete(long id) {
+	public boolean delete(Long id) {
 		
 		Profile profile = profileRepository.findOne(id);
 		profileRepository.delete(profile);

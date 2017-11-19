@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.lucy.domain.Profile;
 
 @Repository
-public interface ProfileRepository extends CrudRepository<Profile, Long>{
+public interface ProfileRepository extends CrudRepository<Profile,Long>{
+	
+	
 
 }
