@@ -15,15 +15,15 @@ public class Address {
 	private Long id;
 	
 	@NotEmpty
-	 @Size(min=3 ,max=50)
+	@Size(min=3 ,max=20,message="{Size.name.validation}")
 	private String street;
 	
 	@NotEmpty
-	 @Size(min=2 ,max=50)
+	 @Size(min=2 ,max=2,message = "{Size.state}")
 	private String state;
 	
 	@NotEmpty
-	 @Size(min=5 ,max=5)
+	 @Size(min=5 ,max=5,message = "{Pattern.zipcode}")
 	private String zipcode;
 
 	public Long getId() {

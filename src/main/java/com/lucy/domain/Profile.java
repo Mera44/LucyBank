@@ -1,7 +1,5 @@
 package com.lucy.domain;
 
-import java.sql.Date;
-
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -12,13 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 
 
@@ -29,21 +26,26 @@ public class Profile {
 	 @GeneratedValue(strategy=GenerationType.AUTO)
 	 private Long id;
 	 
-	 @Size(min=2 ,max=50)
+	 @NotEmpty
+	 @Size(min=2 ,max=50,message="{message.name.validation}")
 	 private String firstName;
 	 
-	 @Size(min=2 ,max=50)
+	 @NotEmpty
+	 @Size(min=2 ,max=50,message="{message.name.validation}")
 	 private String lastName;
 	 
-	 @Size(min=4 ,max=50 )
+	 @NotEmpty
+	 @Size(min=4 ,max=50,message="{message.name.validation}" )
 	 private String userName;
 	 
 	 @NotEmpty
 	 private String password;
 	 
+	 @NotEmpty
 	 @Transient
 	 private String confirmpassword;
 	 
+	 @NotEmpty
 	 @Email
 	 private String email;
 	 
@@ -60,6 +62,7 @@ public class Profile {
 	 @JoinColumn
 	 private Address address;
 	 
+	 @Valid
 	 @OneToOne(cascade=CascadeType.ALL)
 	 @JoinColumn
 	 private Role role;
