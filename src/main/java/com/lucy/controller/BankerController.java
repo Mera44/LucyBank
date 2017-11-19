@@ -48,23 +48,25 @@ public class BankerController {
 		for(String accTyp:accountsType) {		
 			if("saving".equals(accTyp)) {
 				SavingAccount savingAcc = new SavingAccount();
+				savingAcc.setTypeAccount("Saving");
 				savingAcc.setAccountNumber(accountNumber());
 				customer.getAccounts().add(savingAcc);
 			}
 	
 			if("checking".equals(accTyp)) {
 				CheckingAccount checkAcc = new CheckingAccount();
+				checkAcc.setTypeAccount("Checking");
 				checkAcc.setAccountNumber(accountNumber());
 				customer.getAccounts().add(checkAcc);
 			}
 			if("credit".equals(accTyp)) {
 				CreditAccount creditAcc = new CreditAccount();
+				creditAcc.setTypeAccount("Credit");
 				creditAcc.setAccountNumber(accountNumber());
 				customer.getAccounts().add(creditAcc);
 			}
 		}
 		
-		System.out.println("it is safe until here");
 		customer.getProfile().setRole(role);
 		customerService.save(customer);
 		if(bindingResult.hasErrors())
@@ -75,6 +77,13 @@ public class BankerController {
 	private Integer accountNumber() {
 		Random rand = new Random();
 		return rand.nextInt(99998) + 10001;
+	}
+	@RequestMapping(value="/customer/detail/{id}", method=RequestMethod.GET)
+	public String customerDetail(@PathVariable("id") long id, Model model) {
+		System.out.println("id in detail" + id);
+		System.out.println(customerService.getCustomer(id).getProfile().getFirstName());
+		model.addAttribute("customerDetail", customerService.getCustomer(id));
+		return "customerDetail";
 	}
 	
 }
