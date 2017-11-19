@@ -58,6 +58,15 @@ public class TellerController {
 
 	}
 
+	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
+	public String success(Model model, @RequestParam("id") Long id) {
+		System.out.println("=======>customer id "+id);
+		model.addAttribute("customer", customerService.getCustomer(id));
+		model.addAttribute("account", customerService.getCustomer(id).getAccounts());
+
+		return "custAccount";
+
+	}
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
 	public String addAccountForm(@ModelAttribute("teller") Teller teller, @RequestParam("id") Long id, Model model) {
 
@@ -106,14 +115,7 @@ public class TellerController {
 
 	}
 
-	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
-	public String success(Model model, @RequestParam("id") Long id) {
-		model.addAttribute("customer", customerService.getCustomer(id));
-		model.addAttribute("account", customerService.getCustomer(id).getAccounts());
-
-		return "customerAccount";
-
-	}
+	
 	
 
 	@RequestMapping(value = "/deposit/{id}", method = RequestMethod.POST)

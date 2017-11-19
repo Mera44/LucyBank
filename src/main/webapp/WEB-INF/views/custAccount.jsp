@@ -13,8 +13,6 @@
     <tiles:putAttribute name="body">
 
 
-<!-- <p>list customers</p> -->
- 
     </tiles:putAttribute>
 
 </tiles:insertDefinition>
@@ -24,12 +22,13 @@
 <title></title>
 </head>
 <body>
-<c:forEach var= "customer"  items="${customers}"> 
-    <span>${customer.profile.firstName}</span>
-    <span>${customer.profile.lastName}</span> &nbsp; &nbsp;
-    <span> <a href="account?id=${customer.id }">See Account</a></span></br>
+<c:forEach var= "account"  items="${account}">
+    <span>${account.accountNumber}</span>
+    <span>${account.balance}</span><br><br>
 </c:forEach>
-
+<span><a href="withdraw?id=${customer.id}"> Withdraw</a></span>
+<span><a href="deposit?id=${customer.id}"> Deposit</a></span>
+<span><a href="deposit?id=${customer.id}"> Make Transfer</a></span>
+<span><a href="paybill?id=${customer.id}"> Pay Bill</a></span>
 </body>
-</html>
-
+</html>	
