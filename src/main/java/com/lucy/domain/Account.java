@@ -29,8 +29,8 @@ public abstract class Account {
     private Integer accountNumber;
 	@OneToOne
 	private CardNumber cardNumber;
-	protected Double balance;
-	private Boolean status;
+	protected Double balance = 0.0;
+	private Boolean status = true;
 	
 	public Long getId() {
 		return id;
