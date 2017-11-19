@@ -41,9 +41,9 @@ public class Profile {
 	 @NotEmpty
 	 private String password;
 	 
-	 @NotEmpty
+	/* //@NotEmpty
 	 @Transient
-	 private String confirmpassword;
+	 private String confirmpassword;*/
 	 
 	 @NotEmpty
 	 @Email
@@ -112,13 +112,7 @@ public class Profile {
 		this.password = password;
 	}
 
-	public String getConfirmpassword() {
-		return confirmpassword;
-	}
 
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
-	}
 
 	
 
