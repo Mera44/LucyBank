@@ -14,7 +14,7 @@
    
 	   
 		 
-		<div class="header-right">
+	<!-- 	<div class="header-right">
 		    <div class="input-group">
 		        <input class="form-control" type="text" name="username" placeholder="Username">&nbsp;&nbsp;&nbsp;&nbsp;
 		        <input class="form-control" type="text" name="password" placeholder="Password">
@@ -23,7 +23,7 @@
 		          </span>
 		    </div>
 		</div>    
-	 
+	  -->
  
     </tiles:putAttribute>
 

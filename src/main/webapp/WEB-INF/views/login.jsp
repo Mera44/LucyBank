@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<title>Products</title>
+<title>Login</title>
 </head>
 <body>
 	<section>
@@ -17,12 +17,14 @@
 			<div class="container">
 				<h1><spring:message code="profile.welcome"/></h1>
 			</div>
+		
+		
+		
 			<div class="pull-right" style="padding-right: 50px">
 				<a href="?language=en">English</a>|<a href="?language=fr">French</a>
 			</div>
+
 		</div>
-		
-	
 	
 	</section>
 	<div class="container">
@@ -52,6 +54,7 @@
                                     <p>You have been logged out successfully.</p>
                                 </div>
                             </c:if>
+                           
                             <div class="input-group input-sm">
                                 <label class="" for="username"><spring:message code="profile.form.username.label"/> </label>
                                 <input type="text" class="form-control" id="username" name="ssoId" placeholder="Enter Username" required>
