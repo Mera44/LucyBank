@@ -37,8 +37,12 @@ public class AccountHelper {
 		return account;
 	}
 	public List<Account> transfer(Account transferFrom, Account transferTo, Transaction transaction){
+		Transaction transFrom = new Transaction();
+		transFrom.setTransactionAmount(transaction.getTransactionAmount());
+		Transaction transTo = new Transaction();
+		transTo.setTransactionAmount(transaction.getTransactionAmount());
 		if(withdraw(transferFrom, transaction)!=null)
-			return Arrays.asList(withdraw(transferFrom, transaction.setTransactionTypeFor(TransactionType.TRANSFEREDTO)), deposit(transferTo, transaction.setTransactionTypeFor(TransactionType.TRANSFEREDFROM)));
+			return Arrays.asList(withdraw(transferFrom, transFrom.setTransactionTypeFor(TransactionType.TRANSFEREDTO)), deposit(transferTo, transTo.setTransactionTypeFor(TransactionType.TRANSFEREDFROM)));
 		return null;
 	}
 	

@@ -35,6 +35,7 @@ import com.lucy.service.CustomerService;
 import com.lucy.service.ProfileService;
 import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
+import com.lucy.serviceImpl.CustomerAccountHelper;
 
 @Controller
 @RequestMapping("teller")
@@ -53,6 +54,8 @@ public class TellerController {
 	CreditAccountService creditService;
 	@Autowired
 	ProfileService profileService;
+	@Autowired
+	CustomerAccountHelper customerAccountHelper;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getAllCustomers(Model model) {
@@ -93,7 +96,7 @@ public class TellerController {
 	public String success(Model model, @PathVariable("id") Long id) {
 		System.out.println("=======>customer id " + id);
 		model.addAttribute("customer", customerService.getCustomer(id));
-		model.addAttribute("account", getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
+		model.addAttribute("account", customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 
 		return "custAccount";
 
@@ -107,7 +110,7 @@ public class TellerController {
 		System.out.println("=======>acc accountNumber  " + accNum);
 		Transaction trans = new Transaction();
 		trans.setTransactionAmount(transaction.getTransactionAmount());
-		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getAccountNumber().intValue() == accNum.intValue()) {
 				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
 					checkingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW));
@@ -132,7 +135,7 @@ public class TellerController {
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
 
-		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc :customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getTypeAccount().equalsIgnoreCase("Checking") || acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
@@ -186,7 +189,7 @@ public class TellerController {
 	public String getDepositForm(@ModelAttribute("transaction") Transaction transaction, Model model,
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
-		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getTypeAccount().equalsIgnoreCase("Checking") || acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
@@ -209,6 +212,7 @@ public class TellerController {
 		System.out.println("======>transfer From   " + accNumFrom);
 		System.out.println("======>transfer To   " + accNumTo);
 		System.out.println("======>transfer Other   " + accNumOther);
+		System.out.println("======>transfer Amount   " + transaction.getTransactionAmount());
 
 		Transaction trans = new Transaction();
 		trans.setTransactionAmount(transaction.getTransactionAmount());
@@ -238,14 +242,14 @@ public class TellerController {
 	public String getTransferForm(@ModelAttribute("transaction") Transaction transaction, Model model,
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
-		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getTypeAccount().equalsIgnoreCase("Checking") || acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
 		}
 
 		model.addAttribute("accounts", withdrawingAccount);
-		model.addAttribute("accountOther", getRemovedOtherAccountDuplicates(accountService.findAll(),
+		model.addAttribute("accountOther", customerAccountHelper.getRemovedOtherAccountDuplicates(accountService.findAll(),
 				customerService.getCustomer(id).getAccounts()));
 
 		model.addAttribute("customer", customerService.getCustomer(id));
@@ -287,7 +291,7 @@ public class TellerController {
 	public String getPayBillForm(@ModelAttribute("transaction") Transaction transaction, Model model,
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
-		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")
 					|| acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
 				withdrawingAccount.add(acc);
@@ -305,23 +309,5 @@ public class TellerController {
 
 	}
 
-	private List<Account> getRemovedDuplicates(List<Account> acc) {
-		Set<Account> set = new HashSet<Account>(acc);
-		List<Account> customers = new ArrayList<>(set);
-		return customers;
-
-	}
-
-	private List<Account> getRemovedOtherAccountDuplicates(List<Account> Otheracc, List<Account> currentCustomer) {
-		List<Account> filterd = Otheracc.stream().distinct().filter(acc -> {
-			for (Account account : currentCustomer) {
-				if (account.getAccountNumber().intValue() == acc.getAccountNumber().intValue())
-					return false;
-			}
-			return true;
-		}).collect(Collectors.toList());
-		return filterd;
-
-	}
 
 }
