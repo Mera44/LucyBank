@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lucy.domain.Customer;
 import com.lucy.service.CustomerService;
+import com.lucy.util.Util;
 
 @RequestMapping("/customer")
 @Controller
@@ -18,12 +19,11 @@ public class CustomerController {
 	CustomerService customerService;
 	
 	@RequestMapping(value="/welcome", method=RequestMethod.GET)
-	public String customerWelcomePage(Model model, HttpSession httpSession) {
-		Customer customer = new Customer();
-		httpSession.setAttribute("logedCustomer",customer);
-		Customer loggedCustomer = (Customer)httpSession.getAttribute("loggedCustomer");
-		model.addAttribute("accounts", loggedCustomer.getAccounts());
-		return "welcome";
+	public String customerWelcomePage(Model model) {
+		String profileName  = Util.getPrincipal();
+		Customer loggedCustomer =customerService.findCustomerByUsername(profileName);
+		model.addAttribute("loggedCustomer", loggedCustomer);
+		return "customerWelcome";
 	}
 	
 	@RequestMapping(value="/profile", method=RequestMethod.GET)

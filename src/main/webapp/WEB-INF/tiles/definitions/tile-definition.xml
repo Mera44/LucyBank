@@ -15,10 +15,10 @@
 		<put-attribute name="footer" value="/WEB-INF/tiles/template/footer.jsp" />
 	</definition>
 
-	<definition name="welcome" extends="baseLayout">
+	<definition name="customerWelcome" extends="baseLayout">
 		<put-attribute name="title" value="Welcome" />
-		<put-attribute name="heading" value="Internationalization" />
-		<put-attribute name="body" value="/WEB-INF/views/welcome.jsp" />
+		<put-attribute name="heading" value="customerWelcome" />
+		<put-attribute name="body" value="/WEB-INF/views/customerWelcome.jsp" />
 	</definition>
 	<definition name="teller" extends="baseLayout">
 		<put-attribute name="title" value="Teller Page" />
@@ -45,11 +45,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/bankerWelcome.jsp" />
 	</definition>
 
-	<definition name="addProduct" extends="baseLayout">
-		<put-attribute name="title" value="Products" />
-		<put-attribute name="heading" value="Products" />
-		<put-attribute name="tagline" value="Product" />
-		<put-attribute name="body" value="/WEB-INF/views/addProduct.jsp" />
+	<definition name="customerDetail" extends="customerDetail">
+		<put-attribute name="title" value="customerDetail" />
+		<put-attribute name="heading" value="customerDetail" />
+		<put-attribute name="tagline" value="Customer" />
+		<put-attribute name="body" value="/WEB-INF/views/customerDetail.jsp" />
 	</definition>
 
 	<definition name="login" extends="baseLayout">

@@ -1,4 +1,4 @@
-package com.lucy.validator;
+/*package com.lucy.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -33,3 +33,4 @@ public class ProfileIdValidator implements ConstraintValidator<ProfileId, Long> 
 	
 
 }
+*/
