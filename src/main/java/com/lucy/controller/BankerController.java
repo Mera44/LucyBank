@@ -25,6 +25,7 @@ import com.lucy.domain.Role;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
+import com.lucy.domain.TransactionType;
 import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CustomerService;
@@ -166,13 +167,20 @@ public class BankerController {
 		return checkingAccountService.deposit(accountNumber, new Transaction());
 	}
 	
-	@RequestMapping(value="/customer/deposit/{transactionAmount}/{accountNumber}", method=RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value="/customer/deposit/{transactionAmount}/{accountNumber}", method=RequestMethod.GET, produces = "application/json")
 	public @ResponseBody Account customerDeposit2(@PathVariable("transactionAmount") Double transactionAmount,
 			@PathVariable("accountNumber") Integer accountNumber) {
 		System.out.println(transactionAmount);
 		System.out.println(accountNumber);
+		
 		Transaction transaction = new Transaction();
 		transaction.setTransactionAmount((Double)transactionAmount);
-		return checkingAccountService.deposit(accountNumber, new Transaction());
+		transaction.setTransactionType(TransactionType.DEPOSIT);
+		Account account = checkingAccountService.deposit(accountNumber, transaction);
+		System.out.println("the new balance after returned" + account.getBalance());
+		return account;
 	}
+	
+	
+	
 }

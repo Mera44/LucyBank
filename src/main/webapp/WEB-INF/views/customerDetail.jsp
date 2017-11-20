@@ -47,8 +47,14 @@
       <c:forEach var="account" items="${customerDetail.accounts}" >
       <tr><td><h3>${account.typeAccount}</h3></td></tr>
       <tr>
-      		<td>Account Number: ${account.accountNumber}<br />
-      		Account Balance:  ${account.balance}</td>
+      		<td>
+	      		<div>
+	      			Account Number: ${account.accountNumber}
+	      		</div>
+	      		<div id="${account.typeAccount}">
+	      			Account Balance:  ${account.balance}
+	      		</div>
+      		</td>
       </tr>
       <tr>
       	<td><input class="form-control" type="number" id="${account.accountNumber}" /></td>

@@ -4,23 +4,21 @@ var contextRoot = "/" + window.location.pathname.split('/')[1];
 
 
 $(document).ready(function() {	
-	deposit = function(accountNumber){
-		
-		alert(accountNumber);
+	
+	deposit = function(accountNumber){	
 		var selector = "#" + accountNumber;
-		console.log(selector);
 		var transactionAmount = parseFloat($(selector).val());
-		console.log(transactionAmount);
-		var data = JSON.stringify({"transactionAmount": "transaction", "accountNumber": "Number"});
 		$.ajax({
-			url: contextRoot + '/banker/customer/deposit/100/10',
-//			url: contextRoot + '/banker/customer/deposit',
-			type: 'POST',
+			url: contextRoot + '/banker/customer/deposit/'+ transactionAmount +'/' + accountNumber,
+			type: 'GET',
 			dataType: "json",
 			contentType : 'application/json; charset=utf-8',
-//			data: data,
 			success: function(response){
-				alert("Product Successfully added to the Cart!");
+				var selector = '#' +response.typeAccount;
+				console.log(selector);
+				$(selector).html("");
+				$(selector).append("<h4>Account Balance" + response.balance + "</h4>");
+				console.log(response);
 			},
 			error: function(error){						
 				console.log(error);
@@ -28,6 +26,24 @@ $(document).ready(function() {
 		});
 	}
 	
-	
+	withdraw = function(accountNumber){	
+		var selector = "#" + accountNumber;
+		var transactionAmount = parseFloat($(selector).val());
+		$.ajax({
+			url: contextRoot + '/banker/customer/deposit/'+ transactionAmount +'/' + accountNumber,
+			type: 'GET',
+			dataType: "json",
+			contentType : 'application/json; charset=utf-8',
+			success: function(response){
+				var selector = '#' +response.typeAccount;
+				$(selector).html("");
+				$(selector).append("<h4>Account Balance" + response.balance + "</h4>");
+				console.log(response);
+			},
+			error: function(error){						
+				console.log(error);
+			}
+		});
+	}
 });
 
