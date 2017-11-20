@@ -21,6 +21,9 @@
      <form-login login-page="/login" 
 			authentication-failure-url="/login?error" authentication-success-handler-ref="myAuthenticationSuccessHandler"/>
 		<logout logout-success-url="/logout" logout-url="/j_spring_security_logout" />
+		
+	<remember-me data-source-ref="dataSource" 
+	             token-validity-seconds="86400" remember-me-parameter="keepMe"/>
               
         
         <csrf  disabled="true"/>
@@ -30,7 +33,7 @@
     <beans:bean id="myAuthenticationSuccessHandler"
         class="com.lucy.config.UrlAuthenticationSuccessHandler" />
   
-       <authentication-manager >
+     <!--   <authentication-manager >
         <authentication-provider> 
             <user-service>
                 <user name="fili" password="fili" authorities="ROLE_CUSTOMER" />
@@ -38,12 +41,12 @@
                 <user name="mera" password="mera" authorities="ROLE_TELLER" />
             </user-service>
         </authentication-provider>
-    </authentication-manager>  
+    </authentication-manager>   -->
     
-<!-- 	 <authentication-manager>
+ 	 <authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select userName, password from profile where userName = ?"
+				users-by-username-query="select userName, password, 1 from profile p where userName = ?"
 				authorities-by-username-query="select u.userName, ur.role from profile u, role ur where ur.id = u.role_id and u.userName = ? " />
 		</authentication-provider>
 	</authentication-manager>
@@ -51,10 +54,10 @@
 	<beans:bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url" value="jdbc:mysql://localhost:3306/finaljpa" />
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/lucybank" />
 		<beans:property name="username" value="root" />
 		<beans:property name="password" value="root" />
-	</beans:bean>  -->
+	</beans:bean>  
       
      
 </beans:beans>

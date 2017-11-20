@@ -19,19 +19,19 @@ import com.lucy.util.Util;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = {"/login","/"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/login"}, method = RequestMethod.GET)
 	public String login() {
 		return "login";
 	}
 	
-	/*@RequestMapping(value= {"/"})
+	@RequestMapping(value= {"/"})
 	public String admin(Model model) {
 
 		String loggedInUserName = Util.getPrincipal();
 		model.addAttribute("user", loggedInUserName);
 	
 		return "Welcome";
-	}*/
+	}
 
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
 	public String loginerror(Model model) {

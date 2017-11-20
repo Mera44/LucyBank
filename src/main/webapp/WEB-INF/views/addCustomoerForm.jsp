@@ -72,7 +72,7 @@
   			<input type="checkbox" name="accTypes" value="credit"> Credit
   			</fieldset>
 			
-			<form:input type="hidden" path="profile.role" value="customer" />
+			
 	
 		</div>
 		<div class="submmit-button">

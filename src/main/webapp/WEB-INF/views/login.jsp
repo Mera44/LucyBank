@@ -1,8 +1,20 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="security"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+
+ <tiles:insertDefinition name="baseLayout">
+    <tiles:putAttribute name="title"> welcome.title </tiles:putAttribute>
+    <tiles:putAttribute name="heading"> welcome.heading </tiles:putAttribute>
+    <tiles:putAttribute name="tagline"> welcome.tagline </tiles:putAttribute>
+    <tiles:putAttribute name="body">
+   
+	<h1><spring:message code="profile.welcome"/></h1>
+ <h1></h1>
+    </tiles:putAttribute>
+
+</tiles:insertDefinition>
 
 <html>
 <head>
@@ -12,7 +24,7 @@
 <title>Login</title>
 </head>
 <body onload='document.loginForm.j_username.focus();'>
-	<section>
+	<%-- <section>
 		<div class="jumbotron">
 			<div class="container">
 				<h1><spring:message code="profile.welcome"/></h1>
@@ -26,7 +38,7 @@
 
 		</div>
 	
-	</section>
+	</section> --%>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
@@ -74,12 +86,15 @@
                                 <label class="" for="password"><spring:message code="profile.form.password.label"/></label> 
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
                             </div>
-                            <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" />
-                                 
+                          <%--   <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> --%>
+                            <div class="form-group">
+			    				<input type='checkbox' name="keepMe"/> Remember Me? <br/>	
+			    		    </div>
                             <div class="form-actions">
                                 <input type="submit"
                                     class="btn btn-block btn-primary btn-default" value="Log in">
                             </div>
+                            <%-- <security:csrfInput /> --%>
                         </form>
 					</div>
 				</div>

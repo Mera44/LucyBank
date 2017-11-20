@@ -41,7 +41,7 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 				}
 			} else if(authority.getAuthority().equals("ROLE_CUSTOMER")) {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/home");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/customer/welcome");
 				} catch (Exception e) {
 				
 					e.printStackTrace();
