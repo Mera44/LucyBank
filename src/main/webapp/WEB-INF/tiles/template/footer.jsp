@@ -16,6 +16,6 @@
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/teller/deposit"><spring:message code="profile.deposit"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/teller/withdraw"><spring:message code="profile.withdraw"/> |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/welcome/logout"><spring:message code="profile.logout"/> </a></span>
+	  		<span><a href="<%=request.getContextPath() %>/logout"><spring:message code="profile.logout"/> </a></span>
 	    		
 	  </div>

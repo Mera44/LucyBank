@@ -30,7 +30,7 @@ public class LoginController {
 		String loggedInUserName = Util.getPrincipal();
 		model.addAttribute("user", loggedInUserName);
 	
-		return "welcome";
+		return "Welcome";
 	}*/
 
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
