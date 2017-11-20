@@ -17,9 +17,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.lucy.validator.EqualPasswords;
 
 
-
-//import com.lucy.validator.ProfileId;
-
 @EqualPasswords
 @Entity
 public class Profile {
@@ -43,27 +40,13 @@ public class Profile {
 	@NotEmpty
 	private String password;
 
-	
-
-	 @NotEmpty
+	@NotEmpty
 	@Transient
 	private String confirmpassword;
 
 	@NotEmpty
 	@Email
 	private String email;
-
-	/*
-	 * /* private String userStatus; private int isActive;
-	 */
-
-	/*
-	 * @NotNull
-	 * 
-	 * @Past
-	 * 
-	 * @DateTimeFormat(pattern = "dd/MM/yyyy") private Date birthdate;
-	 */
 
 	@Valid
 	@OneToOne(cascade = CascadeType.ALL)
@@ -134,11 +117,7 @@ public class Profile {
 		this.email = email;
 	}
 
-	/*
-	 * public Date getBirthdate() { return birthdate; }
-	 * 
-	 * public void setBirthdate(Date birthdate) { this.birthdate = birthdate; }
-	 */
+
 	public Address getAddress() {
 		return address;
 	}
