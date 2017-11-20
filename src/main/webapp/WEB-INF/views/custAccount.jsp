@@ -23,6 +23,7 @@
 </head>
 <body>
 <c:forEach var= "account"  items="${account}">
+    <span>${account.typeAccount}</span>
     <span>${account.accountNumber}</span>
     <span>${account.balance}</span><br><br>
 </c:forEach>

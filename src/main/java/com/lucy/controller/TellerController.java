@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,16 +89,17 @@ public class TellerController {
 			@PathVariable("id") Long id, @RequestParam("accountNumber") Integer accNum,
 			RedirectAttributes redirectAttributes) {
 		System.out.println("=======>acc accountNumber  " + accNum);
-
+		Transaction trans = new Transaction();
+		trans.setTransactionAmount(transaction.getTransactionAmount());
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getAccountNumber() == accNum) {
-				if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")) {
-					checkingService.withdraw(accNum, transaction.setTransactionTypeFor(TransactionType.WITHDRAW));
+			if (acc.getAccountNumber().intValue() == accNum.intValue()) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
+					checkingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW));
 					break;
 				}
-				if (acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 					{
-						savingService.withdraw(accNum, transaction.setTransactionTypeFor(TransactionType.WITHDRAW));
+						savingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW));
 						break;
 					}
 				}
@@ -114,8 +116,8 @@ public class TellerController {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
 
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")
-					|| acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
+			if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+					|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
 		}
@@ -139,18 +141,18 @@ public class TellerController {
 
 			if (acc.getAccountNumber().intValue()==(accNum.intValue())) {
 				System.out.println("=======> amount444  " + (acc.getAccountNumber().intValue()== accNum.intValue()));
-				if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
 					CheckingAccount checAcc = checkingService.deposit(accNum,
 							trans.setTransactionTypeFor(TransactionType.DEPOSIT));
-					System.out.println("=======> amount2   " + checAcc.getBalance());
+					System.out.println("=======> checking deposit  " + checAcc.getBalance());
 					checkingService.save(checAcc);
 					break;
 				}
-				if (acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 					{
 						SavingAccount saveAcc = savingService.deposit(accNum,
 								trans.setTransactionTypeFor(TransactionType.DEPOSIT));
-						System.out.println("=======> amount2   " + saveAcc.getBalance());
+						System.out.println("=======> saving  deposit   " + saveAcc.getBalance());
 						savingService.save(saveAcc);
 						break;
 					}
@@ -166,61 +168,149 @@ public class TellerController {
 	public String getDepositForm(@ModelAttribute("transaction") Transaction transaction, Model model,
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
-		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")
-					|| acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
+		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+			if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+					|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
 		}
 	
-		model.addAttribute("account", getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
+		model.addAttribute("account", withdrawingAccount);
 		model.addAttribute("customer", customerService.getCustomer(id));
 
 		return "deposit";
 
 	}
 
-	@RequestMapping(value = "/transfer/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.POST)
 	public String transfer(@ModelAttribute("transaction") Transaction transaction, Model model,
-			@RequestParam("id") Integer id, @PathVariable("from") Integer accNumFrom,
-			@PathVariable("to") Integer accNumTo, RedirectAttributes redirectAttributes) {
-
+			@PathVariable("id") Integer id, @RequestParam("accountFrom") Integer accNumFrom,
+			@RequestParam("accountTo") Integer accNumTo, @RequestParam(value = "accountOther", required=false) Integer accNumOther,RedirectAttributes redirectAttributes) {
+		
+		System.out.println("======>transfer From   "+accNumFrom);
+		System.out.println("======>transfer To   "+ accNumTo);
+		System.out.println("======>transfer Other   "+accNumOther);
+		
+		Transaction trans = new Transaction();
+		trans.setTransactionAmount(transaction.getTransactionAmount());
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
-			if (acc.getAccountNumber() == accNumFrom) {
-				if (acc.getClass().getSimpleName() == "CheckingAccount") {
-					checkingService.transfer(accNumFrom, accNumTo, transaction);
+			if (acc.getAccountNumber().intValue() == accNumFrom.intValue()) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
+					checkingService.transfer(accNumFrom, accNumTo, trans);
 					break;
 				}
-				if (acc.getClass().getSimpleName() == "SavingAccount") {
-					savingService.transfer(accNumFrom, accNumTo, transaction);
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					savingService.transfer(accNumFrom, accNumTo, trans);
 					break;
 				}
-				// if(acc.getClass().getSimpleName() == "CreditAccount") { {
-				// creditService.withdraw(accNumFrom,
-				// transaction.setTransactionTypeFor(TransactionType.DEPOSIT));
-				// break;
-				// }
-				// }
+				/*if (acc.getTypeAccount().equalsIgnoreCase("Credit"))   {
+				 creditService.payMonthlyBill(accNumFrom, accNumTo, transaction)(accNumFrom,
+				 transaction.setTransactionTypeFor(TransactionType.DEPOSIT));
+				 break;
+				 	}*/
+				 }
 			}
-		}
+		
 
-		return "redirect:/teller/account?id=" + id;
+		return "redirect:/teller/account/" + id;
 
 	}
 
-	@RequestMapping(value = "/transfer/{id}", method = RequestMethod.GET)
-	public String getTransferForm(Model model, @RequestParam("id") Long id) {
-		model.addAttribute("account", customerService.getCustomer(id).getAccounts());
+	@RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.GET)
+	public String getTransferForm(@ModelAttribute("transaction") Transaction transaction, Model model, @PathVariable("id") Long id) {
+		List<Account> withdrawingAccount = new ArrayList<Account>();
+		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+			if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+					|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+				withdrawingAccount.add(acc);
+			}
+		}
+	
+		model.addAttribute("accounts", withdrawingAccount);
+		model.addAttribute("accountOther",getRemovedOtherAccountDuplicates(accountService.findAll(),customerService.getCustomer(id).getAccounts()));
+
 		model.addAttribute("customer", customerService.getCustomer(id));
 
 		return "transfer";
 
 	}
+ //PayBill Post
+	@RequestMapping(value = "/account/paybill/{id}", method = RequestMethod.POST)
+	public String payBill(@ModelAttribute("transaction") Transaction transaction, Model model,
+			@PathVariable("id") Integer id, @RequestParam("accountFrom") Integer accNumFrom,
+			@RequestParam("accountTo") Integer accNumTo,RedirectAttributes redirectAttributes) {
+		
+		System.out.println("======>transfer From   "+accNumFrom);
+		System.out.println("======>transfer To   "+ accNumTo);
+		
+		Transaction trans = new Transaction();
+		trans.setTransactionAmount(transaction.getTransactionAmount());
+		for (Account acc : customerService.getCustomer(id).getAccounts()) {
+			if (acc.getAccountNumber().intValue() == accNumFrom.intValue()) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
+					checkingService.payCreditBill(accNumFrom, accNumTo, trans);
+					break;
+				}
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					savingService.payCreditBill(accNumFrom, accNumTo, trans);
+					break;
+				}
+			}
+		}
+				
+		
+
+		return "redirect:/teller/account/" + id;
+
+	}
+		
+  //PayBill Get
+	@RequestMapping(value = "/account/paybill/{id}", method = RequestMethod.GET)
+	public String getPayBillForm(@ModelAttribute("transaction") Transaction transaction, Model model, @PathVariable("id") Long id) {
+		List<Account> withdrawingAccount = new ArrayList<Account>();
+		for (Account acc : getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+			if (acc.getClass().getSimpleName().equalsIgnoreCase("CheckingAccount")
+					|| acc.getClass().getSimpleName().equalsIgnoreCase("SavingAccount")) {
+				withdrawingAccount.add(acc);
+			}
+			if(acc.getTypeAccount().equalsIgnoreCase("Credit")) {
+				model.addAttribute("accountOther",acc);
+			}
+		}
+	
+		model.addAttribute("accounts", withdrawingAccount);
+		
+
+		model.addAttribute("customer", customerService.getCustomer(id));
+
+		return "paybill";
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	private List<Account> getRemovedDuplicates(List<Account> acc){
 		 Set<Account> set = new HashSet<Account>(acc);
 		List<Account> customers = new ArrayList<>(set);
 		return customers;
+		
+	}
+	private List<Account> getRemovedOtherAccountDuplicates(List<Account> Otheracc, List<Account> currentCustomer){
+	 	List<Account> filterd= Otheracc.stream().distinct().filter(acc ->{
+	 		for(Account account:currentCustomer ) {
+	 			if(account.getAccountNumber().intValue()== acc.getAccountNumber().intValue())
+	 				return false;
+	 		}
+	 		return true;
+	 	}).collect(Collectors.toList());
+		return filterd;
 		
 	}
 

@@ -27,7 +27,7 @@
 		<label for="accountType">Choose Account To Deposit</label>
 		 <c:forEach var="account" items="${account}">
 			<input type="radio" name="accountNumber"
-				value="${account.accountNumber}" />${account.accountNumber} 
+				value="${account.accountNumber}" />${account.typeAccount} ${account.accountNumber} 
          </c:forEach> 
 		
 		<br>

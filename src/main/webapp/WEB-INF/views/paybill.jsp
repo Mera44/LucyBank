@@ -22,28 +22,23 @@
 <title></title>
 </head>
 <body>
-	<form:form action="${customer.id}"
-		modelAttribute="transaction" method="post">
+	<form:form action="${customer.id}" modelAttribute="transaction"
+		method="post">
 		<label for="accountType">Choose From Account :</label>
-		 <c:forEach var="account" items="${accounts}">
+		<c:forEach var="account" items="${accounts}">
 			<input type="radio" name="accountFrom"
 				value="${account.accountNumber}" />${account.typeAccount}  ${account.accountNumber} 
-         </c:forEach> <br>
-         <label for="accountType"> To Your Own Account :</label>
-		 <c:forEach var="account" items="${accounts}">
-			<input type="radio" name="accountTo"
-				value="${account.accountNumber}" /> ${account.typeAccount} ${account.accountNumber} 
-         </c:forEach> <br><br>
-          <label for="accountType"> To Other Lucy Member Account:</label>
-		 <c:forEach var="account" items="${accountOther}">
-			<input type="radio" name="accountOther"
-				value="${account.accountNumber}" />${account.typeAccount} ${account.accountNumber} 
-         </c:forEach>  
-         
-		
+         </c:forEach>
+		<br>
+		<label for="accountType"> Pay To Account :</label>
+		<input type="radio" name="accountTo"
+			value="${accountOther.accountNumber}" /> ${accountOther.typeAccount} ${accountOther.accountNumber} 
+     
+    	
 		<br>
 		<form:label for="transactionAmount" path="transactionAmount">Amount</form:label>
-		<form:input type="text" path="transactionAmount" /><br>
+		<form:input type="text" path="transactionAmount" />
+		<br>
 		<input type="submit" value="submit" />
 	</form:form>
 </body>

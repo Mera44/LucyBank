@@ -8,5 +8,6 @@ import com.lucy.domain.CheckingAccount;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long>{
-	public CheckingAccount findByAccountNumber(Integer accNo);
+	public Account findByAccountNumber(Integer accNo);
+	
 }
