@@ -18,9 +18,10 @@
 <link href="http://getbootstrap.com/dist/css/bootstrap.css"	rel="stylesheet">
 
 <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css"	rel="stylesheet">
-<%-- <link href='<spring:url value="resources/css/style.css"></spring:url>' rel="stylesheet"> --%>
+<!-- <link href="/resources/css/style.css" rel="stylesheet" /> -->
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <style type="text/css">
-	.header-div{
+.header-div{
 	    width: 100%;
 	    height:100px;
 	    background-color: rgb(27, 72, 145);
@@ -64,7 +65,7 @@
 	.nav span{
 		margin-right:10px;
 	}
-	.nav sapan a{
+	.nav sapan a:link{
 		color:white;
 	}
 	.language{
@@ -100,6 +101,13 @@
 		padding: 20px;
 		clear:both;
 	}
+	td.link span{
+		margin-right:100px;;
+	}
+	form:errors{
+		color:red;
+	}
+
 </style>
 </head>
 

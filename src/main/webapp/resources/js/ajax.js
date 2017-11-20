@@ -2,6 +2,7 @@
 
 var contextRoot = "/" + window.location.pathname.split('/')[1];
 
+
 $(document).ready(function() {	
 	deposit = function(accountNumber){
 		
@@ -12,11 +13,12 @@ $(document).ready(function() {
 		console.log(transactionAmount);
 		var data = JSON.stringify({"transactionAmount": "transaction", "accountNumber": "Number"});
 		$.ajax({
-			url: contextRoot + '/banker/customer/deposit',
+			url: contextRoot + '/banker/customer/deposit/100/10',
+//			url: contextRoot + '/banker/customer/deposit',
 			type: 'POST',
 			dataType: "json",
-			contentType : 'application/json',
-			data: data,
+			contentType : 'application/json; charset=utf-8',
+//			data: data,
 			success: function(response){
 				alert("Product Successfully added to the Cart!");
 			},
@@ -25,4 +27,7 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	
 });
+

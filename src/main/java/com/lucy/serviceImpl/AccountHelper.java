@@ -26,18 +26,19 @@ public class AccountHelper {
 		return null;//if available balance is less than withdraw amount 
 	}
 	public Account deposit(Account account, Transaction transaction){
-		System.out.println("=======> amounthelper" + transaction.getTransactionAmount());
-
+		System.out.println("=======> amounthelper  " + transaction.getTransactionAmount());
+		
 		transaction.setTransactionDate(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 		transaction.setStartingBalance(account.getBalance());
 		account.setBalance(account.getBalance()+(double)transaction.getTransactionAmount());
 		transaction.setEndingBalance(account.getBalance());
 		account.addTransaction(transaction);
+		System.out.println("=======> depositHelperTransEndBalance   " + transaction.getEndingBalance());
 		return account;
 	}
 	public List<Account> transfer(Account transferFrom, Account transferTo, Transaction transaction){
 		if(withdraw(transferFrom, transaction)!=null)
-			return Arrays.asList(withdraw(transferFrom, transaction), deposit(transferTo, transaction.setTransactionTypeFor(TransactionType.TRANSFEREDTO)));
+			return Arrays.asList(withdraw(transferFrom, transaction.setTransactionTypeFor(TransactionType.TRANSFEREDTO)), deposit(transferTo, transaction.setTransactionTypeFor(TransactionType.TRANSFEREDFROM)));
 		return null;
 	}
 	

@@ -7,18 +7,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+
 import javax.validation.Valid;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.lucy.validator.EqualPasswords;
-
 //import com.lucy.validator.ProfileId;
 
-@EqualPasswords
 @Entity
 public class Profile {
 	 
@@ -27,11 +25,11 @@ public class Profile {
 	 private Long id;
 	 
 	 @NotEmpty
-	 @Size(min=2 ,max=50,message="{message.name.validation}")
+	 @Size(min=2 ,max=50,message="{Size.name.validation}")
 	 private String firstName;
 	 
 	 @NotEmpty
-	 @Size(min=2 ,max=50,message="{message.name.validation}")
+	 @Size(min=2 ,max=50,message="{Size.name.validation}")
 	 private String lastName;
 	 
 	 @NotEmpty
@@ -41,25 +39,15 @@ public class Profile {
 	 @NotEmpty
 	 private String password;
 	 
-	 public String getConfirmpassword() {
-		return confirmpassword;
-	}
-
-
-
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
-	}
-
-	//@NotEmpty
+	/* //@NotEmpty
 	 @Transient
-	 private String confirmpassword;
+	 private String confirmpassword;*/
 	 
 	 @NotEmpty
 	 @Email
 	 private String email;
 	 
-	 /*/* private String userStatus;
+	/* private String userStatus;
 	 private int isActive;*/
 	 
 	/*@NotNull
@@ -72,7 +60,7 @@ public class Profile {
 	 @JoinColumn
 	 private Address address;
 	 
-	 @Valid
+
 	 @OneToOne(cascade=CascadeType.ALL)
 	 @JoinColumn
 	 private Role role;
