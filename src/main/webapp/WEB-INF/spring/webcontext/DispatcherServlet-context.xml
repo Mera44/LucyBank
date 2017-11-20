@@ -9,6 +9,7 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.lucy" />
+	<mvc:annotation-driven conversion-service="conversionService" />
      
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -47,6 +48,15 @@
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="en_US" />
+	</bean>
+	
+	<bean id="conversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="formatters">
+			<set>
+				<bean class="com.lucy.formatter.CardNumberFormatter"></bean>
+			</set>
+		</property>
 	</bean>
 
 </beans>
