@@ -2,6 +2,7 @@
 
 var contextRoot = "/" + window.location.pathname.split('/')[1];
 
+
 $(document).ready(function() {	
 	deposit = function(accountNumber){
 		
@@ -25,4 +26,7 @@ $(document).ready(function() {
 			}
 		});
 	}
+	
+	
 });
+
