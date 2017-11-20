@@ -2,6 +2,8 @@ package com.lucy.serviceImpl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import com.lucy.repository.CreditAccountRepository;
 import com.lucy.service.CheckingAccountService;
 
 @Service
+@Transactional
 public class CheckingAccountServiceImpl implements CheckingAccountService {
 
 	@Autowired
@@ -112,6 +115,7 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 				accountRepository.findByAccountNumber(transferTo), transaction);
 		if(!accounts.isEmpty() && !(accounts == null)){
 			accounts.forEach(accountRepository::save);
+			//accountRepository.save(accounts.get(0));
 			return true;
 		}
 		return false;

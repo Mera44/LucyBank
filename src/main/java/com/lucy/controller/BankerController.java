@@ -56,11 +56,11 @@ public class BankerController {
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)
 	public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult 
 			bindingResult, @RequestParam("accTypes") String[] accountsType, RedirectAttributes redirectAttribute) {
-		
-		if(bindingResult.hasErrors())
-			return "addCustomoerForm";
-		
-		
+		System.out.println("=======> + Iam here banker ");
+//		if(bindingResult.hasErrors()) {
+//			return "addCustomoerForm";
+//		}
+		System.out.println("=======> + Iam here banker 222 ");
 		Role role = new Role();
 		role.setRole("customer");
 		
@@ -165,6 +165,6 @@ public class BankerController {
 		System.out.println(accountNumber);
 		Transaction transaction = new Transaction();
 		transaction.setTransactionAmount((Double)transactionAmount);
-		return checkingAccountService.deposit(accountNumber, new Transaction());
+		return checkingAccountService.deposit(accountNumber, transaction);
 	}
 }
