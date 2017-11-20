@@ -57,10 +57,10 @@ public class BankerController {
 	public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult 
 			bindingResult, @RequestParam("accTypes") String[] accountsType, RedirectAttributes redirectAttribute) {
 		
-		if(bindingResult.hasErrors())
+		
+	
+	    if(bindingResult.hasErrors())
 			return "addCustomoerForm";
-		
-		
 		Role role = new Role();
 		role.setRole("customer");
 		
@@ -88,8 +88,6 @@ public class BankerController {
 		
 		customer.getProfile().setRole(role);
 		customerService.save(customer);
-		
-		
 		redirectAttribute.addFlashAttribute("newCustomer", customer);
 		return "redirect:/banker/welcome";
 	}
@@ -161,6 +159,16 @@ public class BankerController {
 	@RequestMapping(value="/customer/deposit", method=RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Account customerDeposit(@RequestParam("transactionAmount") Double transactionAmount,
 			@RequestParam("accountNumber") Integer accountNumber) {
+		System.out.println(transactionAmount);
+		System.out.println(accountNumber);
+		Transaction transaction = new Transaction();
+		transaction.setTransactionAmount((Double)transactionAmount);
+		return checkingAccountService.deposit(accountNumber, new Transaction());
+	}
+	
+	@RequestMapping(value="/customer/deposit/{transactionAmount}/{accountNumber}", method=RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Account customerDeposit2(@PathVariable("transactionAmount") Double transactionAmount,
+			@PathVariable("accountNumber") Integer accountNumber) {
 		System.out.println(transactionAmount);
 		System.out.println(accountNumber);
 		Transaction transaction = new Transaction();

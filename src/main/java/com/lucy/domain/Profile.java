@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import javax.validation.Valid;
-
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -60,7 +60,7 @@ public class Profile {
 	 @JoinColumn
 	 private Address address;
 	 
-	 @Valid
+
 	 @OneToOne(cascade=CascadeType.ALL)
 	 @JoinColumn
 	 private Role role;

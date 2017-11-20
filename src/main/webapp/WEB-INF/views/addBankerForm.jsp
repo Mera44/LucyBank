@@ -37,14 +37,19 @@
 		Personal:<br />
 			<label for="firstname"></label>
 			<form:input class="form-control" id="firstname" path="profile.firstName" placeholder="First name"/>
+			<form:errors style="color:red;" path="profile.firstName" />
 			<label for="lastname"></label>
 			<form:input class="form-control" id="lastname" path="profile.lastName" placeholder="Lastname"/>
+			<form:errors style="color:red;" path="profile.lastName" />
 			<label for="email"></label>
 			<form:input class="form-control" id="email" path="profile.email" placeholder="Email"/>
+			<form:errors style="color:red;" path="profile.email" />
 			<label for="birthdate"></label>
 			<form:input class="form-control" id="username" path="profile.userName" placeholder="Username"/>
+			<form:errors style="color:red;" path="profile.userName" />
 			<label for="password"></label>
 			<form:input class="form-control" id="password" path="profile.password" placeholder="password"/>
+			<form:errors style="color:red;" path="profile.password" />
 			
 		</div>
 		<div class="address">
@@ -52,10 +57,13 @@
 			
 			<label for="street"></label>
 			<form:input class="form-control" id="street" path="profile.address.street" placeholder="Street"/>
+			<form:errors style="color:red;" path="profile.address.street" />
 			<label for="street"></label>
 			<form:input class="form-control" id="street" path="profile.address.state" placeholder="State"/>
+			<form:errors style="color:red;" path="profile.address.state" />
 			<label for="street"></label>
 			<form:input class="form-control" id="street" path="profile.address.zipcode" placeholder="Zipcode"/>
+			<form:errors style="color:red;" path="profile.address.zipcode" />
 			
 		</div>
 		<div class="submmit-button">
