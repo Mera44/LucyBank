@@ -7,7 +7,7 @@
 	 	<img class="logo-img" src="<spring:url value='/resource/images/logo-lucy.png' />" />
 	 </div>
 	  <div class="nav">
-	  		
+	  		<security:authorize access="isAuthenticated()">
 	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/banker/customers"><spring:message code="profile.customers"/> |</a></span>
 	  		
@@ -24,18 +24,14 @@
 	  		
 	  		
 				
-			<security:authorize access="isAuthenticated()">
+			
 					
 	  					Welcome:  <security:authentication property="principal.username" /> 
-	  					<a href="<c:url value="/logout" />"><spring:message code="profile.logout"/> </a>
+	  					<a href="<c:url value="/logout" />"><spring:message code="profile.logout"/> </a></span>	
 					</security:authorize>
-			</span>	
-		<%-- 	<span>
-				<security:authorize access="isAnonymous()">
+	<security:authorize access="isAnonymous()">
 					<a href="<spring:url value='/login' />">Login</a>
 				</security:authorize>
-			</span>
-			 --%>
 	
 	    		
 	  </div>
