@@ -16,6 +16,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.lucy.validator.EqualPasswords;
 
+
+
 //import com.lucy.validator.ProfileId;
 
 @EqualPasswords
@@ -27,29 +29,24 @@ public class Profile {
 	private Long id;
 
 	@NotEmpty
-	@Size(min = 2, max = 50, message = "{Size.name.validation}")
+	@Size(min = 2, max = 50,message="{Size.firstName}")
 	private String firstName;
 
 	@NotEmpty
-	@Size(min = 2, max = 50, message = "{Size.name.validation}")
+	@Size(min = 2, max = 50, message="{Size.lastName}")
 	private String lastName;
 
 	@NotEmpty
-	@Size(min = 4, max = 50, message = "{message.name.validation}")
+	@Size(min = 4, max = 50)
 	private String userName;
 
 	@NotEmpty
 	private String password;
 
-	public String getConfirmpassword() {
-		return confirmpassword;
-	}
-
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
-	}
+	
 
 	// @NotEmpty
+	//@EqualPasswords
 	@Transient
 	private String confirmpassword;
 
@@ -151,4 +148,12 @@ public class Profile {
 		this.address = address;
 	}
 
+	
+	public String getConfirmpassword() {
+		return confirmpassword;
+	}
+
+	public void setConfirmpassword(String confirmpassword) {
+		this.confirmpassword = confirmpassword;
+	}
 }

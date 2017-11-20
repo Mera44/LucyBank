@@ -15,7 +15,7 @@ public class Address {
 	private Long id;
 	
 	@NotEmpty
-	@Size(min=3 ,max=20,message="{Size.name.validation}")
+	@Size(min=3 ,max=30, message="{Size.street}")
 	private String street;
 	
 	@NotEmpty
@@ -23,7 +23,7 @@ public class Address {
 	private String state;
 	
 	@NotEmpty
-	 @Size(min=5 ,max=5,message = "{Pattern.zipcode}")
+	 @Size(min=5 ,max=5,message="{Size.zipcode}")
 	private String zipcode;
 
 	public Long getId() {
