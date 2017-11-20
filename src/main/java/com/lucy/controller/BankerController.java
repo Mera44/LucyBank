@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.Banker;
 import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.CreditAccount;
 import com.lucy.domain.Customer;
@@ -24,8 +25,10 @@ import com.lucy.domain.Role;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
+import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CustomerService;
+import com.lucy.service.TellerService;
 
 @RequestMapping("/banker")
 @Controller
@@ -35,6 +38,10 @@ public class BankerController {
 	CustomerService customerService;
 	@Autowired
 	CheckingAccountService checkingAccountService;
+	@Autowired
+	TellerService tellerService;
+	@Autowired
+	BankerService bankerService;
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
@@ -78,8 +85,9 @@ public class BankerController {
 		customerService.save(customer);
 		if(bindingResult.hasErrors())
 			return "addCustomerForm";
+		
 		redirectAttribute.addFlashAttribute("newCustomer", customer);
-		return "redirect:/customer/customerDetail";
+		return "redirect:/banker/welcome";
 	}
 	
 	@RequestMapping(value="/customer/detail/{id}", method=RequestMethod.GET)
@@ -93,6 +101,12 @@ public class BankerController {
 			Random rand = new Random();
 			return rand.nextInt(99998) + 10001;
 		}
+	
+		//teller	
+		@RequestMapping(value="/teller/add", method=RequestMethod.GET)
+		public String addTellerForm(@ModelAttribute("teller") Teller teller) {	
+			return "addTellerForm";
+		}
 		
 		@RequestMapping(value="/teller/add", method=RequestMethod.POST)
 		public String addCustomer(@Valid @ModelAttribute("teller") Teller teller, BindingResult 
@@ -102,8 +116,42 @@ public class BankerController {
 			teller.getProfile().setRole(role);
 			if(bindingResult.hasErrors())
 				return "addTellerForm";
-			return "redirect";
+			tellerService.save(teller);
+			return "redirect:/banker/list";
 		}
+		
+		@RequestMapping("/list")
+		public String tellerList(Model model) {
+			model.addAttribute("tellers",tellerService.getAllTellers());
+			return "tellerList";
+		}
+		
+		
+		//add banker
+		//teller	
+				@RequestMapping(value="/add", method=RequestMethod.GET)
+				public String addBankerForm(@ModelAttribute("banker") Banker banker) {	
+					return "addBankerForm";
+				}
+				
+				@RequestMapping(value="/add", method=RequestMethod.POST)
+				public String addBanker(@Valid @ModelAttribute("banker") Banker banker, BindingResult 
+						bindingResult, RedirectAttributes redirectAttribute) {
+					Role role = new Role();
+					role.setRole("banker");
+					banker.getProfile().setRole(role);
+					if(bindingResult.hasErrors())
+						return "addTellerForm";
+					bankerService.save(banker);
+					return "redirect:/banker/lists";
+				}
+				
+				@RequestMapping("/lists")
+				public String bankerList(Model model) {
+					model.addAttribute("bankers",bankerService.getAllBankers());
+					return "bankerList";
+				}
+		
 	
 	
 	@RequestMapping(value="/customer/deposit", method=RequestMethod.POST)

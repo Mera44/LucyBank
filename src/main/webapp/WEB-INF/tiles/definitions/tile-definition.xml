@@ -14,7 +14,12 @@
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/template/footer.jsp" />
 	</definition>
-
+	<definition name="welcome" extends="baseLayout">
+		<put-attribute name="title" value="welcome" />
+		<put-attribute name="heading" value="welcome" />
+		<put-attribute name="tagline" value="welcome page" />
+		<put-attribute name="body" value="/WEB-INF/views/Welcome.jsp" />
+	</definition>
 	<definition name="customerWelcome" extends="baseLayout">
 		<put-attribute name="title" value="Welcome" />
 		<put-attribute name="heading" value="customerWelcome" />
@@ -65,6 +70,19 @@
 		<put-attribute name="tagline" value="edit customer profile" />
 		<put-attribute name="body" value="/WEB-INF/views/customerProfile.jsp" />
 	</definition>
+	<definition name="addTeller" extends="baseLayout">
+		<put-attribute name="title" value="addTeller" />
+		<put-attribute name="heading" value="addTeller" />
+		<put-attribute name="tagline" value="addTeller" />
+		<put-attribute name="body" value="/WEB-INF/views/addTellerForm.jsp" />
+	</definition>
+	<definition name="addBanker" extends="baseLayout">
+		<put-attribute name="title" value="addBanker" />
+		<put-attribute name="heading" value="addBanker" />
+		<put-attribute name="tagline" value="addBanker" />
+		<put-attribute name="body" value="/WEB-INF/views/addBankerForm.jsp" />
+	</definition>
+	
 
 	<definition name="productNotFound" extends="baseLayout">
 		<put-attribute name="title" value="Product Exception" />
