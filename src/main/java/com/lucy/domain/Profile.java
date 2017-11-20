@@ -45,8 +45,7 @@ public class Profile {
 
 	
 
-	// @NotEmpty
-	//@EqualPasswords
+	 @NotEmpty
 	@Transient
 	private String confirmpassword;
 

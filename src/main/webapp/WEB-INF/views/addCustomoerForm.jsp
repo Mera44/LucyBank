@@ -32,7 +32,7 @@
 <div class="content-div">
 	
 		<form:form class="form-group" modelAttribute="customer" action="add" method="post">
-		<%-- <form:errors  path = "*"/> --%>
+				 <%-- <form:errors  path = "*"/>  --%>
 		<div class="personal-info">
 		Personal:<br />
 			<label for="firstname"></label>
@@ -52,7 +52,7 @@
 			<form:errors style="color:red;" path="profile.password" />
 				<label for="password"></label>
 			<form:input class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
-			<form:errors style="color:red;" path="profile.confirmpassword" />
+			<form:errors style="color:red;" path="profile" />
 			
 		</div>
 		<div class="address">
@@ -70,8 +70,8 @@
 		<br />
 			Accounts:<br />	
 			<fieldset>
-			 <input type="checkbox" name="accTypes" value="checking" required> Checking<br>
-  			<input type="checkbox" name="accTypes" value="saving" required> Saving<br>
+			 <input type="checkbox" name="accTypes" value="checking" checked> Checking<br>
+  			<input type="checkbox" name="accTypes" value="saving" checked> Saving<br>
   			<input type="checkbox" name="accTypes" value="credit"> Credit
   			</fieldset>
 			
