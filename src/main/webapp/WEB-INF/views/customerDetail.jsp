@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> customerDetail.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
@@ -45,7 +45,7 @@
          <c:out value="${customerDetail.profile.email}"></c:out></td>
       </tr>
       <c:forEach var="account" items="${customerDetail.accounts}" >
-      <tr><td>${account.typeAccount}</td></tr>
+      <tr><td><h3>${account.typeAccount}</h3></td></tr>
       <tr>
       		<td>Account Number: ${account.accountNumber}<br />
       		Account Balance:  ${account.balance}</td>
@@ -54,9 +54,9 @@
       	<td><input class="form-control" type="number" id="${account.accountNumber}" /></td>
       </tr>
       <tr>
-          <td><a href="#" onclick="deposit('${account.accountNumber}');">Accounts</a></td>
-           <td><a href="banker/customer/edit${customer.id}">Withdraw</a></td>
-            <td><a href="banker/account/delete${customer.id}">Transfer</a></td>
+          <td class="link"><span><a href="#" onclick="deposit('${account.accountNumber}');">Deposit</a></span>
+           <span><a href="banker/customer/edit${customer.id}">Withdraw</a></span>
+           <span><a href="banker/account/delete${customer.id}">Transfer</a></span></td>
       </tr>
      </c:forEach> 
     </tbody>

@@ -15,7 +15,7 @@ $(document).ready(function() {
 			url: contextRoot + '/banker/customer/deposit',
 			type: 'POST',
 			dataType: "json",
-			contentType : 'application/json',
+			contentType : 'application/json; charset=utf-8',
 			data: data,
 			success: function(response){
 				alert("Product Successfully added to the Cart!");

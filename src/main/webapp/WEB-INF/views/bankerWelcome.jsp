@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> bankerCustomerList.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
@@ -22,6 +22,8 @@
 <html>
 <head>
 <title></title>
+<link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
 </head>
 <body>
 	

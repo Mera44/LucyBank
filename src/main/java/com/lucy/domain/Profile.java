@@ -25,11 +25,11 @@ public class Profile {
 	 private Long id;
 	 
 	 @NotEmpty
-	 @Size(min=2 ,max=50,message="{message.name.validation}")
+	 @Size(min=2 ,max=50,message="{Size.name.validation}")
 	 private String firstName;
 	 
 	 @NotEmpty
-	 @Size(min=2 ,max=50,message="{message.name.validation}")
+	 @Size(min=2 ,max=50,message="{Size.name.validation}")
 	 private String lastName;
 	 
 	 @NotEmpty
