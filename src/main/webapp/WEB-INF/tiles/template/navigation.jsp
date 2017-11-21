@@ -15,11 +15,11 @@
 	    			</security:authorize>
 	  		<security:authorize access="isAuthenticated()">
 	  		<security:authorize access="hasRole('ROLE_BANKER')">
-	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
+	  		<%-- <span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span> --%>
 	  		
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/banker/welcome"><spring:message code="profile.customers"/> |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/banker/profile"><spring:message code="profile.profile"/> |</a></span>
+	  	<%-- 	<span><a href="<%=request.getContextPath() %>/banker/profile"><spring:message code="profile.profile"/> |</a></span> --%>
 	  		
 	  		
 	  		
@@ -34,9 +34,9 @@
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span>
 	  		</security:authorize>
-	  		<security:authorize access="hasRole('ROLE_TELLER')">
+	  	<%-- 	<security:authorize access="hasRole('ROLE_TELLER')">
 	  		<span><a href="<%=request.getContextPath() %>/teller/profile"><spring:message code="profile.tellerprofile"/> |</a></span>
-	  		</security:authorize>
+	  		</security:authorize> --%>
 	  		<span>
 	  					
 	  					Welcome:  <security:authentication property="principal.username" /> 
