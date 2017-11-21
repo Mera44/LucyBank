@@ -53,7 +53,6 @@
 			<input class="form-control" id="street"  placeholder="${teller.profile.address.street }"readonly/>
 			<label for="street">State</label>
 			<input class="form-control" id="street"  placeholder="${teller.profile.address.state }"readonly/>
-			<form:errors style="color:red;" path="profile.address.state" />
 			<label for="street">Zipcode</label>
 			<input class="form-control" id="street"  placeholder="${teller.profile.address.zipcode}"readonly/>
 		<br />

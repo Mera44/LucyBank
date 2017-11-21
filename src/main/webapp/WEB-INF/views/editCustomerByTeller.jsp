@@ -43,12 +43,12 @@
 
 		<div class="content-div" id="formInput">
 			<form id="editProfileForm" >
-				<div class="personal-info">
+			<!-- 	<div class="personal-info">
 					Put New Email:<br /> <label for="email"></label> <input
 						class="form-control" id="email" 
 						placeholder="Email" />
 
-				</div>
+				</div> -->
 				<div class="address">
 					Put New Address: <label for="street"></label> <input
 						class="form-control" id="street" 

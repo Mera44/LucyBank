@@ -7,13 +7,12 @@ editTeller = function(username) {
 		//var dataToSend = JSON.stringify(serializeObject($('#editProfileForm')));
 	alert(username);
 		var dataToSend = {
-    			email : $("#email").val(),
-    			address : {
+    		
     		    	street : $("#street").val(),
     		    	state : $("#state").val(),
     		    	zipcode : $("#zipcode").val()
     		   
-    		    }
+    		    
     	}
 		alert("Iam inside edit submit");
 		console.log("formData before post: " + dataToSend);
