@@ -12,7 +12,7 @@
 	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
 	  		
 	  		
-	  		<span><a href="<%=request.getContextPath() %>/banker/customers"><spring:message code="profile.customers"/> |</a></span>
+	  		<span><a href="<%=request.getContextPath() %>/customer/customers"><spring:message code="profile.customers"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/profile"><spring:message code="profile.profile"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/accountSummery"><spring:message code="profile.accountsummary"/> |</a></span>
@@ -29,9 +29,9 @@
 	  					<a href="<c:url value="/logout" />"><spring:message code="profile.logout"/> |</a></span>	
 					</security:authorize>
 	<security:authorize access="isAnonymous()">
-				<span>	<a href="<spring:url value='/welcome' />">Home</a> |<span>
+				<span>	<a href="<spring:url value='/welcome' />">Home</a> |</span>
 			
-	<span><a href="<spring:url value='/login' />">Login</a>
+	<span><a href="<spring:url value='/login' />">Login</a></span>
 	    			</security:authorize>
 	  </div>
 		  <div class="language"> 
