@@ -113,7 +113,7 @@ public class CheckingAccountServiceImpl implements CheckingAccountService {
 		return false;*/
 		List<Account> accounts = accountHelper.transfer(getByAccountNumber(transferFrom), 
 				accountRepository.findByAccountNumber(transferTo), transaction);
-		if(!accounts.isEmpty() && !(accounts == null)){
+		if(!accounts.isEmpty() && (accounts != null)){
 			accounts.forEach(accountRepository::save);
 			//accountRepository.save(accounts.get(0));
 			return true;
