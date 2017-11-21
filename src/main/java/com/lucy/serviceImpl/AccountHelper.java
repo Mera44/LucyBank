@@ -41,14 +41,16 @@ public class AccountHelper {
 		transFrom.setTransactionAmount(transaction.getTransactionAmount());
 		Transaction transTo = new Transaction();
 		transTo.setTransactionAmount(transaction.getTransactionAmount());
-		if(withdraw(transferFrom, transaction)!=null)
-			return Arrays.asList(withdraw(transferFrom, transFrom.setTransactionTypeFor(TransactionType.TRANSFEREDTO)), deposit(transferTo, transTo.setTransactionTypeFor(TransactionType.TRANSFEREDFROM)));
+		Account fromAccount = withdraw(transferFrom, transFrom.setTransactionTypeFor(TransactionType.TRANSFEREDTO));
+		if(fromAccount !=null)
+			return Arrays.asList(fromAccount, deposit(transferTo, transTo.setTransactionTypeFor(TransactionType.TRANSFEREDFROM)));
 		return null;
 	}
 	
 	public List<Account> payBill(Account creditAccount, Account payFrom, Transaction transaction){
-		if(withdraw(payFrom, transaction)!=null){
-			return Arrays.asList(deposit(creditAccount, transaction), withdraw(payFrom, transaction.setTransactionTypeFor(TransactionType.PAYCREDIT)));
+		Account payerAccount = withdraw(payFrom, transaction);
+		if(payerAccount!=null){
+			return Arrays.asList(payerAccount, withdraw(payFrom, transaction.setTransactionTypeFor(TransactionType.PAYCREDIT)));
 		}
 		return null;
 	}

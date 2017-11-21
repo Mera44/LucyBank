@@ -3,9 +3,9 @@ $(document).ready(function() {
 var contextRoot = "/" + window.location.pathname.split('/')[1];
 alert (contextRoot);
 	
-	editSubmit = function(customerId) {
+editTeller = function(username) {
 		//var dataToSend = JSON.stringify(serializeObject($('#editProfileForm')));
-		//console.log(dataToSend);
+	alert(username);
 		var dataToSend = {
     			email : $("#email").val(),
     			address : {
@@ -19,14 +19,14 @@ alert (contextRoot);
 		console.log("formData before post: " + dataToSend);
 		$.ajax({
 			type : 'POST',
-			url : contextRoot + '/teller/edit/customer/'+customerId,
+			url : contextRoot + '/teller/edit/'+username,
 			dataType : "json", // Accept header
 			data : JSON.stringify(dataToSend),
 			contentType : 'application/json', // Sends - Content-type
 			success : function(response) {
 				//alert(response.address.state)
 				$('#errors').html("");
-				$("#result").append('<H4 align="center">Customers profile has been Succesfully update<H4>');
+				$("#result").append('<H4 align="center"> Your profile has been Succesfully update<H4>');
 				$('#result').show();
 				//Code her
 			},

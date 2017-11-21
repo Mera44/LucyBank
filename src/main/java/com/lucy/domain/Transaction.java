@@ -1,19 +1,28 @@
 package com.lucy.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
-public class Transaction {
+public class Transaction implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4757068825531283288L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long id;	
 	private Date transactionDate;
+	@NotNull
+	@Min(0)
 	private Double transactionAmount;
 	private Double startingBalance;
 	private Double endingBalance;
