@@ -8,9 +8,11 @@
 	 </div>
 	  <div class="nav">
 	  		<security:authorize access="isAuthenticated()">
-	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/banker/customers"><spring:message code="profile.customers"/> |</a></span>
 	  		
+	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
+	  		
+	  		<security:authorize access="hasRole('ROLE_BANKER')">
+	  		<span><a href="<%=request.getContextPath() %>/banker/customers"><spring:message code="profile.customers"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/profile"><spring:message code="profile.profile"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/customer/accountSummery"><spring:message code="profile.accountsummary"/> |</a></span>
@@ -19,6 +21,8 @@
 	  		
 	  		<span><a href="<%=request.getContextPath() %>/teller/deposit"><spring:message code="profile.deposit"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/teller/withdraw"><spring:message code="profile.withdraw"/> |</a></span>
+	  		</security:authorize>
+	  		
 	  		<span>
 	  		
 	  		
