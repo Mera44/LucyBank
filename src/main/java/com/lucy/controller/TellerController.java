@@ -23,6 +23,7 @@ import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.Customer;
 import com.lucy.domain.Profile;
 import com.lucy.domain.SavingAccount;
+import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 import com.lucy.exception.WithdrawAmountException;
