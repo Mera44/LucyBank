@@ -2,20 +2,20 @@ package com.lucy.domain;
 
 import java.io.Serializable;
 
-
-
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-
+@Component
 public class Check implements Serializable{
 	/**
 	 * 
 	 */
 	
 	private static final long serialVersionUID = 1L;
+	
 	@JsonIgnore 
 	private MultipartFile checkPhoto;
 	private long customerId;
@@ -55,6 +55,11 @@ public class Check implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	@Override
+	public String toString() {
+		return "Check [customerId=" + customerId + ", depositAmount=" + depositAmount + ", accountNumber="
+				+ accountNumber + ", accountType=" + accountType + "]";
 	}
 	
 	

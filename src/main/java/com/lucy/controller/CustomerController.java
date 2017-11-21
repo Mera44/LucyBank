@@ -48,8 +48,7 @@ public class CustomerController {
 	CheckingAccountService checkingService;
 	@Autowired
 	SavingAccountService savingService;
-	@Autowired
-	TransactionType transactionType;
+	
 	
 	
 
@@ -73,16 +72,21 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/depositChecks", method = RequestMethod.POST)
-	public String depositChecks(@ModelAttribute("checks") Check checks, Model model, HttpServletRequest request) {
-
+	public String depositChecks(@ModelAttribute("checks") Check checks, @RequestParam("typeAccount") String[] checking,
+			@RequestParam("accountNumber") Integer accountNumber, Model model) {
+		System.out.println("checks");
+		System.out.println(checking[0]);
+		System.out.println(accountNumber);
 		Transaction transaction = new Transaction();
 		transaction.setTransactionAmount(checks.getDepositAmount());
 		transaction.setTransactionType(TransactionType.DEPOSIT);
+	
 		MultipartFile checkPhoto = checks.getCheckPhoto();
 
 		String rootDirectory = servletContext.getRealPath("/");
 
 		if (checkPhoto != null && !checkPhoto.isEmpty()) {
+			
 			try {
 				checkPhoto.transferTo(new File(rootDirectory + "resources/images/" + checks.getCustomerId() + ".png"));
 			} catch (Exception e) {
@@ -90,14 +94,12 @@ public class CustomerController {
 			}
 		}
 		
-		if(checks.getAccountType().equals("Saving")) {
-			
-			savingService.deposit(checks.getAccountNumber(), transaction);
+		/*if(typeAccount.equals("Saving")) {			
+			savingService.deposit(accountNumber, transaction);
 		}
-		else if(checks.getAccountType().equals("Checking")) {
-			
-			checkingService.deposit(checks.getAccountNumber(), transaction);
-		}
+		else if(typeAccount.equals("Checking")) {			
+			checkingService.deposit(accountNumber, transaction);
+		}*/
 			
 			
 			
