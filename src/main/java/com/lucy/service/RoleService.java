@@ -13,5 +13,5 @@ public interface RoleService {
 	public Role update(Role role);
 	public boolean delete(long id);
 	public Role save(Role role);
-	
+	public Role getByRole(String role);
 }

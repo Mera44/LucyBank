@@ -7,5 +7,5 @@ import com.lucy.domain.Role;
 
 @Repository
 public interface RoleRepository extends CrudRepository<Role, Long>{
-
+	public Role findByRole(String role);
 }
