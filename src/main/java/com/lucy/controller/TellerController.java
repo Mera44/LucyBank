@@ -254,6 +254,7 @@ public class TellerController {
 
 		Transaction trans = new Transaction();
 		trans.setTransactionAmount(transaction.getTransactionAmount());
+		trans.setTransactionType(TransactionType.TRANSFEREDFROM);
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
 			if (acc.getAccountNumber().intValue() == accNumFrom.intValue()) {
 				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {

@@ -56,10 +56,10 @@
 			<form:input class="form-control" id="username" path="profile.userName" placeholder="${uName}"/>
 			<form:errors style="color:red;" path="profile.userName" />
 			<label for="password"></label>
-			<form:input class="form-control" id="password" path="profile.password" placeholder="${pass}"/>
+			<form:input type="password" class="form-control" id="password" path="profile.password" placeholder="password"/>
 			<form:errors style="color:red;" path="profile.password" />
-			<label for="password"></label>
-			<form:input class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="${confirm}"/>
+				<label for="password"></label>
+			<form:input type="password" class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
 			<form:errors style="color:red;" path="profile" />
 			<label for="image"><spring:message code="profile.image" /></label>
 			<form:input path="profile.image" id="image" type="file"/>

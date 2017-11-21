@@ -1,5 +1,6 @@
 package com.lucy.controller;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
@@ -33,6 +34,9 @@ import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CustomerService;
 import com.lucy.service.TellerService;
+import com.lucy.serviceImpl.CustomerAccountHelper;
+import com.lucy.serviceImpl.GenerateCardNumber;
+import com.lucy.util.Util;
 
 @RequestMapping("/banker")
 @Controller
@@ -48,6 +52,8 @@ public class BankerController {
 	BankerService bankerService;
 	@Autowired
 	ServletContext servletContext;
+	@Autowired 
+	GenerateCardNumber generateCardNumber;
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
@@ -56,7 +62,9 @@ public class BankerController {
 	}
 	
 	@RequestMapping(value="/customer/add", method=RequestMethod.GET)
-	public String addCustomerForm(@ModelAttribute("customer") Customer customer) {	
+	public String addCustomerForm(@ModelAttribute("customer") Customer customer, Model model) {
+		//System.out.println(generateCardNumber.generateCardNumberHelper(12));
+		//model.addAttribute("cardNumber", generateCardNumber.generateCardNumberHelper(12));
 		return "addCustomoerForm";
 	}
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)
