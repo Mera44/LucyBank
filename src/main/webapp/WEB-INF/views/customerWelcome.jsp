@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> customerWelcome.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>Customer Welcome</p>
+	<p></p>
  
     </tiles:putAttribute>
 

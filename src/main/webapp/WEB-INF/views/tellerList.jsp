@@ -27,7 +27,7 @@
 	
 	<div class="container">
 		
-  		<a class="btn btn-primary" href="teller/add">Add Teller</a>
+  		<a class="btn btn-primary" href="add">Add Teller</a>
   	
   <h2>List of telers</h2>            
   <table class="table table-hover">

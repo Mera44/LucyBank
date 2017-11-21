@@ -20,8 +20,10 @@ public class CustomerController {
 	
 	@RequestMapping(value="/welcome", method=RequestMethod.GET)
 	public String customerWelcomePage(Model model) {
-		String profileName  = Util.getPrincipal();
-		Customer loggedCustomer =customerService.findCustomerByUsername(profileName);
+		String userName  = Util.getPrincipal();
+		System.out.println("this is the current user name : " +userName);
+		Customer loggedCustomer =customerService.findByProfileUserName(userName);
+		System.out.println("email" + loggedCustomer.getProfile().getEmail());
 		model.addAttribute("loggedCustomer", loggedCustomer);
 		return "customerWelcome";
 	}
