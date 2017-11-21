@@ -20,8 +20,8 @@ public class StatementHelper {
 	public Statement createCheckingStatement(Statement statement, List<Transaction> allTransactions) {//statement with start date and account 
 																										//all transaction for account
 		statement.setTransactions(getTransactionForStatement(allTransactions, statement.getStartDate()));
-		statement.setEndDate(java.sql.Date.valueOf(statement.getEndDate().toLocalDate().plusMonths(1)));
-		statement.setStartingBalance(getStartingBalance(statement.getTransactions(), statement.getStartDate()));
+		statement.setEndDate(java.sql.Date.valueOf(statement.getStartDate().toLocalDate().plusMonths(1)));
+		statement.setStartingBalance(getStartingBalance(statement.getTransactions(), getStartDateOfTransaction(statement.getTransactions())));
 		statement.setEndingBalance(getEndingBalance(statement.getTransactions(), getLastDateOfTransaction(statement.getTransactions())));
 		statement.setTotalDeposit(getTotalDeposit(statement.getTransactions()));
 		statement.setTotalWithdraw(getTotalWithdrawal(statement.getTransactions()));
@@ -44,17 +44,24 @@ public class StatementHelper {
 				.get();
 	}
 	
+	private Date getStartDateOfTransaction(List<Transaction> transactions){
+		return transactions.stream()
+				.map(Transaction::getTransactionDate)
+				.min(java.sql.Date::compareTo)
+				.get();
+	}
+	
 	private Double getEndingBalance(List<Transaction> transactions, Date endingDate){
 		return transactions.stream()
 				 			.filter(t -> t.getTransactionDate().equals(endingDate))
-				 			.map(Transaction::getTransactionAmount)
+				 			.map(Transaction::getEndingBalance)
 				 			.collect(Collectors.toList()).get(0);
 	}
 	
 	private Double getStartingBalance(List<Transaction> transactions, Date statrtingDate){
 		return transactions.stream()
 						   .filter(t -> t.getTransactionDate().equals(statrtingDate))
-						   .map(Transaction::getTransactionAmount)
+						   .map(Transaction::getStartingBalance)
 						   .collect(Collectors.toList()).get(0);		
 	}
 	

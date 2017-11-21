@@ -1,5 +1,6 @@
 package com.lucy.domain;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -11,7 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Statement {
+public class Statement implements Serializable{
+
+	private static final long serialVersionUID = -4045729241960416615L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

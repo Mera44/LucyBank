@@ -48,14 +48,19 @@
       <tr><td>${account.typeAccount}</td></tr>
       <tr>
       		<td>Account Number: ${account.accountNumber}<br />
-      		Account Balance:  ${account.balance}</td>
+      		Account Balance:  ${account.balance}<br />
+      		 <span><a href="<spring:url value="/checkout?cartId=${account.id}"/>" > Statement </a> </span></td>
+      		  
       </tr>
      </c:forEach> 
       <tr>
-          <td><a href="deposit/${customer.id}">Deposit</a></td>
-           <td><a href="withdraw/${customer.id}">Withdraw</a></td>
-            <td><a href="transfer/${customer.id}">Transfer</a></td>
-            <td><a href="paybill/${customer.id}"> PayCreditBill </a></td>
+          <td class="link"><span><a href="deposit/${customer.id}">Deposit</a></span>
+          <span> <a href="withdraw/${customer.id}">Withdraw</a></span>
+            <span><a href="transfer/${customer.id}">Transfer</a></span>
+            <span><a href="paybill/${customer.id}"> PayCreditBill </a></span>
+            <%--  <span><a href="/checkout?cartId=${customer.id}"> Statement </a></span> --%>
+           
+             </td>
       </tr>
     </tbody>
   </table>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <p>&copy; Lucy Bank 2017</p>
-  <div class="nav">
+  <%-- <div class="nav">
 	  	  		<security:authorize access="isAuthenticated()">
 	  		<security:authorize access="hasRole('ROLE_BANKER')">
 	  		<span><a href="<%=request.getContextPath() %>/welcome"><spring:message code="profile.home"/> |</a></span>
@@ -32,4 +32,4 @@
 	  					Welcome:  <security:authentication property="principal.username" /> 
 	  					<a href="<c:url value="/logout" />"><spring:message code="profile.logout"/> |</a></span>	
 					</security:authorize>
-	  </div>
+	  </div> --%>

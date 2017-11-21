@@ -1,5 +1,6 @@
 package com.lucy.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -18,7 +19,14 @@ import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Account {
+public abstract class Account implements Serializable {
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 913141288780928575L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name ="id", updatable = false, nullable = false)

@@ -23,6 +23,7 @@ import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.Customer;
 import com.lucy.domain.Profile;
 import com.lucy.domain.SavingAccount;
+import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 import com.lucy.exception.WithdrawAmountException;
@@ -34,6 +35,7 @@ import com.lucy.service.ProfileService;
 import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
 import com.lucy.serviceImpl.CustomerAccountHelper;
+import com.lucy.util.Util;
 
 @Controller
 @RequestMapping("teller")
@@ -54,6 +56,7 @@ public class TellerController {
 	ProfileService profileService;
 	@Autowired
 	CustomerAccountHelper customerAccountHelper;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getAllCustomers(Model model) {
@@ -61,13 +64,48 @@ public class TellerController {
 		return "listCustomers";
 
 	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String viewTellerProfile( Model model) {
+   System.out.println(" usernam teller===> "+ tellerService.findTellerByUsername( Util.getPrincipal()).getId());
+		model.addAttribute("teller", tellerService.findTellerByUsername( Util.getPrincipal()));
+
+		return "viewTellerProfile";
+
+	}
+
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String getEditTellerProfileForm(@PathVariable("id") String userName, Model model) {
+
+		model.addAttribute("name", userName);
+
+		return "editTeller";
+
+	}
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+	public @ResponseBody Profile editTeller(@RequestBody Profile profile, @PathVariable("id") String userName) {
+		System.out.println("======>teller edit customer email  " + profile.getEmail());
+		System.out.println("======>teller edit customer street  " + profile.getAddress().getStreet());
+		Teller teller = tellerService.findTellerByUsername(userName);
+		teller.getProfile().setEmail(profile.getEmail());
+		teller.getProfile().getAddress().setState((profile.getAddress().getState()));
+		teller.getProfile().getAddress().setStreet((profile.getAddress().getStreet()));
+		teller.getProfile().getAddress().setZipcode((profile.getAddress().getZipcode()));
+		System.out.println("======>teller edit customer state  " + teller.getProfile().getAddress().getState());
+
+		profileService.save(teller.getProfile());
+		
+		return profile;
+
+	}
+	
 
 	@RequestMapping(value = "/edit/customer/{id}", method = RequestMethod.GET)
 	public String getAllAccounts(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerService.getCustomer(id));
 		return "editCustomerByTeller";
 	}
-
+//Teller Edit Customer
 	@RequestMapping(value = "/edit/customer/{id}", method = RequestMethod.POST)
 	public @ResponseBody Profile addAccountForm(@RequestBody Profile profile, @PathVariable("id") Long id) {		
 		Customer customer = customerService.getCustomer(id);
@@ -193,17 +231,23 @@ public class TellerController {
 		return "deposit";
 
 	}
-
+//transfer Post
 	@RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.POST)
 	public String transfer(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result, Model model,
 			@PathVariable("id") Integer id, @RequestParam("accountFrom") Integer accNumFrom,
 			@RequestParam("accountTo") Integer accNumTo,
-			@RequestParam(value = "accountOther", required = false) Integer accNumOther,
 			RedirectAttributes redirectAttributes) {
+
+
+		System.out.println("======>transfer From   " + accNumFrom);
+		System.out.println("======>transfer To   " + accNumTo);
+		System.out.println("======>transfer Amount   " + transaction.getTransactionAmount());
+
 
 		if(result.hasErrors()){
 			return "transfer";
 		}
+
 		Transaction trans = new Transaction();
 		trans.setTransactionAmount(transaction.getTransactionAmount());
 		trans.setTransactionType(TransactionType.TRANSFEREDFROM);
