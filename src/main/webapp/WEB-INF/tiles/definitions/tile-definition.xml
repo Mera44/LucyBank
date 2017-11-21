@@ -83,6 +83,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/addBankerForm.jsp" />
 	</definition>
 	
+	<definition name="noFund" extends="baseLayout">
+		<put-attribute name="title" value="noFund" />
+		<put-attribute name="heading" value="noFundException" />
+		<put-attribute name="tagline" value="noFundException" />
+		<put-attribute name="body" value="/WEB-INF/views/noFund.jsp" />
+	</definition>
 
 	<definition name="productNotFound" extends="baseLayout">
 		<put-attribute name="title" value="Product Exception" />
