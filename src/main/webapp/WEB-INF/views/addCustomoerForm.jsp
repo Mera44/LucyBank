@@ -48,10 +48,10 @@
 			<form:input class="form-control" id="username" path="profile.userName" placeholder="Username"/>
 			<form:errors style="color:red;" path="profile.userName" />
 			<label for="password"></label>
-			<form:input class="form-control" id="password" path="profile.password" placeholder="password"/>
+			<form:input type="password" class="form-control" id="password" path="profile.password" placeholder="password"/>
 			<form:errors style="color:red;" path="profile.password" />
 				<label for="password"></label>
-			<form:input class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
+			<form:input type="password" class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
 			<form:errors style="color:red;" path="profile" />
 			
 		</div>

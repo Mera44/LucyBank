@@ -1,9 +1,7 @@
 package com.lucy.controller;
 
-import java.util.HashSet;
-import java.util.List;
+
 import java.util.Random;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -36,6 +34,7 @@ import com.lucy.service.RoleService;
 import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
 import com.lucy.serviceImpl.CustomerAccountHelper;
+import com.lucy.serviceImpl.GenerateCardNumber;
 import com.lucy.util.Util;
 
 @RequestMapping("/banker")
@@ -56,6 +55,8 @@ public class BankerController {
 	CustomerAccountHelper customerAccountHelper;
 	@Autowired
 	RoleService roleService;
+	@Autowired 
+	GenerateCardNumber generateCardNumber;
 	
 	
 	@RequestMapping("/welcome")
@@ -65,7 +66,9 @@ public class BankerController {
 	}
 	
 	@RequestMapping(value="/customer/add", method=RequestMethod.GET)
-	public String addCustomerForm(@ModelAttribute("customer") Customer customer) {	
+	public String addCustomerForm(@ModelAttribute("customer") Customer customer, Model model) {
+		//System.out.println(generateCardNumber.generateCardNumberHelper(12));
+		//model.addAttribute("cardNumber", generateCardNumber.generateCardNumberHelper(12));
 		return "addCustomoerForm";
 	}
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)

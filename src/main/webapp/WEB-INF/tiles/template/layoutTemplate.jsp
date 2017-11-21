@@ -21,6 +21,13 @@
 <!-- <link href="/resources/css/style.css" rel="stylesheet" /> -->
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <style type="text/css">
+body {
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
 .header-div{
 	    width: 100%;
 	    height:100px;
@@ -31,10 +38,10 @@
 	    color:white;
 	}
 	.bodyAndFooter{
-		margin-top:100px;
+		margin-top: 100px;
 	}
 	.footer{
-		  position: fixed;
+		  position: absolute;
 		  right: 0;
 		  bottom: 0;
 		  left: 0;
@@ -128,10 +135,11 @@
 			<tiles:insertAttribute name="body" />
 		</div>
 
-		<div class="footer">
+		
+<div class="footer">
 			<tiles:insertAttribute name="footer" />
-		</div>
+	</div>
 
 	</div>
-</body>
+</body>	
 </html>

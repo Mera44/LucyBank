@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <html>
  
@@ -40,9 +41,17 @@
     <tbody>
     	
       <tr>
-        <td><c:out value="${loggedCustomer.profile.firstName}"></c:out><br />
-        <c:out value="${loggedCustomer.profile.lastName}"></c:out><br />
-         <c:out value="${loggedCustomer.profile.email}"></c:out></td>
+      
+        <td>
+        		<c:out value="${loggedCustomer.profile.firstName}"></c:out><br />
+        		<c:out value="${loggedCustomer.profile.lastName}"></c:out><br />
+         		<c:out value="${loggedCustomer.profile.email}"></c:out></td>
+        <td>
+        		Street: <c:out value="${loggedCustomer.profile.address.street}"></c:out><br />
+        		Zip-code: <c:out value="${loggedCustomer.profile.address.zipcode}"></c:out><br />
+         		State: <c:out value="${loggedCustomer.profile.address.state}"></c:out>
+        </td>
+         <%-- <td class="link"><span><a href="#" onclick="deposit('${loggedCustomer.id}');">Edit Profile</a></span> --%>
       </tr>
       <c:forEach var="account" items="${loggedCustomer.accounts}" >
       <tr><td>${account.typeAccount}</td></tr>
@@ -51,8 +60,17 @@
       		Account Balance:  ${account.balance}</td>
       </tr>
       <tr>
-          <td><a href="#" onclick="deposit('${account.accountNumber}');">Transfer</a></td>
-          <td><a href="#" onclick="deposit('${account.accountNumber}');">Deposit Checks</a></td>
+          <td class="link"><span><a href="account/transfer/${loggedCustomer.id}">Transfer</a></span>
+          <span>
+			<form:form commandName="checks" action="depositChecks" method="post" enctype="multipart/form-data">
+					<form:input class="form-control" path="depositAmount" type="number"  />
+					<form:input class="form-control" path="accountNumber" type="hidden" value="${account.accountNumber}" />
+					<form:input class="form-control" path="accountType" type="hidden" value="${account.typeAccount}" />
+    						<form:input class="form-control" type="file" path="checkPhoto" id="checkPhoto" />
+    						<form:input type="hidden" path="customerId" value="${loggedCustomer.id}" />
+    						<input class="btn btn-danger" id="submit" type="submit" tabindex="5" value="Deposit Checks">
+    				</form:form>
+		</span></td>
        </tr>
      </c:forEach> 
     </tbody>
