@@ -35,6 +35,7 @@
 	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span>
 	  		</security:authorize>
 	  		<security:authorize access="hasRole('ROLE_TELLER')">
+	  		<span><a href="<%=request.getContextPath() %>/teller/"><spring:message code="profile.customers"/> |</a></span>
 	  		<span><a href="<%=request.getContextPath() %>/teller/profile"><spring:message code="profile.tellerprofile"/> |</a></span>
 	  		</security:authorize>
 	  		<span>
