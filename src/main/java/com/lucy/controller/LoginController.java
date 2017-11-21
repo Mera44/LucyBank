@@ -24,11 +24,11 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value= {"/"})
+	@RequestMapping(value= {"/welcome","/"})
 	public String admin(Model model) {
 
-		String loggedInUserName = Util.getPrincipal();
-		model.addAttribute("user", loggedInUserName);
+		//String loggedInUserName = Util.getPrincipal();
+		//model.addAttribute("user", loggedInUserName);
 	
 		return "Welcome";
 	}
