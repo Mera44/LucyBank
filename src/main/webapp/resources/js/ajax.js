@@ -5,11 +5,11 @@ var contextRoot = "/" + window.location.pathname.split('/')[1];
 
 $(document).ready(function() {	
 	
-	deposit = function(accountNumber){	
-		var selector = "#" + accountNumber;
-		var transactionAmount = parseFloat($(selector).val());
+	deposit = function(accountNumber, typeAccount){	
+		let selector = "#" + accountNumber;
+		let transactionAmount = parseFloat($(selector).val());
 		$.ajax({
-			url: contextRoot + '/banker/customer/deposit/'+ transactionAmount +'/' + accountNumber,
+			url: contextRoot + '/banker/customer/deposit/'+ transactionAmount +'/' + accountNumber +'/' + typeAccount,
 			type: 'GET',
 			dataType: "json",
 			contentType : 'application/json; charset=utf-8',
@@ -17,8 +17,7 @@ $(document).ready(function() {
 				var selector = '#' +response.typeAccount;
 				console.log(selector);
 				$(selector).html("");
-				$(selector).append("<h4>Account Balance" + response.balance + "</h4>");
-				console.log(response);
+				$(selector).append("<p>Account Balance: " + response.balance + "</p>");
 			},
 			error: function(error){						
 				console.log(error);
@@ -26,18 +25,20 @@ $(document).ready(function() {
 		});
 	}
 	
-	withdraw = function(accountNumber){	
-		var selector = "#" + accountNumber;
-		var transactionAmount = parseFloat($(selector).val());
+	withdraw = function(accountNumber, typeAccount){	
+		let selector = "#" + accountNumber;
+		console.log(selector);
+		let transactionAmount = parseFloat($(selector).val());
+		console.log(transactionAmount)
 		$.ajax({
-			url: contextRoot + '/banker/customer/deposit/'+ transactionAmount +'/' + accountNumber,
+			url: contextRoot + '/banker/customer/withdraw/'+ transactionAmount +'/' + accountNumber + '/' + typeAccount,
 			type: 'GET',
 			dataType: "json",
 			contentType : 'application/json; charset=utf-8',
 			success: function(response){
 				var selector = '#' +response.typeAccount;
 				$(selector).html("");
-				$(selector).append("<h4>Account Balance" + response.balance + "</h4>");
+				$(selector).append("<p>Account Balance: " + response.balance + "</p>");
 				console.log(response);
 			},
 			error: function(error){						

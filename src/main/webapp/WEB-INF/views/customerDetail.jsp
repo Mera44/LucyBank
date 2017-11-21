@@ -44,7 +44,7 @@
         <c:out value="${customerDetail.profile.lastName}"></c:out><br />
          <c:out value="${customerDetail.profile.email}"></c:out></td>
       </tr>
-      <c:forEach var="account" items="${customerDetail.accounts}" >
+      <c:forEach var="account" items="${accounts}" >
       <tr><td><h3>${account.typeAccount}</h3></td></tr>
       <tr>
       		<td>
@@ -60,9 +60,9 @@
       	<td><input class="form-control" type="number" id="${account.accountNumber}" /></td>
       </tr>
       <tr>
-          <td class="link"><span><a href="#" onclick="deposit('${account.accountNumber}');">Deposit</a></span>
-           <span><a href="banker/customer/edit${customer.id}">Withdraw</a></span>
-           <span><a href="banker/account/delete${customer.id}">Transfer</a></span></td>
+          <td class="link"><span><a href="#" onclick="deposit('${account.accountNumber}','${account.typeAccount}');">Deposit</a></span>
+          <td class="link"><span><a href="#" onclick="withdraw('${account.accountNumber}','${account.typeAccount}');">Withdraw</a></span>
+ 
       </tr>
      </c:forEach> 
     </tbody>
