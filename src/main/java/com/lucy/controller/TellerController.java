@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.Address;
 import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.Customer;
 import com.lucy.domain.Profile;
@@ -27,7 +28,9 @@ import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 import com.lucy.exception.WithdrawAmountException;
+import com.lucy.repository.AddressRepository;
 import com.lucy.service.AccountService;
+import com.lucy.service.AddressService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CreditAccountService;
 import com.lucy.service.CustomerService;
@@ -56,6 +59,8 @@ public class TellerController {
 	ProfileService profileService;
 	@Autowired
 	CustomerAccountHelper customerAccountHelper;
+	@Autowired
+	AddressService addressService;
 	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -83,19 +88,16 @@ public class TellerController {
 
 	}
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
-	public @ResponseBody Profile editTeller(@RequestBody Profile profile, @PathVariable("id") String userName) {
-		System.out.println("======>teller edit customer email  " + profile.getEmail());
-		System.out.println("======>teller edit customer street  " + profile.getAddress().getStreet());
-		Teller teller = tellerService.findTellerByUsername(userName);
-		teller.getProfile().setEmail(profile.getEmail());
-		teller.getProfile().getAddress().setState((profile.getAddress().getState()));
-		teller.getProfile().getAddress().setStreet((profile.getAddress().getStreet()));
-		teller.getProfile().getAddress().setZipcode((profile.getAddress().getZipcode()));
-		System.out.println("======>teller edit customer state  " + teller.getProfile().getAddress().getState());
-
-		profileService.save(teller.getProfile());
+	public @ResponseBody Address editTeller(@RequestBody Address address, @PathVariable("id") String userName) {
+	
+		System.out.println("======>teller edit customer street  " + address.getStreet());
+		Address addr = (Address) addressService.findAddressById(tellerService.findTellerByUsername(userName).getProfile().getAddress().getId());
+		addr.setState(address.getState());
+		addr.setStreet(address.getStreet());
+		addr.setZipcode(address.getZipcode());
+		addressService.save(addr);
 		
-		return profile;
+		return address;
 
 	}
 	
@@ -107,15 +109,16 @@ public class TellerController {
 	}
 //Teller Edit Customer
 	@RequestMapping(value = "/edit/customer/{id}", method = RequestMethod.POST)
-	public @ResponseBody Profile addAccountForm(@RequestBody Profile profile, @PathVariable("id") Long id) {		
-		Customer customer = customerService.getCustomer(id);
-		customer.getProfile().setEmail(profile.getEmail());
-		customer.getProfile().getAddress().setState((profile.getAddress().getState()));
-		customer.getProfile().getAddress().setStreet((profile.getAddress().getStreet()));
-		customer.getProfile().getAddress().setZipcode((profile.getAddress().getZipcode()));
-
-		profileService.save(customer.getProfile());		
-		return profile;
+	public @ResponseBody Address addAccountForm(@RequestBody Address address, @PathVariable("id") Long id) {		
+		System.out.println("======>teller edit customer street  " + address.getStreet());
+		Address addr = (Address) addressService.findAddressById(customerService.getCustomer(id).getProfile().getAddress().getId());
+		addr.setState(address.getState());
+		addr.setStreet(address.getStreet());
+		addr.setZipcode(address.getZipcode());
+		addressService.save(addr);
+		
+		return address;		
+		
 	}
 
 	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
@@ -186,6 +189,7 @@ public class TellerController {
 			@PathVariable("id") Integer id, @RequestParam("accountNumber") Integer accNum,
 			RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()){
+			
 			return "deposit";
 		}
 		Transaction trans = new Transaction();

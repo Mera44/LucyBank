@@ -25,7 +25,7 @@
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript"
-	src="<spring:url value="/resource/js/edit.js"/>"></script>
+	src="<spring:url value="/resource/js/editTeller.js"/>"></script>
 <html>
 <head>
 <title></title>
@@ -43,12 +43,12 @@
 
 		<div class="content-div" id="formInput">
 			<form id="editProfileForm" >
-				<div class="personal-info">
+				<!-- <div class="personal-info">
 					Put New Email:<br /> <label for="email"></label> <input
 						class="form-control" id="email" 
 						placeholder="Email" />
 
-				</div>
+				</div> -->
 				<div class="address">
 					Put New Address: ${name} <label for="street"></label> <input
 						class="form-control" id="street" 
