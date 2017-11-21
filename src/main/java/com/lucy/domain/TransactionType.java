@@ -1,7 +1,7 @@
 package com.lucy.domain;
 
 
-public enum TransactionType{
+public enum TransactionType {
 	WITHDRAW,
 	DEPOSIT, 
 	TRANSFEREDTO, 

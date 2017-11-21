@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+							http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+<!-- Flow level variable definition SO flow scope -->
+	<var name="statement" class="com.lucy.domain.Statement" />
+
+	<action-state id="addCartToOrder">
+	<evaluate expression="statementControllerHelper.getAccount(requestParameters.cartId)"
+			result="statement.account" />
+		<transition to="customerStatementInfo" />
+		<!-- <transition to="InvalidCartWarning"
+			on-exception="endState" />	 -->	
+	</action-state>
+
+   	<view-state id="customerStatementInfo" view="customerStatementInfo.jsp" model="statement">
+		<transition on="shippingDetailCollected" to="processStatement" />
+	</view-state>
+<action-state id="processStatement">
+		<evaluate expression="statementControllerHelper.createStatement(statement)" result="statement"/>
+		<transition to="statementReady" />
+	</action-state>
+	<view-state id="InvalidCartWarning">
+		<transition to="endState"/>
+	</view-state>
+
+    <view-state id="statementReady" model="statement">
+		<transition to="endState"/>
+	</view-state>
+	<end-state id="endState"/>	
+
+</flow>
