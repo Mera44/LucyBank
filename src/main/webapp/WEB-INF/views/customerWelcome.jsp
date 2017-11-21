@@ -53,26 +53,33 @@
         </td>
          <%-- <td class="link"><span><a href="#" onclick="deposit('${loggedCustomer.id}');">Edit Profile</a></span> --%>
       </tr>
+      <form:form id="${loggedCustomer.id}" modelAttribute="checks" action="depositChecks" method="post" enctype="multipart/form-data">
       <c:forEach var="account" items="${loggedCustomer.accounts}" >
-      <tr><td>${account.typeAccount}</td></tr>
-      <tr>
-      		<td>Account Number: ${account.accountNumber}<br />
-      		Account Balance:  ${account.balance}</td>
-      </tr>
-      <tr>
+      	<tr>
+      		<td>
+      				<fieldset>
+      				<legend>${account.typeAccount}</legend>
+      					<input type="radio" name="${account.typeAccount}" value="${account.accountNumber}" /><br />
+      					<input type="radio" name="${account.typeAccount}" value="${account.typeAccount}" /><br />
+      				</fieldset>
+      				
+      		</td>
+     	 </tr>
+       </c:forEach>
+      <tr>    
           <td class="link"><span><a href="account/transfer/${loggedCustomer.id}">Transfer</a></span>
           <span>
-			<form:form commandName="checks" action="depositChecks" method="post" enctype="multipart/form-data">
+			
 					<form:input class="form-control" path="depositAmount" type="number"  />
-					<form:input class="form-control" path="accountNumber" type="hidden" value="${account.accountNumber}" />
-					<form:input class="form-control" path="accountType" type="hidden" value="${account.typeAccount}" />
-    						<form:input class="form-control" type="file" path="checkPhoto" id="checkPhoto" />
-    						<form:input type="hidden" path="customerId" value="${loggedCustomer.id}" />
-    						<input class="btn btn-danger" id="submit" type="submit" tabindex="5" value="Deposit Checks">
-    				</form:form>
+					<%-- <form:input class="form-control" path="accountNumber" type="hidden" value="${account.accountNumber}"  /> --%>
+					<%-- <form:input class="form-control" path="accountType" type="hidden" value="${account.typeAccount}" /> --%>
+    				<form:input class="form-control" type="file" path="checkPhoto" id="checkPhoto" />
+    				<form:input type="hidden" path="customerId" value="${loggedCustomer.id}" />
+    				<input class="btn btn-danger" id="submit" type="submit" tabindex="5" value="Deposit Checks">
+    		
 		</span></td>
        </tr>
-     </c:forEach> 
+     </form:form>
     </tbody>
   </table>
 </div>

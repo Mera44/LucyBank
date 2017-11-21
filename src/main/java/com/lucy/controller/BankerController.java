@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
@@ -30,6 +33,7 @@ import com.lucy.domain.Role;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
+import com.lucy.exception.NoCheckPhotoUploadedException;
 import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CustomerService;
@@ -192,4 +196,14 @@ public class BankerController {
 		transaction.setTransactionAmount((Double)transactionAmount);
 		return checkingAccountService.deposit(accountNumber, new Transaction());
 	}
+	
+	/*@ExceptionHandler(NoCheckPhotoUploadedException.class) 
+	public ModelAndView handleError(HttpServletRequest req, NoCheckPhotoUploadedException exception) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("msg", exception.getMessage());
+		modelAndView.addObject("exception", exception);
+		modelAndView.addObject("url", req.getRequestURL());
+		modelAndView.setViewName("error");
+		return modelAndView;
+	}*/
 }
