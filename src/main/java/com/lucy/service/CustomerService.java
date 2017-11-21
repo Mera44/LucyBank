@@ -10,5 +10,5 @@ public interface CustomerService {
 	public List<Customer> getCustomers();
 	public void update(Customer customer, long id);
 	public void deleteCustomer(long id);
-	public Customer findCustomerByUsername(String userName);
+	public Customer findByProfileUserName(String userName);
 }

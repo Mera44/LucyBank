@@ -21,9 +21,6 @@ public class Role {
 	@NotEmpty
 	private String role;
 	
-	@Valid
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="role")
-	private Profile profile;
 
 	public Long getId() {
 		return id;
@@ -41,13 +38,7 @@ public class Role {
 		this.role = role;
 	}
 
-	public Profile getProfile() {
-		return profile;
-	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
-	}
 	
 	
 }

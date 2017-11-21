@@ -50,6 +50,9 @@
 			<label for="password"></label>
 			<form:input class="form-control" id="password" path="profile.password" placeholder="password"/>
 			<form:errors style="color:red;" path="profile.password" />
+			<label for="password"></label>
+			<form:input class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
+			<form:errors style="color:red;" path="profile.confirmpassword" />
 			
 		</div>
 		<div class="address">

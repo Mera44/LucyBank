@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lucy.validator.EqualPasswords;
 
@@ -56,6 +57,9 @@ public class Profile {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn
 	private Role role;
+	
+	@Transient
+	private MultipartFile image;
 
 	public Profile() {
 
@@ -133,5 +137,13 @@ public class Profile {
 
 	public void setConfirmpassword(String confirmpassword) {
 		this.confirmpassword = confirmpassword;
+	}
+
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
 	}
 }

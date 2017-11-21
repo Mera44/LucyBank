@@ -26,17 +26,18 @@
 <title></title>
 </head>
 <body>
-	<h3>
+<div>
+	
 	You might be interested in:
 	<ul><li>
-		- Personal checking accounts</li>
-		<li>	- Personal Saving accounts</li>
-  	<li>	- Lucy Bank Credit Cards</li>
+		 Personal checking accounts</li>
+		<li>	Personal Saving accounts</li>
+  	<li>	 Lucy Bank Credit Cards</li>
 	
- 	<li>	- Special Offers</li>
+ 	<li>	 Special Offers</li>
  		</ul>
-  	</h3>
-  
+  	
+  </div>
   
 
 </body>

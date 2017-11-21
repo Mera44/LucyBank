@@ -1,7 +1,10 @@
 package com.lucy.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
+import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
@@ -42,6 +46,8 @@ public class BankerController {
 	TellerService tellerService;
 	@Autowired
 	BankerService bankerService;
+	@Autowired
+	ServletContext servletContext;
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
@@ -55,11 +61,22 @@ public class BankerController {
 	}
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)
 	public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult 
-			bindingResult, @RequestParam("accTypes") String[] accountsType, RedirectAttributes redirectAttribute) {
+			bindingResult, @RequestParam("accTypes") String[] accountsType, RedirectAttributes redirectAttribute) throws FileNotFoundException {
 		
 		if(bindingResult.hasErrors())
 			return "addCustomoerForm";
-		
+		MultipartFile image = customer.getProfile().getImage();
+		System.out.println("image"+customer.getProfile().getImage().getSize());
+		String rootDirectory = servletContext.getRealPath("/");
+		System.out.println(rootDirectory);
+		if(image!=null && !image.isEmpty()){
+			try{
+				image.transferTo(new File(rootDirectory+"/profilePic/"+customer.getProfile().getUserName()+".png"));				
+				
+			} catch (Exception e) {
+				throw new FileNotFoundException("unable to save image: "+ image.getOriginalFilename());
+			}
+		}
 		
 		Role role = new Role();
 		role.setRole("customer");
