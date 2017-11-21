@@ -153,7 +153,7 @@ public class BankerController {
 			return "redirect:/banker/list";
 		}
 		
-		@RequestMapping("/list")
+		@RequestMapping("/teller/list")
 		public String tellerList(Model model) {
 			model.addAttribute("tellers",tellerService.getAllTellers());
 			return "tellerList";
