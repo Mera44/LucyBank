@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> bankerCustomerList.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
@@ -27,7 +27,7 @@
 	
 	<div class="container">
 		
-  		<a class="btn btn-primary" href="banker/add">Add Banker</a>
+  		<a class="btn btn-primary" href="add">Add Banker</a>
   	
   <h2>List of Bankers</h2>            
   <table class="table table-hover">
