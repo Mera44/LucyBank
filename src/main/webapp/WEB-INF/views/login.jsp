@@ -10,7 +10,7 @@
     <tiles:putAttribute name="tagline"> welcome.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<h1><spring:message code="profile.welcome"/></h1>
+	
  <h1></h1>
     </tiles:putAttribute>
 
