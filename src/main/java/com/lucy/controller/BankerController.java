@@ -9,6 +9,8 @@ import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -61,13 +63,18 @@ public class BankerController {
 	CustomerAccountHelper customerAccountHelper;
 	@Autowired
 	SavingAccountService savingAccountService;
-
+	
+	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
 		model.addAttribute("customers",customerService.getCustomers());
 		return "bankerWelcome";
 	}
+	
+	/*private String encodePassword(String password) {
+		return bCryptPasswordEncoder.encode(password);
+	}*/
 	
 	@RequestMapping(value="/customer/add", method=RequestMethod.GET)
 	public String addCustomerForm(@ModelAttribute("customer") Customer customer, Model model) {
@@ -82,6 +89,12 @@ public class BankerController {
 		
 		if(bindingResult.hasErrors())
 			return "addCustomoerForm";
+		/*String pass = encodePassword(customer.getProfile().getConfirmpassword());
+		customer.getProfile().setPassword(pass);
+		customer.getProfile().setConfirmpassword(pass);*/
+		
+		/*customer.getProfile().setPassword(encodePassword(customer.getProfile().getPassword()));
+		customer.getProfile().setConfirmpassword(encodePassword(customer.getProfile().getConfirmpassword()));*/
 		MultipartFile image = customer.getProfile().getImage();
 		System.out.println("image"+customer.getProfile().getImage().getSize());
 		String rootDirectory = servletContext.getRealPath("/");
@@ -137,10 +150,58 @@ public class BankerController {
 		customerService.deleteCustomer(id);
 		return "redirect:/banker/welcome";
 	}
+	//update customer
+	@RequestMapping(value="/customer/update/{id}", method=RequestMethod.GET)
+	public String updateCustomer(@ModelAttribute("customer") Customer customer, @PathVariable("id") long id, Model model) {
+		model.addAttribute("editCustomer", customerService.getCustomer(id));
+		return "updateCustomerForm";
+	}
+	@RequestMapping(value="/customer/update", method=RequestMethod.POST)
+	public String updateCustomerProcess(@ModelAttribute("customer") Customer customer ,
+			@PathVariable("id") long id, Model model) {
+		Customer editCustomer = customerService.getCustomer(id);
+		editCustomer.getProfile().setEmail(customer.getProfile().getEmail());
+		editCustomer.getProfile().setPassword(customer.getProfile().getPassword());
+		editCustomer.getProfile().setAddress(customer.getProfile().getAddress());
+		customerService.save(editCustomer);
+		return "redirect:/banker/customer/welcome";
+	}
+	//teller update
+		@RequestMapping(value="/teller/update/{id}", method=RequestMethod.GET)
+		public String updateTeller(@ModelAttribute("teller") Teller teller, @PathVariable("id") long id, Model model) {
+			model.addAttribute("editTeller", tellerService.getTeller(id));
+			return "updateTellerForm";
+		}
+		@RequestMapping(value="/teller/update", method=RequestMethod.POST)
+		public String updateTellerProcess(@ModelAttribute("teller") Teller teller ,
+				@PathVariable("id") long id, Model model) {
+			Teller editTeller = tellerService.getTeller(id);
+			editTeller.getProfile().setEmail(teller.getProfile().getEmail());
+			editTeller.getProfile().setPassword(teller.getProfile().getPassword());
+			editTeller.getProfile().setAddress(teller.getProfile().getAddress());
+			tellerService.save(editTeller);
+			return "redirect:/banker/teller/list";
+		}
+	//banker update	
+		@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+		public String updateBanker(@ModelAttribute("banker") Banker banker, @PathVariable("id") long id, Model model) {
+			model.addAttribute("editBanker", bankerService.getBanker(id));
+			return "updateBankerForm";
+		}
+		@RequestMapping(value="/update", method=RequestMethod.POST)
+		public String updateBankerProcess(@ModelAttribute("banker") Banker banker ,
+				@PathVariable("id") long id, Model model) {
+			Banker editBanker = bankerService.getBanker(id);
+			editBanker.getProfile().setEmail(banker.getProfile().getEmail());
+			editBanker.getProfile().setPassword(banker.getProfile().getPassword());
+			editBanker.getProfile().setAddress(banker.getProfile().getAddress());
+			bankerService.save(editBanker);
+			return "redirect:/banker/list";
+		}
 	//helper method
 		private Integer accountNumber() {
 			Random rand = new Random();
-			return rand.nextInt(99998) + 10001;
+			return rand.nextInt(99998) + 99997;
 		}
 	
 		//teller	
@@ -186,7 +247,7 @@ public class BankerController {
 						bindingResult, RedirectAttributes redirectAttribute) {
 					
 					if(bindingResult.hasErrors())
-						return "addTellerForm";
+						return "addBankerForm";
 					bankerService.save(banker);
 					return "redirect:/banker/list";
 				}

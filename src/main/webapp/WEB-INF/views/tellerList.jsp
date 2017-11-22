@@ -51,7 +51,9 @@
           <td><c:out value="${teller.profile.address.street}"></c:out></td>
           <td><c:out value="${teller.profile.address.state}"></c:out></td>
           <td><c:out value="${teller.profile.address.zipcode}"></c:out></td>
+          <td><a href="<%=request.getContextPath() %>/banker/teller/update/${teller.id}">Edit</a></td>
           <td><a href="<%=request.getContextPath() %>/banker/teller/delete/${teller.id}">Delete</a></td>
+          
           
       </tr>
      </c:forEach> 

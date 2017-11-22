@@ -54,6 +54,7 @@
           <td><c:out value="${customer.profile.address.state}"></c:out></td>
           <td><c:out value="${customer.profile.address.zipcode}"></c:out></td>
           <td><a href="<%=request.getContextPath() %>/banker/customer/detail/${customer.id}">Accounts</a></td>
+           <td><a href="<%=request.getContextPath() %>/banker/customer/update/${customer.id}">Edit</a></td>
            <td><a href="<%=request.getContextPath() %>/banker/customer/delete/${customer.id}">Delete</a></td>
            
             
