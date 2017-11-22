@@ -26,7 +26,7 @@ public class Customer {
 	private long id;
 	
 	@Valid
-	@OneToOne(cascade=CascadeType.PERSIST)
+	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn
 	private Profile profile;
 	
