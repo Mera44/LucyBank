@@ -9,9 +9,9 @@
 	  <div class="nav">
 	  
 	  	<security:authorize access="isAnonymous()">
-				<span>	<a href="<spring:url value='/welcome' />">Home</a> |</span>
+				<span>	<a href="<spring:url value='/welcome' />"><spring:message code="profile.home"/></a> |</span>
 			
-	<span><a href="<spring:url value='/login' />">Login</a></span>
+	<span><a href="<spring:url value='/login' />"><spring:message code="profile.login"/></a></span>
 	    			</security:authorize>
 	  		<security:authorize access="isAuthenticated()">
 	  		<security:authorize access="hasRole('ROLE_BANKER')">
