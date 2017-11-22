@@ -29,7 +29,7 @@ public class AddressBuilder {
 		return this;
 	}
 	
-	public AddressBuilder build(){
-		return this;
+	public Address build(){
+		return this.address;
 	}
 }

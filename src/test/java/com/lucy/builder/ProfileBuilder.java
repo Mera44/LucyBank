@@ -36,6 +36,11 @@ public class ProfileBuilder {
 		return this;
 	}
 	
+	public ProfileBuilder withConfirmPass(String confirm){
+		this.profile.setConfirmpassword(confirm);
+		return this;
+	}
+	
 	public ProfileBuilder withEmail(String email){
 		this.profile.setEmail(email);
 		return this;
@@ -49,5 +54,9 @@ public class ProfileBuilder {
 	public ProfileBuilder withRole(Role role){
 		this.profile.setRole(role);
 		return this;
+	}
+	
+	public Profile build(){
+		return this.profile;
 	}
 }
