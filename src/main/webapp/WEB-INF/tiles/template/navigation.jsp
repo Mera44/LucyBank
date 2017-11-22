@@ -29,10 +29,10 @@
 	  		</security:authorize>
 	  		<security:authorize access="hasRole('ROLE_CUSTOMER')">
 	  		<span><a href="<%=request.getContextPath() %>/customer/welcome"><spring:message code="profile.accountsummary"/> |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/customer/profile"><spring:message code="profile.profile"/> |</a></span>
-	  		<span><a href="<%=request.getContextPath() %>/customer/statment"><spring:message code="profile.statement"/> |</a></span>
+	  		<%-- <span><a href="<%=request.getContextPath() %>/customer/profile"><spring:message code="profile.profile"/> |</a></span> --%>
+	  		<%-- <span><a href="<%=request.getContextPath() %>/customer/statment"><spring:message code="profile.statement"/> |</a></span>
 	  		
-	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span>
+	  		<span><a href="<%=request.getContextPath() %>/customer/payCredit"><spring:message code="profile.paycredit"/> |</a></span> --%>
 	  		</security:authorize>
 	  		<security:authorize access="hasRole('ROLE_TELLER')">
 	  		<span><a href="<%=request.getContextPath() %>/teller/"><spring:message code="profile.customers"/> |</a></span>
