@@ -29,7 +29,7 @@
 	
 	<div class="container">
 		
-  		<a class="btn btn-primary" href="customer/add">Add Account</a>
+  		<a class="btn btn-primary" href="customer/add">Add Customer</a>
   	
   <h2>List of accounts</h2>            
   <table class="table table-hover">

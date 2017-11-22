@@ -20,6 +20,9 @@ public class CustomerBuilder {
     }
 
     public CustomerBuilder withId(Long id) {
+
+    public CustomerBuilder withId(long id) {
+
         this.customer.setId(id);
         return this;
     }

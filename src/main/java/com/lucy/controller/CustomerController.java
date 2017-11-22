@@ -21,7 +21,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
 import com.lucy.domain.Check;
+import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.Customer;
+import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 import com.lucy.exception.NoCheckPhotoUploadedException;
@@ -72,15 +74,34 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/depositChecks", method = RequestMethod.POST)
-	public String depositChecks(@ModelAttribute("checks") Check checks, @RequestParam("typeAccount") String[] checking,
-			@RequestParam("accountNumber") Integer accountNumber, Model model) {
-		System.out.println("checks");
-		System.out.println(checking[0]);
-		System.out.println(accountNumber);
-		Transaction transaction = new Transaction();
-		transaction.setTransactionAmount(checks.getDepositAmount());
-		transaction.setTransactionType(TransactionType.DEPOSIT);
+	public String depositChecks(@ModelAttribute("checks") Check checks,
+			 Model model, @RequestParam("accNum") Integer accNum) {
 	
+		System.out.println(accNum);
+		Transaction trans = new Transaction();
+		trans.setTransactionAmount(checks.getDepositAmount());
+		trans.setTransactionType(TransactionType.DEPOSIT);
+	
+		for (Account acc : customerService.getCustomer(checks.getCustomerId()).getAccounts()) {
+
+			if (acc.getAccountNumber().intValue() == (accNum.intValue())) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
+					CheckingAccount checAcc = checkingService.deposit(accNum,
+							trans.setTransactionTypeFor(TransactionType.DEPOSIT));
+					checkingService.save(checAcc);
+					break;
+				}
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					{
+						SavingAccount saveAcc = savingService.deposit(accNum,
+								trans.setTransactionTypeFor(TransactionType.DEPOSIT));
+						savingService.save(saveAcc);
+						break;
+					}
+				}
+			}
+		}
+			
 		MultipartFile checkPhoto = checks.getCheckPhoto();
 
 		String rootDirectory = servletContext.getRealPath("/");
@@ -94,16 +115,7 @@ public class CustomerController {
 			}
 		}
 		
-		/*if(typeAccount.equals("Saving")) {			
-			savingService.deposit(accountNumber, transaction);
-		}
-		else if(typeAccount.equals("Checking")) {			
-			checkingService.deposit(accountNumber, transaction);
-		}*/
-			
-			
-			
-		return "checkUploadedSuccessfully";
+		return "redirect:/customer/welcome";
 	}
 
 	@RequestMapping(value = "/customers", method = RequestMethod.GET)

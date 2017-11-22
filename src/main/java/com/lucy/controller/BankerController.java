@@ -33,10 +33,12 @@ import com.lucy.domain.Role;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
+import com.lucy.domain.TransactionType;
 import com.lucy.exception.NoCheckPhotoUploadedException;
 import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CustomerService;
+import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
 import com.lucy.serviceImpl.CustomerAccountHelper;
 import com.lucy.serviceImpl.GenerateCardNumber;
@@ -58,6 +60,10 @@ public class BankerController {
 	ServletContext servletContext;
 	@Autowired 
 	GenerateCardNumber generateCardNumber;
+	@Autowired
+	CustomerAccountHelper customerAccountHelper;
+	@Autowired
+	SavingAccountService savingAccountService;
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
@@ -126,6 +132,7 @@ public class BankerController {
 	@RequestMapping(value="/customer/detail/{id}", method=RequestMethod.GET)
 	public String customerDetail(@PathVariable("id") long id, Model model) {
 		model.addAttribute("customerDetail", customerService.getCustomer(id));
+		model.addAttribute("accounts", customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 		return "customerDetail";
 	}
 	
@@ -187,15 +194,55 @@ public class BankerController {
 		
 	
 	
-	@RequestMapping(value="/customer/deposit", method=RequestMethod.POST, produces = "application/json")
-	public @ResponseBody Account customerDeposit(@RequestParam("transactionAmount") Double transactionAmount,
-			@RequestParam("accountNumber") Integer accountNumber) {
-		System.out.println(transactionAmount);
-		System.out.println(accountNumber);
-		Transaction transaction = new Transaction();
-		transaction.setTransactionAmount((Double)transactionAmount);
-		return checkingAccountService.deposit(accountNumber, new Transaction());
-	}
+				@RequestMapping(value="/customer/deposit", method=RequestMethod.POST, produces = "application/json")
+				public @ResponseBody Account customerDeposit(@RequestParam("transactionAmount") Double transactionAmount,
+						@RequestParam("accountNumber") Integer accountNumber) {
+					System.out.println(transactionAmount);
+					System.out.println(accountNumber);
+					Transaction transaction = new Transaction();
+					transaction.setTransactionAmount((Double)transactionAmount);
+					return checkingAccountService.deposit(accountNumber, new Transaction());
+				}
+
+				
+				@RequestMapping(value="/customer/deposit/{transactionAmount}/{accountNumber}/{typeAccount}", method=RequestMethod.GET, produces = "application/json")
+				public @ResponseBody Account customerDeposit2(@PathVariable("transactionAmount") Double transactionAmount,
+						@PathVariable("accountNumber") Integer accountNumber, @PathVariable("typeAccount") String typeAccount) {
+					Account account=null;
+					Transaction transaction = new Transaction();
+					transaction.setTransactionAmount((Double)transactionAmount);
+					transaction.setTransactionType(TransactionType.DEPOSIT);
+					
+					if(typeAccount.equals("Checking"))
+						account = checkingAccountService.deposit(accountNumber, transaction);
+					else if(typeAccount.equals("Saving"))
+						account = savingAccountService.deposit(accountNumber, transaction);	
+						
+					return account;
+				}
+				
+				@RequestMapping(value="/customer/withdraw/{transactionAmount}/{accountNumber}/{typeAccount}", method=RequestMethod.GET, produces = "application/json")
+				public @ResponseBody Account customerWithdraw(@PathVariable("transactionAmount") Double transactionAmount,
+						@PathVariable("accountNumber") Integer accountNumber, @PathVariable("typeAccount") String typeAccount) {
+					Account account=null;
+					Transaction transaction = new Transaction();
+					transaction.setTransactionAmount((Double)transactionAmount);
+					transaction.setTransactionType(TransactionType.WITHDRAW);
+				
+						
+						if(typeAccount.equals("Checking")) {
+							checkingAccountService.withdraw(accountNumber, transaction);
+							account = checkingAccountService.getByAccountNumber(accountNumber);
+						}
+							
+						else if(typeAccount.equals("Saving")) {
+							savingAccountService.withdraw(accountNumber, transaction);
+							account = savingAccountService.getByAccountNumber(accountNumber);
+						}
+						
+					return account;
+				}
+				
 	
 	/*@ExceptionHandler(NoCheckPhotoUploadedException.class) 
 	public ModelAndView handleError(HttpServletRequest req, NoCheckPhotoUploadedException exception) {
