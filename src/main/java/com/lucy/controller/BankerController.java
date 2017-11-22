@@ -9,12 +9,10 @@ import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
@@ -34,9 +31,10 @@ import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
-import com.lucy.exception.NoCheckPhotoUploadedException;
+import com.lucy.service.AccountService;
 import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
+import com.lucy.service.CreditAccountService;
 import com.lucy.service.CustomerService;
 import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
@@ -63,6 +61,10 @@ public class BankerController {
 	CustomerAccountHelper customerAccountHelper;
 	@Autowired
 	SavingAccountService savingAccountService;
+	@Autowired
+	CreditAccountService creditAccountService;
+	@Autowired
+	AccountService accountService;
 	
 	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	
@@ -314,7 +316,35 @@ public class BankerController {
 					return account;
 				}
 				
-	
+				@RequestMapping(value="/customer/addCredit/{id}", method=RequestMethod.GET)
+				public String addCreditAccount(@ModelAttribute("credit") CreditAccount credit, Model model){
+					model.addAttribute("accountNumber", accountNumber());
+					model.addAttribute("cardNumber", generateCardNumber.generateCardNumberHelper(12));
+					return "addCredit";
+				}
+				
+				@RequestMapping(value="/customer/addCredit/{id}", method=RequestMethod.POST)
+				public String saveCreditAccount(@Valid @ModelAttribute("credit") CreditAccount credit, BindingResult result,
+						RedirectAttributes redirectA, @PathVariable("id") long id){
+					if(result.hasErrors()){
+						return "addCredit";
+					}	
+					//credit.setId(3L);
+					//Account acc = credit;
+					//Account cr = accountService.save(credit);
+					Customer customer = customerService.getCustomer(id);					
+					customer.getAccounts().add(credit);
+					accountService.saveAll(customer.getAccounts());
+					customerService.save(customer);
+					return "redirect:/banker/customer/detail/"+id;
+				}
+				/*@RequestMapping(value="/customer/addCredit/{id}", method=RequestMethod.POST)
+				public String showCreditCard(Model model){
+					return "showCredit";
+				}*/
+				
+				
+				
 	/*@ExceptionHandler(NoCheckPhotoUploadedException.class) 
 	public ModelAndView handleError(HttpServletRequest req, NoCheckPhotoUploadedException exception) {
 		ModelAndView modelAndView = new ModelAndView();

@@ -56,10 +56,10 @@
 			<form:input class="form-control" id="username" path="profile.userName" placeholder="${uName}"/>
 			<form:errors style="color:red;" path="profile.userName" />
 			<label for="password"></label>
-			<form:input type="password" class="form-control" id="password" path="profile.password" placeholder="password"/>
+			<form:input type="password" class="form-control" id="password" path="profile.password" placeholder="${pass}"/>
 			<form:errors style="color:red;" path="profile.password" />
 				<label for="password"></label>
-			<form:input type="password" class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
+			<form:input type="password" class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="${confirm}"/>
 			<form:errors style="color:red;" path="profile" />
 			<label for="image"><spring:message code="profile.image" /></label>
 			<form:input path="profile.image" id="image" type="file"/>
@@ -84,12 +84,12 @@
 			<spring:message code="profile.accounts" /><br />	
 			<fieldset>
 			 <input type="checkbox" name="accTypes" value="checking" checked> <spring:message code="accounts.checking" />
-			 <br />
-			 Checking Card Number : ${cardNumberChecking}
+			 <br />			 
+			 <spring:message code="check.number" /> ${cardNumberChecking}
 			 <input type="hidden" name="cardNumberChecking" value="${cardNumberChecking}">
 			 <br>
   			<input type="checkbox" name="accTypes" value="saving" checked> <spring:message code="accounts.saving" /><br>
-  			 Saving Card Number :  ${cardNumberSaving}<br />
+  			 <spring:message code="save.number" /> ${cardNumberSaving}<br />
   			 <input type="hidden" name="cardNumberSaving" value="${cardNumberSaving}">
   			<input type="checkbox" name="accTypes" value="credit"> <spring:message code="accounts.credit" />
   			</fieldset>

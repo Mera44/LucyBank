@@ -13,7 +13,11 @@ public class CardNumber {
 	private int start;
 	private int middle;
 	private int suffix;
-
+	
+	public CardNumber() {
+		
+	}
+	
 	public CardNumber(int start, int middle, int suffix) {
 		super();
 		this.start = start;

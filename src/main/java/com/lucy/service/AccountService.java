@@ -10,4 +10,5 @@ public interface AccountService {
 	public Account update(Account account);
 	public boolean delete(Integer accNo);
 	public Account save(Account account);
+	public Account saveAll(List<Account> accounts);
 }

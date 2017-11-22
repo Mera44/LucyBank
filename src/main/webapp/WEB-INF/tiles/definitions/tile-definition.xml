@@ -90,6 +90,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/noFund.jsp" />
 	</definition>
 
+	<definition name="addCredit" extends="baseLayout">
+		<put-attribute name="title" value="addCredit" />
+		<put-attribute name="heading" value="addCredit" />
+		<put-attribute name="tagline" value="addCredit" />
+		<put-attribute name="body" value="/WEB-INF/views/addCredit.jsp" />
+	</definition>
+	
 	<definition name="productNotFound" extends="baseLayout">
 		<put-attribute name="title" value="Product Exception" />
 		<put-attribute name="body" value="/WEB-INF/views/productNotFound.jsp" />

@@ -16,7 +16,7 @@ public class AccountServiceImpl implements AccountService {
 	AccountRepository accountRepository;
 
 	@Override
-	public Account findById(long id) {
+	public Account findById(long id) {		
 		return accountRepository.findOne(id);
 	}
 
@@ -44,6 +44,12 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account save(Account account) {
 		return accountRepository.save(account);
+	}
+
+	@Override
+	public Account saveAll(List<Account> accounts) {
+		accountRepository.save(accounts);
+		return null;
 	}
 
 }

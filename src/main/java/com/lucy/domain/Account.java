@@ -15,8 +15,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.validator.constraints.Range;
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Account implements Serializable {
@@ -37,7 +35,7 @@ public abstract class Account implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Transaction> transaction;
     private Integer accountNumber;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private CardNumber cardNumber;
 	private String typeAccount;
 	protected Double balance = 0.0;
