@@ -13,7 +13,7 @@
     <tiles:putAttribute name="tagline"> customerWelcome.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p></p>
+	<p>ll</p>
  
     </tiles:putAttribute>
 
@@ -66,21 +66,26 @@
       				
       		</td>
      	 </tr>
+     	 
        </c:forEach>
       <tr>    
           <td class="link"><span><a href="account/transfer/${loggedCustomer.id}">Transfer</a></span>
           <span>
 			
-					<form:input class="form-control" path="depositAmount" type="number"  />
+					<form:input class="form-control" path="depositAmount" type="number" placeholder="Please enter the check amount"  />
 					<%-- <form:input class="form-control" path="accountNumber" type="hidden" value="${account.accountNumber}"  /> --%>
 					<%-- <form:input class="form-control" path="accountType" type="hidden" value="${account.typeAccount}" /> --%>
-    				<form:input class="form-control" type="file" path="checkPhoto" id="checkPhoto" />
+    				<%-- <form:input class="form-control btn btn-warning btn-reset" type="file" path="checkPhoto" id="checkPhoto" /> --%>
     				<form:input type="hidden" path="customerId" value="${loggedCustomer.id}" />
-    				<input class="btn btn-danger" id="submit" type="submit" tabindex="5" value="Deposit Checks">
+    					<form:input class="form-control btn-choose btn btn-warning btn-reset" type="file" path="checkPhoto" id="checkPhoto" />
+    					<span class="input-group-btn">
+	    					<input class="btn btn-danger" id="submit" type="submit" tabindex="5" value="Deposit Checks">
+	    				</span>	
     		
 		</span></td>
        </tr>
-     </form:form>
+     </form:form><tr><td><div><img class="img-circle"  src="<c:url value="/image/checks/${loggedCustomer.id }.png"/>" alt="image" style="width:150px"/></div></td>
+     </tr>
     </tbody>
   </table>
 </div>

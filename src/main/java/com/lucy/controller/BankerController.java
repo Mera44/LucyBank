@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ import com.lucy.domain.Banker;
 import com.lucy.domain.CheckingAccount;
 import com.lucy.domain.CreditAccount;
 import com.lucy.domain.Customer;
-import com.lucy.domain.Role;
 import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
@@ -42,7 +40,6 @@ import com.lucy.service.SavingAccountService;
 import com.lucy.service.TellerService;
 import com.lucy.serviceImpl.CustomerAccountHelper;
 import com.lucy.serviceImpl.GenerateCardNumber;
-import com.lucy.util.Util;
 
 @RequestMapping("/banker")
 @Controller
@@ -64,6 +61,7 @@ public class BankerController {
 	CustomerAccountHelper customerAccountHelper;
 	@Autowired
 	SavingAccountService savingAccountService;
+
 	
 	@RequestMapping("/welcome")
 	public String bankerWelcome(Model model) {
@@ -73,8 +71,9 @@ public class BankerController {
 	
 	@RequestMapping(value="/customer/add", method=RequestMethod.GET)
 	public String addCustomerForm(@ModelAttribute("customer") Customer customer, Model model) {
-		//System.out.println(generateCardNumber.generateCardNumberHelper(12));
-		//model.addAttribute("cardNumber", generateCardNumber.generateCardNumberHelper(12));
+		System.out.println(generateCardNumber.generateCardNumberHelper(12));
+		model.addAttribute("cardNumberChecking", generateCardNumber.generateCardNumberHelper(12));
+		model.addAttribute("cardNumberSaving", generateCardNumber.generateCardNumberHelper(12));
 		return "addCustomoerForm";
 	}
 	@RequestMapping(value="/customer/add", method=RequestMethod.POST)
@@ -95,9 +94,6 @@ public class BankerController {
 				throw new FileNotFoundException("unable to save image: "+ image.getOriginalFilename());
 			}
 		}
-		
-		Role role = new Role();
-		role.setRole("customer");
 		
 		for(String accTyp:accountsType) {		
 			if("saving".equals(accTyp)) {
@@ -121,7 +117,7 @@ public class BankerController {
 			}
 		}
 		
-		customer.getProfile().setRole(role);
+
 		customerService.save(customer);
 		
 		
@@ -135,7 +131,12 @@ public class BankerController {
 		model.addAttribute("accounts", customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 		return "customerDetail";
 	}
-	
+	//delete customer
+	@RequestMapping(value="/customer/delete/{id}", method=RequestMethod.GET)
+	public String deleteCustomer(@PathVariable("id") long id, Model model) {
+		customerService.deleteCustomer(id);
+		return "redirect:/banker/welcome";
+	}
 	//helper method
 		private Integer accountNumber() {
 			Random rand = new Random();
@@ -151,13 +152,13 @@ public class BankerController {
 		@RequestMapping(value="/teller/add", method=RequestMethod.POST)
 		public String addCustomer(@Valid @ModelAttribute("teller") Teller teller, BindingResult 
 				bindingResult, RedirectAttributes redirectAttribute) {
-			Role role = new Role();
-			role.setRole("teller");
-			teller.getProfile().setRole(role);
+			
+			
 			if(bindingResult.hasErrors())
 				return "addTellerForm";
+		
 			tellerService.save(teller);
-			return "redirect:/banker/list";
+			return "redirect:/banker/teller/list";
 		}
 		
 		@RequestMapping("/teller/list")
@@ -166,9 +167,15 @@ public class BankerController {
 			return "tellerList";
 		}
 		
+		//delete teller
+		@RequestMapping(value="/teller/delete/{id}", method=RequestMethod.GET)
+		public String deleteTeller(@PathVariable("id") long id, Model model) {
+			tellerService.deleteTeller(id);
+			return "redirect:/banker/teller/list";
+		}
+		
 		
 		//add banker
-		//teller	
 				@RequestMapping(value="/add", method=RequestMethod.GET)
 				public String addBankerForm(@ModelAttribute("banker") Banker banker) {	
 					return "addBankerForm";
@@ -177,21 +184,24 @@ public class BankerController {
 				@RequestMapping(value="/add", method=RequestMethod.POST)
 				public String addBanker(@Valid @ModelAttribute("banker") Banker banker, BindingResult 
 						bindingResult, RedirectAttributes redirectAttribute) {
-					Role role = new Role();
-					role.setRole("banker");
-					banker.getProfile().setRole(role);
+					
 					if(bindingResult.hasErrors())
 						return "addTellerForm";
 					bankerService.save(banker);
-					return "redirect:/banker/lists";
+					return "redirect:/banker/list";
 				}
 				
-				@RequestMapping("/lists")
+				@RequestMapping("/list")
 				public String bankerList(Model model) {
 					model.addAttribute("bankers",bankerService.getAllBankers());
 					return "bankerList";
 				}
-		
+				//delete banker
+				@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)
+				public String deleteBanker(@PathVariable("id") long id, Model model) {
+					bankerService.deleteBanker(id);
+					return "redirect:/banker/list";
+				}
 	
 	
 				@RequestMapping(value="/customer/deposit", method=RequestMethod.POST, produces = "application/json")

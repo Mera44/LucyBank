@@ -77,11 +77,20 @@
 			<label for="street"></label>
 			<form:input class="form-control" id="street" path="profile.address.zipcode" placeholder="${zip}"/>
 			<form:errors style="color:red;" path="profile.address.zipcode" />
+			
+			<form:input type="hidden"  path="profile.role.role" value="ROLE_CUSTOMER"/>
+			
 		<br />
 			<spring:message code="profile.accounts" /><br />	
 			<fieldset>
-			 <input type="checkbox" name="accTypes" value="checking" checked> <spring:message code="accounts.checking" /><br>
+			 <input type="checkbox" name="accTypes" value="checking" checked> <spring:message code="accounts.checking" />
+			 <br />
+			 Checking Card Number : ${cardNumberChecking}
+			 <input type="hidden" name="cardNumberChecking" value="${cardNumberChecking}">
+			 <br>
   			<input type="checkbox" name="accTypes" value="saving" checked> <spring:message code="accounts.saving" /><br>
+  			 Saving Card Number :  ${cardNumberSaving}<br />
+  			 <input type="hidden" name="cardNumberSaving" value="${cardNumberSaving}">
   			<input type="checkbox" name="accTypes" value="credit"> <spring:message code="accounts.credit" />
   			</fieldset>
 			

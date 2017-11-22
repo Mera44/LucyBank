@@ -53,7 +53,7 @@
 			<label for="password"></label>
 			<form:input type="password" class="form-control" id="confirmpassword" path="profile.confirmpassword" placeholder="confirm password"/>
 			<form:errors style="color:red;" path="profile.confirmpassword" /><label for="password"></label>
-			
+			<form:input type="hidden"  path="profile.role.role" value="ROLE_BANKER"/>
 			
 		</div>
 		<div class="address">

@@ -59,6 +59,7 @@ public class CustomerController {
 		String userName = Util.getPrincipal();
 		System.out.println("this is the current user name : " + userName);
 		Customer loggedCustomer = customerService.findByProfileUserName(userName);
+		
 		System.out.println("email" + loggedCustomer.getProfile().getEmail());
 		model.addAttribute("loggedCustomer", loggedCustomer);
 		return "customerWelcome";
@@ -109,7 +110,7 @@ public class CustomerController {
 		if (checkPhoto != null && !checkPhoto.isEmpty()) {
 			
 			try {
-				checkPhoto.transferTo(new File(rootDirectory + "resources/images/" + checks.getCustomerId() + ".png"));
+				checkPhoto.transferTo(new File(rootDirectory + "/profilePic/checks/" + checks.getCustomerId() + ".png"));
 			} catch (Exception e) {
 				throw new NoCheckPhotoUploadedException("Check Image saving failed");
 			}

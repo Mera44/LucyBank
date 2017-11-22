@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GenerateCardNumber {
-	public Integer generateCardNumberHelper(int length) {
+	public String generateCardNumberHelper(int length) {
 		
 		    Random random = new Random();
 		    char[] digits = new char[length];
@@ -14,7 +14,7 @@ public class GenerateCardNumber {
 		    for (int i = 1; i < length; i++) {
 		        digits[i] = (char) (random.nextInt(10) + '0');
 		    }
-		    return Integer.parseInt(new String(digits));
+		    return new String(digits);
 	}
 
 }

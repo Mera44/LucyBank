@@ -61,8 +61,8 @@
       </tr>
       <tr>
           <td class="link"><span><a href="#" onclick="deposit('${account.accountNumber}','${account.typeAccount}');">Deposit</a></span>
-          <td class="link"><span><a href="#" onclick="withdraw('${account.accountNumber}','${account.typeAccount}');">Withdraw</a></span>
- 
+          <span><a href="#" onclick="withdraw('${account.accountNumber}','${account.typeAccount}');">Withdraw</a></span>
+ 			</td>
       </tr>
      </c:forEach> 
     </tbody>
