@@ -1,4 +1,4 @@
-package  com.lucy.controller;
+/*package  com.lucy.controller;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
@@ -40,8 +40,8 @@ import edu.mum.builder.ProductListBuilder;
 	    @Mock
 	    private CustomerService customerServiceMock;
 
-	   /* @Mock
-	    private CategoryService categoryServiceMock;*/
+	    @Mock
+	    private CategoryService categoryServiceMock;
 
      private MockMvc mockMvc;
     
@@ -71,7 +71,7 @@ import edu.mum.builder.ProductListBuilder;
                 .andExpect(view().name("bankerWelcome"))
                // .andExpect(forwardedUrl("ListProducts"))
                 .andExpect(model().attribute("customers", hasSize(2)))
-                .andExpect(model().attribute("products", hasItem(
+                .andExpect(model().attribute("customers", hasItem(
                         allOf(
                                 hasProperty("id", is(1L)),
                         		hasProperty("category", hasProperty("name", is("Sports"))),
@@ -97,7 +97,7 @@ import edu.mum.builder.ProductListBuilder;
         verifyNoMoreInteractions(productServiceMock);
     }
     
-    /*@Test
+    @Test
     public void saveProduct_Post() throws Exception {
      	
         // Behavior of Mockito -- MOCKS the categoryService.GetCategory in ProductController
@@ -130,6 +130,6 @@ import edu.mum.builder.ProductListBuilder;
 			throw e;
 		}
 
-      }*/
+      }
     
-}
+}*/
