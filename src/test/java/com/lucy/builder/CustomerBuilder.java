@@ -14,12 +14,12 @@ public class CustomerBuilder {
 		this.customer = new Customer();
 	}
 	
-    public CustomerBuilder withAccountlistName(List<Account> accounts) {
+    public CustomerBuilder withAccountlist(List<Account> accounts) {
         this.customer.setAccounts(accounts);
         return this;
     }
 
-    public CustomerBuilder withId(Integer id) {
+    public CustomerBuilder withId(Long id) {
         this.customer.setId(id);
         return this;
     }
