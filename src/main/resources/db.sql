@@ -1,5 +1,4 @@
 
-use lucybank;
 INSERT INTO Role (id, role) VALUES (1,'ROLE_BANKER');
 INSERT INTO Role (id, role) VALUES (2,'ROLE_TELLER');
 INSERT INTO Role (id, role) VALUES (3,'ROLE_CUSTOMER');

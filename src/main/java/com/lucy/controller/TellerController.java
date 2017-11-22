@@ -101,7 +101,7 @@ public class TellerController {
 		addr.setState(address.getState());
 		addr.setStreet(address.getStreet());
 		addr.setZipcode(address.getZipcode());
-		addressService.save(addr);
+		addressService.update(addr);
 
 		return address;
 
@@ -122,6 +122,7 @@ public class TellerController {
 		addr.setState(address.getState());
 		addr.setStreet(address.getStreet());
 		addr.setZipcode(address.getZipcode());
+		//addressService.update(addr);
 		addressService.save(addr);
 
 		return address;
