@@ -9,33 +9,29 @@ import com.lucy.domain.Profile;
 public class CustomerBuilder {
 
 	private Customer customer;
-  
+
 	public CustomerBuilder() {
 		this.customer = new Customer();
 	}
-	
-    public CustomerBuilder withAccountlist(List<Account> accounts) {
-        this.customer.setAccounts(accounts);
-        return this;
-    }
 
-    public CustomerBuilder withId(Long id) {
+	public CustomerBuilder withAccountlist(List<Account> accounts) {
+		this.customer.setAccounts(accounts);
+		return this;
+	}
 
-    public CustomerBuilder withId(long id) {
+	public CustomerBuilder withId(long id) {
 
-        this.customer.setId(id);
-        return this;
-    }
-    
-    public CustomerBuilder withProfile(Profile profile) {
-        this.customer.setProfile(profile);
-        return this;
-    }
-    
+		this.customer.setId(id);
+		return this;
+	}
 
-      public Customer build() {
-        return customer;
-    }
+	public CustomerBuilder withProfile(Profile profile) {
+		this.customer.setProfile(profile);
+		return this;
+	}
 
-	
+	public Customer build() {
+		return customer;
+	}
+
 }

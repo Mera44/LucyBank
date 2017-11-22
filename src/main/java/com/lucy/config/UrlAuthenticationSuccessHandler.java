@@ -50,7 +50,7 @@ private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 			
 			else {
 				try {
-					redirectStrategy.sendRedirect(httrequest, httpResponse, "/guestPage");
+					redirectStrategy.sendRedirect(httrequest, httpResponse, "/");
 				} catch (IOException e) {
 					
 					e.printStackTrace();
