@@ -6,9 +6,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
@@ -27,6 +31,7 @@ import com.lucy.domain.SavingAccount;
 import com.lucy.domain.Teller;
 import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
+import com.lucy.exception.TransferAccountException;
 import com.lucy.exception.WithdrawAmountException;
 import com.lucy.repository.AddressRepository;
 import com.lucy.service.AccountService;
@@ -61,7 +66,6 @@ public class TellerController {
 	CustomerAccountHelper customerAccountHelper;
 	@Autowired
 	AddressService addressService;
-	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getAllCustomers(Model model) {
@@ -69,11 +73,11 @@ public class TellerController {
 		return "listCustomers";
 
 	}
-	
+
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public String viewTellerProfile( Model model) {
-   System.out.println(" usernam teller===> "+ tellerService.findTellerByUsername( Util.getPrincipal()).getId());
-		model.addAttribute("teller", tellerService.findTellerByUsername( Util.getPrincipal()));
+	public String viewTellerProfile(Model model) {
+		System.out.println(" usernam teller===> " + tellerService.findTellerByUsername(Util.getPrincipal()).getId());
+		model.addAttribute("teller", tellerService.findTellerByUsername(Util.getPrincipal()));
 
 		return "viewTellerProfile";
 
@@ -87,44 +91,48 @@ public class TellerController {
 		return "editTeller";
 
 	}
+
 	@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
 	public @ResponseBody Address editTeller(@RequestBody Address address, @PathVariable("id") String userName) {
-	
+
 		System.out.println("======>teller edit customer street  " + address.getStreet());
-		Address addr = (Address) addressService.findAddressById(tellerService.findTellerByUsername(userName).getProfile().getAddress().getId());
+		Address addr = (Address) addressService
+				.findAddressById(tellerService.findTellerByUsername(userName).getProfile().getAddress().getId());
 		addr.setState(address.getState());
 		addr.setStreet(address.getStreet());
 		addr.setZipcode(address.getZipcode());
 		addressService.save(addr);
-		
+
 		return address;
 
 	}
-	
 
 	@RequestMapping(value = "/edit/customer/{id}", method = RequestMethod.GET)
 	public String getAllAccounts(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("customer", customerService.getCustomer(id));
 		return "editCustomerByTeller";
 	}
-//Teller Edit Customer
+
+	// Teller Edit Customer
 	@RequestMapping(value = "/edit/customer/{id}", method = RequestMethod.POST)
-	public @ResponseBody Address addAccountForm(@RequestBody Address address, @PathVariable("id") Long id) {		
+	public @ResponseBody Address addAccountForm(@RequestBody Address address, @PathVariable("id") Long id) {
 		System.out.println("======>teller edit customer street  " + address.getStreet());
-		Address addr = (Address) addressService.findAddressById(customerService.getCustomer(id).getProfile().getAddress().getId());
+		Address addr = (Address) addressService
+				.findAddressById(customerService.getCustomer(id).getProfile().getAddress().getId());
 		addr.setState(address.getState());
 		addr.setStreet(address.getStreet());
 		addr.setZipcode(address.getZipcode());
 		addressService.save(addr);
-		
-		return address;		
-		
+
+		return address;
+
 	}
 
 	@RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
 	public String success(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("customer", customerService.getCustomer(id));
-		model.addAttribute("account", customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
+		model.addAttribute("account",
+				customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts()));
 
 		return "custAccount";
 
@@ -132,10 +140,26 @@ public class TellerController {
 
 	// Withdraw Post
 	@RequestMapping(value = "/account/withdraw/{id}", method = RequestMethod.POST)
-	public String withdraw(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result, Model model,
-			@PathVariable("id") Long id, @RequestParam("accountNumber") Integer accNum,
+	public String withdraw(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result,
+			Model model, @PathVariable("id") Long id,
+			@RequestParam(value = "accountNumber", required = false) Integer accNum,
 			RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()){
+		if (accNum == null) {
+			throw new NullPointerException();
+
+		}
+		if (result.hasErrors()) {
+			List<Account> withdrawingAccount = new ArrayList<Account>();
+			for (Account acc : customerAccountHelper
+					.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+						|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					withdrawingAccount.add(acc);
+				}
+			}
+
+			model.addAttribute("account", withdrawingAccount);
+			model.addAttribute("customer", customerService.getCustomer(id));
 			return "withdraw";
 		}
 		Transaction trans = new Transaction();
@@ -143,18 +167,21 @@ public class TellerController {
 		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getAccountNumber().intValue() == accNum.intValue()) {
 				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
-					if(!checkingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW))){
-						throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.WITHDRAW.toString(),null));
+					if (!checkingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW))) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.WITHDRAW.toString(), null));
 					}
-					//checkingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW));
+					// checkingService.withdraw(accNum,
+					// trans.setTransactionTypeFor(TransactionType.WITHDRAW));
 					break;
 				}
-				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {					
-						if(!savingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW))){
-							throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.WITHDRAW.toString(),null));
-						}
-						break;
-					
+				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					if (!savingService.withdraw(accNum, trans.setTransactionTypeFor(TransactionType.WITHDRAW))) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.WITHDRAW.toString(), null));
+					}
+					break;
+
 				}
 			}
 		}
@@ -169,7 +196,7 @@ public class TellerController {
 			@PathVariable("id") Long id) {
 		List<Account> withdrawingAccount = new ArrayList<Account>();
 
-		for (Account acc :customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+		for (Account acc : customerAccountHelper.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
 			if (acc.getTypeAccount().equalsIgnoreCase("Checking") || acc.getTypeAccount().equalsIgnoreCase("Saving")) {
 				withdrawingAccount.add(acc);
 			}
@@ -185,11 +212,26 @@ public class TellerController {
 
 	// Deposit Post
 	@RequestMapping(value = "/account/deposit/{id}", method = RequestMethod.POST)
-	public String deposit(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result, Model model,
-			@PathVariable("id") Integer id, @RequestParam("accountNumber") Integer accNum,
+	public String deposit(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result,
+			Model model, @PathVariable("id") Integer id,
+			@RequestParam(value = "accountNumber", required = false) Integer accNum,
 			RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()){
-			
+		if (accNum == null) {
+			throw new NullPointerException();
+
+		}
+		if (result.hasErrors()) {
+			List<Account> withdrawingAccount = new ArrayList<Account>();
+			for (Account acc : customerAccountHelper
+					.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+						|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					withdrawingAccount.add(acc);
+				}
+			}
+
+			model.addAttribute("account", withdrawingAccount);
+			model.addAttribute("customer", customerService.getCustomer(id));
 			return "deposit";
 		}
 		Transaction trans = new Transaction();
@@ -235,20 +277,34 @@ public class TellerController {
 		return "deposit";
 
 	}
-//transfer Post
+
+	// transfer Post
 	@RequestMapping(value = "/account/transfer/{id}", method = RequestMethod.POST)
-	public String transfer(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result, Model model,
-			@PathVariable("id") Integer id, @RequestParam("accountFrom") Integer accNumFrom,
-			@RequestParam("accountTo") Integer accNumTo,
+	public String transfer(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result,
+			Model model, @PathVariable("id") Integer id,
+			@RequestParam(value = "accountFrom", required = false) Integer accNumFrom,
+			@RequestParam(value = "accountTo", required = false) Integer accNumTo,
 			RedirectAttributes redirectAttributes) {
+		System.out.println("=====>accNumFrom" + accNumFrom);
+		if (accNumFrom == null || accNumTo == null) {
+			throw new TransferAccountException(null);
 
+		}
+		if (result.hasErrors()) {
+			List<Account> withdrawingAccount = new ArrayList<Account>();
+			for (Account acc : customerAccountHelper
+					.getRemovedDuplicates(customerService.getCustomer(id).getAccounts())) {
+				if (acc.getTypeAccount().equalsIgnoreCase("Checking")
+						|| acc.getTypeAccount().equalsIgnoreCase("Saving")) {
+					withdrawingAccount.add(acc);
+				}
+			}
 
-		System.out.println("======>transfer From   " + accNumFrom);
-		System.out.println("======>transfer To   " + accNumTo);
-		System.out.println("======>transfer Amount   " + transaction.getTransactionAmount());
+			model.addAttribute("accounts", withdrawingAccount);
+			model.addAttribute("accountOther", customerAccountHelper.getRemovedOtherAccountDuplicates(
+					accountService.findAll(), customerService.getCustomer(id).getAccounts()));
 
-
-		if(result.hasErrors()){
+			model.addAttribute("customer", customerService.getCustomer(id));
 			return "transfer";
 		}
 
@@ -258,14 +314,16 @@ public class TellerController {
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
 			if (acc.getAccountNumber().intValue() == accNumFrom.intValue()) {
 				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
-					if(!checkingService.transfer(accNumFrom, accNumTo, trans)){
-						throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.TRANSFEREDFROM.toString(),null));
+					if (!checkingService.transfer(accNumFrom, accNumTo, trans)) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.TRANSFEREDFROM.toString(), null));
 					}
 					break;
 				}
 				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
-					if(!savingService.transfer(accNumFrom, accNumTo, trans)){
-						throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.TRANSFEREDFROM.toString(),null));
+					if (!savingService.transfer(accNumFrom, accNumTo, trans)) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.TRANSFEREDFROM.toString(), null));
 					}
 					break;
 				}
@@ -292,8 +350,8 @@ public class TellerController {
 		}
 
 		model.addAttribute("accounts", withdrawingAccount);
-		model.addAttribute("accountOther", customerAccountHelper.getRemovedOtherAccountDuplicates(accountService.findAll(),
-				customerService.getCustomer(id).getAccounts()));
+		model.addAttribute("accountOther", customerAccountHelper.getRemovedOtherAccountDuplicates(
+				accountService.findAll(), customerService.getCustomer(id).getAccounts()));
 
 		model.addAttribute("customer", customerService.getCustomer(id));
 
@@ -303,10 +361,18 @@ public class TellerController {
 
 	// PayBill Post
 	@RequestMapping(value = "/account/paybill/{id}", method = RequestMethod.POST)
-	public String payBill(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result, Model model,
-			@PathVariable("id") Integer id, @RequestParam("accountFrom") Integer accNumFrom,
-			@RequestParam("accountTo") Integer accNumTo, RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()){
+	public String payBill(@Valid @ModelAttribute("transaction") Transaction transaction, BindingResult result,
+			Model model, @PathVariable("id") Integer id,
+			@RequestParam(value = "accountFrom", required = false) Integer accNumFrom,
+			@RequestParam(value = "accountTo", required = false) Integer accNumTo,
+			RedirectAttributes redirectAttributes) {
+
+		if (accNumFrom == null || accNumTo == null) {
+			throw new TransferAccountException(null);
+
+		}
+
+		if (result.hasErrors()) {
 			return "paybill";
 		}
 		Transaction trans = new Transaction();
@@ -314,14 +380,16 @@ public class TellerController {
 		for (Account acc : customerService.getCustomer(id).getAccounts()) {
 			if (acc.getAccountNumber().intValue() == accNumFrom.intValue()) {
 				if (acc.getTypeAccount().equalsIgnoreCase("Checking")) {
-					if(!checkingService.payCreditBill(accNumFrom, accNumTo, trans)){
-						throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.PAYCREDIT.toString(),null));
+					if (!checkingService.payCreditBill(accNumFrom, accNumTo, trans)) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.PAYCREDIT.toString(), null));
 					}
 					break;
 				}
 				if (acc.getTypeAccount().equalsIgnoreCase("Saving")) {
-					if(!savingService.payCreditBill(accNumFrom, accNumTo, trans)){
-						throw new IllegalArgumentException(new WithdrawAmountException(TransactionType.PAYCREDIT.toString(),null));
+					if (!savingService.payCreditBill(accNumFrom, accNumTo, trans)) {
+						throw new IllegalArgumentException(
+								new WithdrawAmountException(TransactionType.PAYCREDIT.toString(), null));
 					}
 					break;
 				}
@@ -350,5 +418,16 @@ public class TellerController {
 		return "paybill";
 	}
 
+	//// Individual Exception
+
+	@ExceptionHandler(NullPointerException.class)
+	// @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason="Account Should be
+	// Selected for Transaction")
+	public ModelAndView handleClientErrors(NullPointerException ex) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("withdrawId", "Account Should be Selected for Transaction");
+		mav.setViewName("errorTransaction");
+		return mav;
+	}
 
 }

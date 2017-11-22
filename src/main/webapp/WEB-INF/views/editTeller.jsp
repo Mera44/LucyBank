@@ -50,7 +50,7 @@
 
 				</div> -->
 				<div class="address">
-					Put New Address: ${name} <label for="street"></label> <input
+					<h4>Put New Address:</h4>  <label for="street"></label> <input
 						class="form-control" id="street" 
 						placeholder="Street" /> <label for="street"></label> <input
 						class="form-control" id="state" 
