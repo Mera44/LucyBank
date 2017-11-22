@@ -82,7 +82,10 @@ body {
 .nav span {
 	margin-right: 10px;
 }
-
+.image-div{
+	width:200px;
+	
+}
 .nav sapan a:link {
 	color: white;
 }
@@ -101,6 +104,7 @@ body {
 
 .img-circle {
 	border-radius: 50%;
+	width: 10%;
 }
 
 .content-div {

@@ -1,5 +1,5 @@
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
@@ -29,7 +29,11 @@
 <body>
 	
 	<div class="container">
-  	
+	<div class="image-div">
+	
+	<img class="img-circle" src="<c:url value="/image/${customer.profile.userName}.png"></c:url>"
+						alt="image" style="width: 100%" />
+  	</div>
   <h2>Customer Account Detail</h2>            
   <table class="table table-hover">
     <thead>
@@ -39,9 +43,7 @@
     </thead>
     <tbody>
      <tr>
-     ${customer.profile.userName}
-      	
-    <img class="img-circle" src="<spring:url value="\resources\images\lucy.png"/>" alt="image"  style = "width:100%"/>
+    
         <td><c:out value="${customer.profile.firstName}"></c:out><br />
         <c:out value="${customer.profile.lastName}"></c:out><br />
          <c:out value="${customer.profile.email}"></c:out></td>
