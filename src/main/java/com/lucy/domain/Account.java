@@ -36,7 +36,6 @@ public abstract class Account implements Serializable {
 	//@Fetch(FetchMode.JOIN)
 	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
 	private List<Transaction> transaction;
-	@Range(min=10000, max=99999)
     private Integer accountNumber;
 	@OneToOne
 	private CardNumber cardNumber;
