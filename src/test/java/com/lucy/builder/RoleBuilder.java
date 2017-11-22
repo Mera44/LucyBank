@@ -18,7 +18,7 @@ public class RoleBuilder {
 		this.role.setRole(role);
 		return this;
 	}
-	public RoleBuilder build(){
-		return this;
+	public Role build(){
+		return this.role;
 	}
 }
