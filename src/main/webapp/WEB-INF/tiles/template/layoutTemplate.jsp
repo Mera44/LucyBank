@@ -141,6 +141,28 @@ td.link span {
 form:errors {
 	color: red;
 }
+.front-moto{
+	width:70%;
+	margin-left:400px;
+	margin-top:100px;
+}
+.front-box-div{
+	width:90%;
+	margin-left:200px;
+	margin-top:20px;
+}
+.front-box{
+	width:300px;
+	height:200px;
+	border-radius:10px;
+	padding:30px;
+	font-size:2em;
+	color:white;
+	background-color: rgb(27, 72, 145);
+	float:left;
+	box-shadow: 10px 10px 5px #888888;
+	margin-right:20px;
+}
 </style>
 </head>
 
