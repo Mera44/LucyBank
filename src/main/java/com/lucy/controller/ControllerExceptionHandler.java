@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lucy.exception.TransferAccountException;
 import com.lucy.exception.WithdrawAmountException;
 
 @ControllerAdvice
@@ -18,6 +19,15 @@ public class ControllerExceptionHandler {
 		ModelAndView mav = new ModelAndView();
 		 mav.addObject("withdrawId", exception.getFullMessage());
 		 mav.setViewName("noFund");
+		 return mav;
+	}
+	
+
+	@ExceptionHandler(TransferAccountException.class)
+	public ModelAndView handleError(HttpServletRequest req, TransferAccountException exception) {
+		ModelAndView mav = new ModelAndView();
+		 mav.addObject("withdrawId", exception.getFullMessage());
+		 mav.setViewName("errorTransaction");
 		 return mav;
 	}
 }

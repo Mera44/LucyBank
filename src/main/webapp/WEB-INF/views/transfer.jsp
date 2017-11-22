@@ -13,7 +13,7 @@
 	<tiles:putAttribute name="tagline"> customerDetail.tagline </tiles:putAttribute>
 	<tiles:putAttribute name="body">
 
-		<p>List</p>
+		<p></p>
 
 	</tiles:putAttribute>
 
@@ -58,7 +58,8 @@
 						<tr>
 							<td><h4>Transfer Amount</h4></td>
 								<td><form:label for="transactionAmount"
-								path="transactionAmount">Amount</form:label>
+								path="transactionAmount"></form:label>
+								<form:errors style="color:red;" path="transactionAmount" />
 						<form:input class="form-control" path="transactionAmount" />
 						<input type="submit" value="submit" /></td>
 							

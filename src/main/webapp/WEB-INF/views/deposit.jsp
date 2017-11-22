@@ -13,7 +13,7 @@
     <tiles:putAttribute name="tagline"> customerDetail.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
@@ -52,7 +52,10 @@
      </c:forEach> 
       <tr>
          <td> <form:label for="transactionAmount" path="transactionAmount">Amount</form:label></td>
-		  <td><form:input class="form-control" path="transactionAmount" /></td>
+		  <td><form:errors style="color:red;" path="transactionAmount" /><form:errors style="color:red;" path="transactionAmount" />
+		  
+		  <form:input class="form-control" path="transactionAmount" /></td>
+		  
 		   <td><input type="submit" value="submit" /></td>
       </tr>
       

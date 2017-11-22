@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> customerDetail.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
@@ -38,8 +38,10 @@
       </tr>
     </thead>
     <tbody>
-    	
-      <tr>
+     <tr>
+     ${customer.profile.userName}
+      	
+    <img class="img-circle" src="<spring:url value="\resources\images\lucy.png"/>" alt="image"  style = "width:100%"/>
         <td><c:out value="${customer.profile.firstName}"></c:out><br />
         <c:out value="${customer.profile.lastName}"></c:out><br />
          <c:out value="${customer.profile.email}"></c:out></td>

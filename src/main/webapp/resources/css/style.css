@@ -81,3 +81,7 @@
 	td.link span{
 		margin-right:100px;;
 	}
+	.img-circle {
+    border-radius: 50%;
+}
+	
