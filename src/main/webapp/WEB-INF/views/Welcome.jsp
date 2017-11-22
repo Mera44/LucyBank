@@ -27,19 +27,14 @@
 </head>
 <body>
 <div>
-	
-	You might be interested in:
-	<ul><li>
-		 Personal checking accounts</li>
-		<li>	Personal Saving accounts</li>
-  	<li>	 Lucy Bank Credit Cards</li>
-	
- 	<li>	 Special Offers</li>
- 		</ul>
-  	
-  </div>
-  <h1>JOIN OUR BANK BY TAKING A VISIT TO ANY OF OUR BRANCHES</h1>
-
+  <div class="front-moto"><h2>Join our bank where Experience  meets Customer satisfaction</h2> </div>
+  <div class="front-box-div">
+  	<div class="front-box">Personal Checking accounts</div>
+  	<div class="front-box">Personal Saving accounts</div>
+  	<div class="front-box">PLucy Bank Credit Cards</div>
+  	<div class="front-box">Special Offers</div>
+  </div>	
+</div>
 </body>
 </html>
 
