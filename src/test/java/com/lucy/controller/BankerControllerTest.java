@@ -1,4 +1,4 @@
-/*package  com.lucy.controller;
+package  com.lucy.controller;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasItem;
@@ -10,14 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,11 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.lucy.builder.CustomerListBuilder;
-import com.lucy.domain.Customer;
 import com.lucy.service.CustomerService;
-
-import edu.mum.builder.ProductListBuilder;
-
 
 
  	public class BankerControllerTest {
@@ -40,8 +31,7 @@ import edu.mum.builder.ProductListBuilder;
 	    @Mock
 	    private CustomerService customerServiceMock;
 
-	    @Mock
-	    private CategoryService categoryServiceMock;
+	
 
      private MockMvc mockMvc;
     
@@ -69,35 +59,31 @@ import edu.mum.builder.ProductListBuilder;
            mockMvc.perform(get("/banker/welcome"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bankerWelcome"))
-               // .andExpect(forwardedUrl("ListProducts"))
-                .andExpect(model().attribute("customers", hasSize(2)))
+                //.andExpect(forwardedUrl("bankerWelcome"))
+                .andExpect(model().attribute("customers", hasSize(1)))
                 .andExpect(model().attribute("customers", hasItem(
                         allOf(
-                                hasProperty("id", is(1L)),
-                        		hasProperty("category", hasProperty("name", is("Sports"))),
-                        		hasProperty("description", is("Two wheels")),
-                                hasProperty("name", is("Bicycle"))
-                        )
-                )))
-                .andExpect(model().attribute("products", hasItem(
-                        allOf(
-                                hasProperty("id", is(2L)),
-                        		hasProperty("category", hasProperty("name", is("Solids"))),
-                                hasProperty("description", is("6 sides")),
-                                hasProperty("name", is("Cube"))
-                        )
-                )));
+                        		
+                						hasProperty("id", is(1L)),
+                						hasProperty("profile", hasProperty("firstName", is("Ameha"))),
+                						hasProperty("profile", hasProperty("address",hasProperty("state", is("IA"))))
+                						
+                					    
+                						
+  
+ 
+                ))));
         } catch (AssertionError e) {
-			System.out.println("ListProduct Error Message: " + e.getMessage());
+			System.out.println("ListCustomers Error Message: " + e.getMessage());
 			throw e;
 	    }
 
         // verify EXACTLY 1 invocation ...
-        verify(productServiceMock, times(1)).getAll();
-        verifyNoMoreInteractions(productServiceMock);
+        verify(customerServiceMock, times(1)).getCustomers();
+        verifyNoMoreInteractions(customerServiceMock);
     }
     
-    @Test
+   /* @Test
     public void saveProduct_Post() throws Exception {
      	
         // Behavior of Mockito -- MOCKS the categoryService.GetCategory in ProductController
@@ -130,6 +116,6 @@ import edu.mum.builder.ProductListBuilder;
 			throw e;
 		}
 
-      }
+      }*/
     
-}*/
+}

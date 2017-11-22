@@ -7,7 +7,7 @@
       
     <http auto-config="true" use-expressions="true">
          <intercept-url pattern="/" access="permitAll" />
-       <intercept-url pattern="/banker/**" access="hasRole('ROLE_BANKER')"  /> 
+        <intercept-url pattern="/banker/**" access="hasRole('ROLE_BANKER')"  />  
         <intercept-url pattern="/customer/**" access="hasRole('ROLE_CUSTOMER')" />
         <intercept-url pattern="/teller/**" access="hasRole('ROLE_TELLER')" />  
      <!--    <form-login  login-page="/login" username-parameter="ssoId" password-parameter="password"  /> -->
