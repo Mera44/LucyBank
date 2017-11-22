@@ -59,8 +59,9 @@
       		<td>
       				<fieldset>
       				<legend>${account.typeAccount}</legend>
-      					<input type="radio" name="${account.typeAccount}" value="${account.accountNumber}" /><br />
-      					<input type="radio" name="${account.typeAccount}" value="${account.typeAccount}" /><br />
+      				
+      					 <input type="radio" name="accNum" value="${account.accountNumber}" />${account.accountNumber}<br />
+      					Balance: ${account.balance}
       				</fieldset>
       				
       		</td>
