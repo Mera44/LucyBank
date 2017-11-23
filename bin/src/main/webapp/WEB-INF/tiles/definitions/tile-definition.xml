@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="baseLayout"
+		template="/WEB-INF/tiles/template/layoutTemplate.jsp">
+		<put-attribute name="title" value="Sample Title" />
+		<put-attribute name="heading" value="" />
+		<put-attribute name="tagline" value="" />
+		<put-attribute name="navigation"
+			value="/WEB-INF/tiles/template/navigation.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/template/footer.jsp" />
+	</definition>
+	<definition name="welcome" extends="baseLayout">
+		<put-attribute name="title" value="welcome" />
+		<put-attribute name="heading" value="welcome" />
+		<put-attribute name="tagline" value="welcome page" />
+		<put-attribute name="body" value="/WEB-INF/views/Welcome.jsp" />
+	</definition>
+	<definition name="customerWelcome" extends="baseLayout">
+		<put-attribute name="title" value="Welcome" />
+		<put-attribute name="heading" value="customerWelcome" />
+		<put-attribute name="body" value="/WEB-INF/views/customerWelcome.jsp" />
+	</definition>
+	<definition name="teller" extends="baseLayout">
+		<put-attribute name="title" value="Teller Page" />
+		<put-attribute name="heading" value="Teller Page" />
+		<put-attribute name="body" value="/WEB-INF/views/listCustomers.jsp" />
+	</definition>
+	<definition name="customerAccount" extends="baseLayout">
+		<put-attribute name="title" value="Teller Page" />
+		<put-attribute name="heading" value="Teller Page" />
+		<put-attribute name="body" value="/WEB-INF/views/custAccount.jsp" />
+	</definition>
+	
+
+	<definition name="withdraw" extends="baseLayout">
+		<put-attribute name="title" value="Teller" />
+		<put-attribute name="heading" value="Teller" />
+		<put-attribute name="body" value="/WEB-INF/views/withdraw.jsp" />
+	</definition>
+
+	<definition name="bankerCustomerList" extends="baseLayout">
+		<put-attribute name="title" value="banker" />
+		<put-attribute name="heading" value="banker" />
+		<put-attribute name="tagline" value="banker" />
+		<put-attribute name="body" value="/WEB-INF/views/bankerWelcome.jsp" />
+	</definition>
+
+	<definition name="customerDetail" extends="customerDetail">
+		<put-attribute name="title" value="customerDetail" />
+		<put-attribute name="heading" value="customerDetail" />
+		<put-attribute name="tagline" value="Customer" />
+		<put-attribute name="body" value="/WEB-INF/views/customerDetail.jsp" />
+	</definition>
+
+	<definition name="login" extends="baseLayout">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="heading" value="Login" />
+		<put-attribute name="tagline" value="Enter your Credentials" />
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	</definition>
+
+	<definition name="customer" extends="baseLayout">
+		<put-attribute name="title" value="customer profile" />
+		<put-attribute name="heading" value="CustomerProfile" />
+		<put-attribute name="tagline" value="edit customer profile" />
+		<put-attribute name="body" value="/WEB-INF/views/customerProfile.jsp" />
+	</definition>
+	<definition name="addTeller" extends="baseLayout">
+		<put-attribute name="title" value="addTeller" />
+		<put-attribute name="heading" value="addTeller" />
+		<put-attribute name="tagline" value="addTeller" />
+		<put-attribute name="body" value="/WEB-INF/views/addTellerForm.jsp" />
+	</definition>
+	<definition name="addBanker" extends="baseLayout">
+		<put-attribute name="title" value="addBanker" />
+		<put-attribute name="heading" value="addBanker" />
+		<put-attribute name="tagline" value="addBanker" />
+		<put-attribute name="body" value="/WEB-INF/views/addBankerForm.jsp" />
+	</definition>
+	
+	<definition name="noFund" extends="baseLayout">
+		<put-attribute name="title" value="noFund" />
+		<put-attribute name="heading" value="noFundException" />
+		<put-attribute name="tagline" value="noFundException" />
+		<put-attribute name="body" value="/WEB-INF/views/noFund.jsp" />
+	</definition>
+
+	<definition name="productNotFound" extends="baseLayout">
+		<put-attribute name="title" value="Product Exception" />
+		<put-attribute name="body" value="/WEB-INF/views/productNotFound.jsp" />
+	</definition>
+
+</tiles-definitions>

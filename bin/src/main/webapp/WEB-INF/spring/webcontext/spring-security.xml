@@ -5,7 +5,6 @@
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security-4.0.xsd">
       
-       	<global-method-security pre-post-annotations="enabled"/>	
     <http auto-config="true" use-expressions="true">
          <intercept-url pattern="/" access="permitAll" />
         <intercept-url pattern="/banker/**" access="hasRole('ROLE_BANKER')"  />  
@@ -24,8 +23,7 @@
         <csrf  disabled="true"/>
     </http>
     
-   
-
+    <global-method-security pre-post-annotations="enabled"/>
     <beans:bean id="myAuthenticationSuccessHandler"
         class="com.lucy.config.UrlAuthenticationSuccessHandler" />
   
