@@ -30,7 +30,7 @@ import com.lucy.service.CustomerService;
      private MockMvc mockMvc;
     
      @InjectMocks
-     private  CustomerController customerController;
+     private  BankerController customerController;
 
      @Before
      public void setup() {
@@ -54,26 +54,27 @@ import com.lucy.service.CustomerService;
                 .build();
         when(categoryServiceMock.getCategory(1)).thenReturn(category);*/
       
-        CustomerListBuilder listBuilder = new CustomerListBuilder();
+        @SuppressWarnings("unused")
+		CustomerListBuilder listBuilder = new CustomerListBuilder();
         
     	try {
- 			mockMvc.perform(post("/banker/add")
+ 			mockMvc.perform(post("/banker/customer/add?accTypes=Checking&accTypes=Saving")
 			    .param("profile.userName","fili")
 			    .param("profile.password", "fili123")
 			    .param("profile.firstName", "Filmon")
 			    .param("profile.lastName", "Semere"))
 			    .andExpect(status().isOk())
-			    .andExpect(forwardedUrl("bankerList"))
+			    .andExpect(forwardedUrl("addCustomoerForm"))
 			    // validate that Data binding has worked...compare ModelAttribute (NewProduct)
 			    // with "real" values....
-			    .andExpect(model().attribute("banker",  
+			    .andExpect(model().attribute("customer",  
                       allOf (
                         		hasProperty("profile",hasProperty("userName", is("fili"))),
                         		hasProperty("profile",hasProperty("password", is("fili123"))),
                         		hasProperty("profile", hasProperty("firstName", is("Filmon"))),
                         		hasProperty("profile", hasProperty("lastName", is("Semere")))
                        )
-			      )).andExpect(model().attribute("bankers", listBuilder.build()));
+			      ));
 		} catch (AssertionError e) {
 			System.out.println("SaveBanker Error Message: " + e.getMessage());
 			throw e;

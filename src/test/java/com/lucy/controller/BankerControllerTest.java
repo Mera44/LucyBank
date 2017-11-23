@@ -36,16 +36,16 @@ import com.lucy.service.CustomerService;
      private MockMvc mockMvc;
     
      @InjectMocks
-     private  CustomerController customerController;
+     private  BankerController bankerController;
 
      @Before
      public void setup() {
   
          // Process mock annotations
          MockitoAnnotations.initMocks(this);
-  
+         //this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).dispatchOptions(true).build();
          // Setup Spring test in standalone mode
-         this.mockMvc = MockMvcBuilders.standaloneSetup(customerController).build();
+         this.mockMvc = MockMvcBuilders.standaloneSetup(bankerController).build();
   
      }
 
@@ -60,7 +60,7 @@ import com.lucy.service.CustomerService;
                 .andExpect(status().isOk())
                 .andExpect(view().name("bankerWelcome"))
                 //.andExpect(forwardedUrl("bankerWelcome"))
-                .andExpect(model().attribute("customers", hasSize(1)))
+                .andExpect(model().attribute("customers", hasSize(3)))
                 .andExpect(model().attribute("customers", hasItem(
                         allOf(
                         		
@@ -83,39 +83,6 @@ import com.lucy.service.CustomerService;
         verifyNoMoreInteractions(customerServiceMock);
     }
     
-   /* @Test
-    public void saveProduct_Post() throws Exception {
-     	
-        // Behavior of Mockito -- MOCKS the categoryService.GetCategory in ProductController
-   Category category = new CategoryBuilder()
-            .withId(1)
-             .withName("Food")
-            .build();
-    when(categoryServiceMock.getCategory(1)).thenReturn(category);
 
-    	try {
- 			mockMvc.perform(post("/product")
-			    .param("name", "Ice Cream")
-			    .param("description", "Vanilla")
-			    .param("category.id", "1")
-			    .param("price", "3.99"))
-			    .andExpect(status().isOk())
-			    .andExpect(forwardedUrl("ProductDetails"))
-			    // validate that Data binding has worked...compare ModelAttribute (NewProduct)
-			    // with "real" values....
-			    .andExpect(model().attribute("newProduct",  
-                      allOf (
-                        		hasProperty("name", is("ce Cream")),
-                        		hasProperty("category", hasProperty("name", is("Food"))),
-                        		hasProperty("description", is("Vanilla")),
-                        		hasProperty("price", is(3.99F))
-                       )
-			      ));
-		} catch (AssertionError e) {
-			System.out.println("SaveProduct Error Message: " + e.getMessage());
-			throw e;
-		}
-
-      }*/
     
 }
