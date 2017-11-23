@@ -86,7 +86,7 @@
                                 <label class="" for="password"><spring:message code="profile.form.password.label"/></label> 
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" required>
                             </div>
-                          <%--   <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> --%>
+                          <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> 
                             <div class="form-group">
 			    				<input type='checkbox' name="keepMe"/> Remember Me? <br/>	
 			    		    </div>
@@ -94,7 +94,7 @@
                                 <input type="submit"
                                     class="btn btn-block btn-primary btn-default" value="Log in">
                             </div>
-                            <%-- <security:csrfInput /> --%>
+                            <security:csrfInput /> 
                         </form>
 					</div>
 				</div>
@@ -103,46 +103,3 @@
 	</div>
 </body> 
 
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-
-<head>
-<title>Login Page</title>
-
-<style>
-.errorblock {
-	color: #ff0000;
-	background-color: #ffEEEE;
-}
-</style>
-</head>
-<body onload='document.loginForm.j_username.focus();'>
-	<h3>Login Page</h3>
-
-	<%
-		String errorString = (String) request.getAttribute("error");
-		if (errorString != null && errorString.trim().equals("true")) {
-			out.println("<span class=\"errorblock\">Incorrect login name or password. Please try again");
-		}
-	%>
-
-	<form name='loginForm' action="<c:url value='login' />" method='POST'>
-
-		<table>
-			<tr>
-				<td>User:</td>
-				<td><input type='text' name='username' value=''></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type='password' name='password' /></td>
-			</tr>
-			<tr>
-				<td><input name="submit" type="submit" value="submit" /></td>
-				<td><input name="reset" type="reset" /></td>
-			</tr>
-		</table>
-
-	</form>
-</body>
-</html>  --%>

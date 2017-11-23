@@ -71,3 +71,4 @@ org.eclipse.wst.common.component
 pom.properties
 .class
 
+/LucyBankClassDiagram.ucls

@@ -21,7 +21,7 @@
 	             token-validity-seconds="86400" remember-me-parameter="keepMe"/>
               
         
-        <csrf  disabled="true"/>
+        <csrf/>
     </http>
     
    
