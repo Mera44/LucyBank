@@ -53,12 +53,7 @@ public abstract class Account implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-//	public double getInterestRate() {
-//		return interestRate;
-//	}
-//	public void setInterestRate(double interestRate) {
-//		this.interestRate = interestRate;
-//	}
+
 	public List<Transaction> getTransaction() {
 		return transaction;
 	}

@@ -53,4 +53,7 @@ public class Customer {
 	public void setAccounts(List<Account> accounts) {
 		this.accounts = accounts;
 	}
+	public boolean addAccount(Account account){
+		return this.accounts.add(account);
+	}
 }

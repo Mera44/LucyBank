@@ -17,7 +17,12 @@ public class CardNumber {
 	public CardNumber() {
 		
 	}
-	
+	public CardNumber(String number) {
+		super();
+		this.start = Integer.parseInt(number.substring(0, 3));
+		this.middle = Integer.parseInt(number.substring(3, 6));
+		this.suffix = Integer.parseInt(number.substring(6, 9));
+	}
 	public CardNumber(int start, int middle, int suffix) {
 		super();
 		this.start = start;

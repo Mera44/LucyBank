@@ -81,17 +81,19 @@
 			<form:input type="hidden"  path="profile.role.role" value="ROLE_CUSTOMER"/>
 			
 		<br />
+		<br/>
+  			<br/>
 			<spring:message code="profile.accounts" /><br />	
 			<fieldset>
 			 <input type="checkbox" name="accTypes" value="checking" checked> <spring:message code="accounts.checking" />
 			 <br />			 
-			 <spring:message code="check.number" /> ${cardNumberChecking}
-			 <input type="hidden" name="cardNumberChecking" value="${cardNumberChecking}">
-			 <br>
+			 
   			<input type="checkbox" name="accTypes" value="saving" checked> <spring:message code="accounts.saving" /><br>
-  			 <spring:message code="save.number" /> ${cardNumberSaving}<br />
-  			 <input type="hidden" name="cardNumberSaving" value="${cardNumberSaving}">
+  			 
   			<input type="checkbox" name="accTypes" value="credit"> <spring:message code="accounts.credit" />
+  			<br/>
+  			<br/>
+  			<br/>
   			</fieldset>
 			
 			

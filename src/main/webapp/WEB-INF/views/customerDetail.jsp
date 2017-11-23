@@ -49,7 +49,8 @@
       <tr>
       		<td>
 	      		<div>
-	      			Account Number: ${account.accountNumber}
+	      			Account Number: ${account.accountNumber} <br>
+	      			Account CardNumber: <spring:eval expression="account.cardNumber" /><%-- ${account.cardNumber} --%>
 	      		</div>
 	      		<div id="${account.typeAccount}">
 	      			Account Balance:  ${account.balance}

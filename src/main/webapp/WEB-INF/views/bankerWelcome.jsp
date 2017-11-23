@@ -56,7 +56,7 @@
           <td><a href="<%=request.getContextPath() %>/banker/customer/detail/${customer.id}">Accounts</a></td>
            <td><a href="<%=request.getContextPath() %>/banker/customer/update/${customer.id}">Edit</a></td>
            <td><a href="<%=request.getContextPath() %>/banker/customer/delete/${customer.id}">Delete</a></td>
-           <%-- <td><a href="<%=request.getContextPath() %>/banker/customer/addCredit/${customer.id}">Add Credit</a></td> --%>
+           <td><a href="<%=request.getContextPath() %>/banker/customer/addCredit/${customer.id}">Add Credit</a></td>
            
             
       </tr>
