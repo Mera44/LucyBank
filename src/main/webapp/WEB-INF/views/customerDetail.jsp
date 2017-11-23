@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <html>
  
@@ -59,6 +60,7 @@
       </tr>
       <tr>
       	<td><input class="form-control" type="number" id="${account.accountNumber}" /></td>
+      	
       </tr>
       <tr>
           <td class="link"><span><a href="#" onclick="deposit('${account.accountNumber}','${account.typeAccount}');">Deposit</a></span>

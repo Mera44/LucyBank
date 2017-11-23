@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
 <html>
 
@@ -62,7 +63,9 @@
 				<div class="submmit-button">
 					<input type="button" value="Edit Customer"
 						onclick="editTeller('${name}');return false;" />
+						 <input type="hidden" name="${_csrf.parameterName}"   value="${_csrf.token}" /> 
 				</div>
+				<security:csrfInput /> 
 			</form>
 		</div>
 

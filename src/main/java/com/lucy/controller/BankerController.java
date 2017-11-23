@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.lucy.domain.Account;
+import com.lucy.domain.Address;
 import com.lucy.domain.Banker;
 import com.lucy.domain.CardNumber;
 import com.lucy.domain.CheckingAccount;
@@ -36,6 +37,7 @@ import com.lucy.domain.Transaction;
 import com.lucy.domain.TransactionType;
 import com.lucy.exception.NoCheckPhotoUploadedException;
 import com.lucy.service.AccountService;
+import com.lucy.service.AddressService;
 import com.lucy.service.BankerService;
 import com.lucy.service.CheckingAccountService;
 import com.lucy.service.CreditAccountService;
@@ -69,6 +71,8 @@ public class BankerController {
 	CreditAccountService creditAccountService;
 	@Autowired
 	AccountService accountService;
+	@Autowired
+	AddressService addressService;
 
 	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -159,60 +163,70 @@ public class BankerController {
 		return "redirect:/banker/welcome";
 	}
 
-	// update customer
-	@RequestMapping(value = "/customer/update/{id}", method = RequestMethod.GET)
-	public String updateCustomer(@ModelAttribute("customer") Customer customer, @PathVariable("id") long id,
-			Model model) {
-		model.addAttribute("editCustomer", customerService.getCustomer(id));
-		return "updateCustomerForm";
-	}
+	//update customer
+		@RequestMapping(value="/customer/update/{id}", method=RequestMethod.GET)
+		public String updateCustomer(@ModelAttribute("customer") Customer customer, 
+				@PathVariable("id") long id, Model model) {
+			model.addAttribute("editCustomer", customerService.getCustomer(id));
+			return "updateCustomerForm";
+		}
+		@RequestMapping(value="/customer/update/{id}", method=RequestMethod.POST)
+		public String updateCustomerProcess(@RequestParam("state") String state ,@RequestParam("street") String street,
+				@RequestParam("zipcode") String zipcode, @RequestParam("id") long id, Model model) {
+			
+			Customer cust = customerService.getCustomer(id);
+			Address addr = (Address) addressService
+					.findAddressById(customerService.getCustomer(id).getProfile().getAddress().getId());
+			addr.setState(state);
+			addr.setStreet(street);
+			addr.setZipcode(zipcode);
+			cust.getProfile().setAddress(addr);
+			customerService.save(cust);
 
-	@RequestMapping(value = "/customer/update", method = RequestMethod.POST)
-	public String updateCustomerProcess(@ModelAttribute("customer") Customer customer, @PathVariable("id") long id,
-			Model model) {
-		Customer editCustomer = customerService.getCustomer(id);
-		editCustomer.getProfile().setEmail(customer.getProfile().getEmail());
-		editCustomer.getProfile().setPassword(customer.getProfile().getPassword());
-		editCustomer.getProfile().setAddress(customer.getProfile().getAddress());
-		customerService.save(editCustomer);
-		return "redirect:/banker/customer/welcome";
-	}
+			return "redirect:/banker/welcome";
+		}
+		//teller update
+			@RequestMapping(value="/teller/update/{id}", method=RequestMethod.GET)
+			public String updateTeller(@ModelAttribute("teller") Teller teller, @PathVariable("id") long id, Model model) {
+				model.addAttribute("editTeller", tellerService.getTeller(id));
+				return "updateTellerForm";
+			}
+			@RequestMapping(value="/teller/update/{id}", method=RequestMethod.POST)
+			public String updateTellerProcess(@RequestParam("state") String state ,@RequestParam("street") String street,
+					@RequestParam("zipcode") String zipcode, @RequestParam("id") long id, Model model) {
+				
+				Teller teller = tellerService.getTeller(id);
+				Address addr = (Address) addressService
+						.findAddressById(tellerService.getTeller(id).getProfile().getAddress().getId());
+				addr.setState(state);
+				addr.setStreet(street);
+				addr.setZipcode(zipcode);
+				teller.getProfile().setAddress(addr);
+				tellerService.save(teller);
 
-	// teller update
-	@RequestMapping(value = "/teller/update/{id}", method = RequestMethod.GET)
-	public String updateTeller(@ModelAttribute("teller") Teller teller, @PathVariable("id") long id, Model model) {
-		model.addAttribute("editTeller", tellerService.getTeller(id));
-		return "updateTellerForm";
-	}
+				return "redirect:/banker/teller/list";
+			}
+		//banker update	
+			@RequestMapping(value="/update/{id}", method=RequestMethod.GET)
+			public String updateBanker(@ModelAttribute("banker") Banker banker, @PathVariable("id") long id, Model model) {
+				model.addAttribute("editBanker", bankerService.getBanker(id));
+				return "updateBankerForm";
+			}
+			@RequestMapping(value="/update/{id}", method=RequestMethod.POST)
+			public String updateBankerProcess(@RequestParam("state") String state ,@RequestParam("street") String street,
+					@RequestParam("zipcode") String zipcode, @RequestParam("id") long id, Model model) {
+				
+				Banker banker = bankerService.getBanker(id);
+				Address addr = (Address) addressService
+						.findAddressById(bankerService.getBanker(id).getProfile().getAddress().getId());
+				addr.setState(state);
+				addr.setStreet(street);
+				addr.setZipcode(zipcode);
+				banker.getProfile().setAddress(addr);
+				bankerService.save(banker);
 
-	@RequestMapping(value = "/teller/update", method = RequestMethod.POST)
-	public String updateTellerProcess(@ModelAttribute("teller") Teller teller, @PathVariable("id") long id,
-			Model model) {
-		Teller editTeller = tellerService.getTeller(id);
-		editTeller.getProfile().setEmail(teller.getProfile().getEmail());
-		editTeller.getProfile().setPassword(teller.getProfile().getPassword());
-		editTeller.getProfile().setAddress(teller.getProfile().getAddress());
-		tellerService.save(editTeller);
-		return "redirect:/banker/teller/list";
-	}
-
-	// banker update
-	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String updateBanker(@ModelAttribute("banker") Banker banker, @PathVariable("id") long id, Model model) {
-		model.addAttribute("editBanker", bankerService.getBanker(id));
-		return "updateBankerForm";
-	}
-
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updateBankerProcess(@ModelAttribute("banker") Banker banker, @PathVariable("id") long id,
-			Model model) {
-		Banker editBanker = bankerService.getBanker(id);
-		editBanker.getProfile().setEmail(banker.getProfile().getEmail());
-		editBanker.getProfile().setPassword(banker.getProfile().getPassword());
-		editBanker.getProfile().setAddress(banker.getProfile().getAddress());
-		bankerService.save(editBanker);
-		return "redirect:/banker/list";
-	}
+				return "redirect:/banker/list";
+			}
 
 	// helper method
 	private Integer accountNumber() {
