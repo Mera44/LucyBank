@@ -12,7 +12,7 @@
     <tiles:putAttribute name="tagline"> bankerCustomerList.tagline </tiles:putAttribute>
     <tiles:putAttribute name="body">
    
-	<p>List</p>
+	<p></p>
  
     </tiles:putAttribute>
 
